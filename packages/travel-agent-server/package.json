@@ -1,0 +1,41 @@
+{
+  "name": "travel-agent-server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": {},
+  "scripts": {
+    "build": "tsc"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^20.0.2",
+    "jest": "^20.0.4",
+    "typescript": "^2.4.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)"
+    ]
+  },
+  "dependencies": {
+    "@types/express": "^4.0.36",
+    "body-parser": "^1.17.2",
+    "bootstrap-sass": "^3.3.7",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.8",
+    "express": "^4.15.3",
+    "hbs": "^4.0.1",
+    "inversify": "^4.2.0",
+    "morgan": "^1.8.2",
+    "reflect-metadata": "^0.1.10",
+    "serve-favicon": "^2.4.3"
+  }
+}
