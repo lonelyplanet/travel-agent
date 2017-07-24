@@ -4,9 +4,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "inversify": "^4.2.0",
     "reflect-metadata": "^0.1.10",
-    "travel-agent-server": "1.0.0",
+    "travel-agent-server": "../travel-agent-server",
     "typescript": "^2.4.1"
   }
 }

@@ -10,19 +10,14 @@ import {
 } from "./classes/controller";
 import { inject, injectable } from "inversify";
 
+export { inject, injectable } from "inversify";
 export { Controller } from "./classes/controller";
-
-// export const {
-//   decorators: {
-//     get,
-//   }
-// };
 
 const start = (options: ITravelAgentServerOptions) => {
   const port = normalizePort(process.env.PORT || 3000);
 
   const travelAgent = container.get<ITravelAgentServer>(TYPES.ITravelAgentServer);
-  
+
   travelAgent.addModules(options.modules);
 
   const server = http.createServer(travelAgent.app);

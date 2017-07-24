@@ -34,7 +34,7 @@ export default class TravelAgentServer implements ITravelAgentServer {
     middleware(this.app);
   }
 
-  bind(...args) {
+  bind<T = {}>(...args) {
     return container.bind.apply(container, args);
   }
 
@@ -77,7 +77,6 @@ export default class TravelAgentServer implements ITravelAgentServer {
     controller: string,
     handler: string
   ) {
-    console.log();
     const instance = container.get<IController>(controller);
     instance.request = req;
     instance.response = res;
