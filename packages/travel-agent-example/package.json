@@ -4,6 +4,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "react": "^15.6.1",
     "reflect-metadata": "^0.1.10",
     "travel-agent-server": "../travel-agent-server",
     "typescript": "^2.4.1"

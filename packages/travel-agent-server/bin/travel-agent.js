@@ -5,7 +5,8 @@ var path = require("path");
 
 nodemon({
   ext: "ts json",
-  watch: [path.join(process.cwd(), "app")],
+  ignore: ["components"],
+  watch: ["app"].map(p => path.join(process.cwd(), p)),
   exec: `${path.join(__dirname, "../node_modules/.bin/ts-node")} ${path.join(process.cwd(), "app/index.ts")}`,
 });
 
