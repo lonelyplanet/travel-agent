@@ -3,6 +3,8 @@ import TravelAgentServer from "../classes/server";
 import {
   ITravelAgentServer,
 } from "../interfaces";
+import MiddlewareProvider, { IMiddlewareProvider } from "../middleware/middlewareProvider";
+import CustomMiddlewareResolver, { ICustomMiddlewareResolver } from "../middleware/customMiddlewareResolver";
 import TYPES from "../types";
 import * as express from "express";
 
@@ -21,5 +23,9 @@ container.bind<express.Application>(TYPES.express).toFactory(() => {
 });
 
 container.bind<ITravelAgentServer>(TYPES.ITravelAgentServer).to(TravelAgentServer);
+container.bind<IMiddlewareProvider>(TYPES.IMiddlewareProvider).to(MiddlewareProvider);
+container.bind<ICustomMiddlewareResolver>(TYPES.ICustomMiddlewareResolver).to(CustomMiddlewareResolver);
+
+container.bind("IRequireConstructor").toConstantValue(require);
 
 export default container;

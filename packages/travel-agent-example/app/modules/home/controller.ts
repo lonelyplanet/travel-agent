@@ -11,6 +11,7 @@ export default class HomeController extends Controller {
     "GET /": "show",
     "GET /omg": "omg",
     "GET /html": "html",
+    "GET /html.json": "json",
   };
 
   foo: IFooService;
@@ -42,5 +43,10 @@ export default class HomeController extends Controller {
     </body>
     </html>
     `);
+  }
+  json() {
+    this.response.send({
+      json: "json",
+    });
   }
 }

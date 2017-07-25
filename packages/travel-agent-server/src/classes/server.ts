@@ -12,26 +12,37 @@ import {
   IControllerConstructor,
   IController,
 } from "./controller";
+import {
+  IMiddlewareProvider,
+} from "../middleware/middlewareProvider";
+import {
+  ICustomMiddlewareResolver,
+  ICustomMiddleware,
+} from "../middleware/customMiddlewareResolver";
+
 import TYPES from "../types";
 import * as express from "express";
-import middleware from "../middleware";
 import container from "../config/container";
 
 @injectable()
 export default class TravelAgentServer implements ITravelAgentServer {
   app: express.Application;
   container: Container;
+  middlewareResolver: IMiddlewareProvider;
 
-  constructor(@inject(TYPES.express) express: express.Application) {
+  constructor(
+    @inject(TYPES.express) express: express.Application,
+    @inject(TYPES.ICustomMiddlewareResolver) middlewareResolver: IMiddlewareProvider
+  ) {
     this.app = express;
-    this.middleware();
+    this.middlewareResolver = middlewareResolver;
 
     this.handler = this.handler.bind(this);
     this.container = container;
   }
 
   middleware() {
-    middleware(this.app);
+    this.middlewareResolver.middleware(this.app);
   }
 
   bind<T = {}>(...args) {

@@ -13,6 +13,7 @@
     "typescript": "^2.4.1"
   },
   "jest": {
+    "setupFiles": ["./test-setup.js"],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -30,9 +31,11 @@
     "body-parser": "^1.17.2",
     "bootstrap-sass": "^3.3.7",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "debug": "^2.6.8",
     "express": "^4.15.3",
     "hbs": "^4.0.1",
+    "helmet": "^3.8.0",
     "inversify": "^4.2.0",
     "morgan": "^1.8.2",
     "reflect-metadata": "^0.1.10",
