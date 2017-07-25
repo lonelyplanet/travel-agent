@@ -20,7 +20,7 @@ const start = (options: ITravelAgentServerOptions) => {
 
   travelAgent.setup();
 
-  travelAgent.addModules(options.modules);
+  travelAgent.addModules();
 
   travelAgent.postSetup();
 

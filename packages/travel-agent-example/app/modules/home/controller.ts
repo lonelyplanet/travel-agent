@@ -25,8 +25,8 @@ export default class HomeController extends Controller {
   async show() {
     const foo = await this.foo.fetch();
 
-    this.response.json({
-      home: `hell effin yea ${foo[0].name}`,
+    this.response.render("home", {
+      message: `hell effin yea ${foo[0].name}!`,
     });
   }
   omg() {

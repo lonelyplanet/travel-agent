@@ -23,6 +23,9 @@ import {
 import TYPES from "../types";
 import * as express from "express";
 import container from "../config/container";
+import * as path from "path";
+import createEngine from "./reactEngine";
+import ControllerRegistry from "./controllerRegistry";
 
 @injectable()
 export default class TravelAgentServer implements ITravelAgentServer {
@@ -43,6 +46,24 @@ export default class TravelAgentServer implements ITravelAgentServer {
 
   setup() {
     this.middlewareResolver.middleware(this.app);
+
+    if (process.env.NODE_ENV === "production") {
+      this.app.engine("js", createEngine({
+        layout: "dist/layouts/main"
+      }));
+      this.app.set("views", [
+        "dist/modules",
+        "dist/views"
+      ].map(p => path.join(process.cwd(), p))); // specify the views directory
+      this.app.set("view engine", "js"); // register the template engine
+    } else {
+      this.app.engine("tsx", createEngine());
+      this.app.set("views", [
+        "app/modules",
+        "app/views"
+      ].map(p => path.join(process.cwd(), p))); // specify the views directory
+      this.app.set("view engine", "tsx"); // register the template engine
+    }
   }
 
   postSetup() {
@@ -53,25 +74,27 @@ export default class TravelAgentServer implements ITravelAgentServer {
     return container.bind.apply(container, args);
   }
 
-  addModules(modules: ITravelAgentModule[]) {
-    modules.forEach((module) => {
-      injectable()(module.controller);
-      container.bind(module.controller.name).to(module.controller);
+  addModules() {
+    const registry = new ControllerRegistry();
+    const controllers = registry.register();
+    controllers.forEach((controller) => {
+      injectable()(controller);
+      container.bind(controller.name).to(controller);
 
-      const routes = Object.keys(module.controller.routes)
+      const routes = Object.keys(controller.routes)
       .reduce<Array<IRoute>>((memo, key) => {
         const split = key.split(" ");
         const method = split[0].toLocaleLowerCase();
         const url = split[1];
-        const handler = module.controller.routes[key];
+        const handler = controller.routes[key];
 
         memo.push({
           handler,
           method,
           url,
           middleware: [],
-          routes: module.controller.routes,
-          controller: module.controller,
+          routes: controller.routes,
+          controller: controller,
         });
 
         return memo;
@@ -79,7 +102,7 @@ export default class TravelAgentServer implements ITravelAgentServer {
 
       routes.forEach((route) => {
         this.app[route.method](route.url, ...route.middleware, (req, res, next) => {
-          this.handler(req, res, next, module.controller.name, route.handler);
+          this.handler(req, res, next, controller.name, route.handler);
         });
       });
     });

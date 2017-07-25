@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "module": "commonjs",
-    "target": "ES6",
+    "target": "ES5",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "lib": [

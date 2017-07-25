@@ -4,6 +4,7 @@ export default (env) => (err, req, res, next) => {
   }
 
   res.status(err.status || 500);
+  console.log(err);
 
   const locals = env === "production" ? {
     message: "An error has occurred",
@@ -12,7 +13,6 @@ export default (env) => (err, req, res, next) => {
     message: err.message,
     error: err
   };
-
 
   if (req.headers["content-type"] === "application/json") {
     return res.json(locals);

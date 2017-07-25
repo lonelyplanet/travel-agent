@@ -4,9 +4,18 @@ var nodemon = require("nodemon");
 var path = require("path");
 
 nodemon({
-  ext: "ts json",
+  ext: "js json ts tsx",
   ignore: ["components"],
-  watch: ["app"].map(p => path.join(process.cwd(), p)),
+  watch: [
+    ...[
+      "app/layouts/*",
+      "app/services/*",
+      "app/views/*",
+      "app/modules/**/*controller",
+      "app/modules/**",
+    ].map(p => path.join(process.cwd(), p)),
+    path.join(__dirname, "../dist/**/*"),
+  ],
   exec: `${path.join(__dirname, "../node_modules/.bin/ts-node")} ${path.join(process.cwd(), "app/index.ts")}`,
 });
 

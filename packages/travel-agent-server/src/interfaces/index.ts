@@ -15,14 +15,14 @@ export interface ITravelAgentModule {
 }
 
 export interface ITravelAgentServerOptions {
-  modules: ITravelAgentModule[];
+
 }
 
 export interface ITravelAgentServer {
   app: express.Application;
   container: Container;
   bind: Function;
-  addModules(modules: ITravelAgentModule[]): void;
+  addModules(): void;
   postSetup(): void;
   setup(): void;
 }
