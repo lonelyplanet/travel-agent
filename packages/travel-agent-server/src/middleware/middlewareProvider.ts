@@ -10,6 +10,7 @@ import {
   ICustomMiddlewareResolver,
   ICustomMiddleware,
 } from "./customMiddlewareResolver";
+import errorHandler from "./errorHandler";
 import logger from "../utils/logger";
 
 const health = express.Router();
@@ -41,6 +42,18 @@ export interface IMiddlewareProvider {
 }
 
 export default class MiddlewareProvider {
+  static defaultMiddleware() {
+    return {
+      health,
+      errorHandler: errorHandler(process.env.NODE_ENV),
+      cookieParser: cookieParser(),
+      cors: cors(),
+      jsonParser: bodyParser.json(),
+      bodyParserUrl: bodyParser.urlencoded({ extended: false }),
+      static: express.static(path.join(process.cwd(), "public")),
+    };
+  }
+
   defaultMiddleware: ICustomMiddleware;
   customMiddlewareResolver: ICustomMiddlewareResolver;
 
@@ -48,16 +61,11 @@ export default class MiddlewareProvider {
     defaults?: ICustomMiddleware,
     @inject(TYPES.ICustomMiddlewareResolver) customMiddlewareResolver?: ICustomMiddlewareResolver
   ) {
-    this.defaultMiddleware = defaults || {
-      health,
-      cookieParser: cookieParser(),
-      cors: cors(),
-      jsonParser: bodyParser.json(),
-      bodyParserUrl: bodyParser.urlencoded({ extended: false }),
-      static: express.static(path.join(process.cwd(), "public")),
-    };
+    this.defaultMiddleware = defaults || MiddlewareProvider.defaultMiddleware();
     this.customMiddlewareResolver = customMiddlewareResolver;
   }
+
+
 
   middleware(app) {
     return applyMiddleware(
