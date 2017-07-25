@@ -1,7 +1,7 @@
-import TravelAgentServer from "../src/classes/server";
+import TravelAgentServer from "../classes/server";
 
 describe("TravelAgentServer", () => {
   it("should work", () => {
-    
+
   });
 })

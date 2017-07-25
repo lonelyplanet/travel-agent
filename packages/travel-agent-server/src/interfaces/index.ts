@@ -7,7 +7,7 @@ import {
 } from "inversify";
 
 export interface IHttpServer {
-  
+
 }
 
 export interface ITravelAgentModule {
@@ -23,4 +23,6 @@ export interface ITravelAgentServer {
   container: Container;
   bind: Function;
   addModules(modules: ITravelAgentModule[]): void;
+  postSetup(): void;
+  setup(): void;
 }

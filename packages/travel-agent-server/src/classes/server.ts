@@ -32,17 +32,21 @@ export default class TravelAgentServer implements ITravelAgentServer {
 
   constructor(
     @inject(TYPES.express) express: express.Application,
-    @inject(TYPES.ICustomMiddlewareResolver) middlewareResolver: IMiddlewareProvider
+    @inject(TYPES.IMiddlewareProvider) middlewareResolver: IMiddlewareProvider
   ) {
     this.app = express;
     this.middlewareResolver = middlewareResolver;
+    this.container = container;
 
     this.handler = this.handler.bind(this);
-    this.container = container;
   }
 
-  middleware() {
+  setup() {
     this.middlewareResolver.middleware(this.app);
+  }
+
+  postSetup() {
+    this.middlewareResolver.postMiddleware(this.app);
   }
 
   bind<T = {}>(...args) {

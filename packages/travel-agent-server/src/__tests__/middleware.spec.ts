@@ -1,6 +1,6 @@
-import CustomMiddlewareResolver, { ICustomMiddlewareResolver } from "../src/middleware/customMiddlewareResolver";
-import MiddlewareProvider from "../src/middleware/middlewareProvider";
-import errorHandler from "../src/middleware/errorHandler";
+import CustomMiddlewareResolver, { ICustomMiddlewareResolver } from "../middleware/customMiddlewareResolver";
+import MiddlewareProvider from "../middleware/middlewareProvider";
+import errorHandler from "../middleware/errorHandler";
 
 interface F { (name: string): any; resolve(name: string): string; }
 
@@ -13,15 +13,25 @@ describe("middleware", () => {
         };
       }
     }
-    const provider = new MiddlewareProvider({
+    const provider = new MiddlewareProvider(new MockCustomProvider());
+    provider.defaultMiddleware = () => ({
       foo: (req, res, next) => {},
-    }, new MockCustomProvider());
+    });
+    provider.defaultProductionMiddleware = () => ({
+      baz: (req, res, next) => {},
+    });
 
     const middleware = provider.middleware({
       use: jest.fn(),
-    });
+    }, "development");
     expect(middleware.foo).toBeTruthy();
     expect(middleware.bar).toBeTruthy();
+    expect(middleware.baz).toBeFalsy();
+
+    const production = provider.middleware({
+      use: jest.fn(),
+    }, "production");
+    expect(production.baz).toBeTruthy();
   });
 
   it("should resolve custom middleware", () => {

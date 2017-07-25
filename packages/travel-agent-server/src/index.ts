@@ -18,7 +18,11 @@ const start = (options: ITravelAgentServerOptions) => {
 
   const travelAgent = container.get<ITravelAgentServer>(TYPES.ITravelAgentServer);
 
+  travelAgent.setup();
+
   travelAgent.addModules(options.modules);
+
+  travelAgent.postSetup();
 
   const server = http.createServer(travelAgent.app);
 

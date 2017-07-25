@@ -1,77 +1,64 @@
-import { inject } from "inversify";
-import * as cookieParser from "cookie-parser";
+import { inject, injectable } from "inversify";
 import * as express from "express";
-import * as helmet from "helmet";
-import * as path from "path";
-import * as bodyParser from "body-parser";
-import * as cors from "cors";
 import TYPES from "../types";
 import {
   ICustomMiddlewareResolver,
   ICustomMiddleware,
 } from "./customMiddlewareResolver";
 import errorHandler from "./errorHandler";
+import catchAll from "./catchAll";
 import logger from "../utils/logger";
 
-const health = express.Router();
-health.get("/health-check", (req, res) => {
-  res.json({
-    success: true,
-  });
-});
-
 export const applyMiddleware = (
-  app, defaultMiddleware,
-  customMiddleware: ICustomMiddleware
+  app,
+  ...middleware: ICustomMiddleware[],
 ): ICustomMiddleware => {
-  const middleware = {
-    ...defaultMiddleware,
-    ...customMiddleware
-  };
-
-  Object.keys(middleware)
-  .forEach((key) => {
+  const allMiddleware = middleware.reduce((memo, m) => ({ ...memo, ...m }), {});
+  Object.keys(allMiddleware)
+  .map((key) => {
     logger.debug(`initializing middleware: ${key}`);
-    app.use(middleware[key]);
+    app.use(allMiddleware[key]);
   });
-  return middleware;
+  return allMiddleware;
 };
 
 export interface IMiddlewareProvider {
-  middleware(app: express.Application): ICustomMiddleware;
+  middleware(app: express.Application, env?: string): ICustomMiddleware;
+  postMiddleware(app: express.Application, env?: string): ICustomMiddleware;
 }
 
-export default class MiddlewareProvider {
-  static defaultMiddleware() {
+@injectable()
+export default class MiddlewareProvider implements IMiddlewareProvider {
+  static postMiddleware() {
     return {
-      health,
       errorHandler: errorHandler(process.env.NODE_ENV),
-      cookieParser: cookieParser(),
-      cors: cors(),
-      jsonParser: bodyParser.json(),
-      bodyParserUrl: bodyParser.urlencoded({ extended: false }),
-      static: express.static(path.join(process.cwd(), "public")),
+      catchAll,
     };
   }
 
-  defaultMiddleware: ICustomMiddleware;
+  @inject(TYPES.DefaultMiddleware) defaultMiddleware: () => ICustomMiddleware;
+  @inject(TYPES.DefaultProductionMiddleware) defaultProductionMiddleware: () => ICustomMiddleware;
   customMiddlewareResolver: ICustomMiddlewareResolver;
 
   constructor(
-    defaults?: ICustomMiddleware,
     @inject(TYPES.ICustomMiddlewareResolver) customMiddlewareResolver?: ICustomMiddlewareResolver
   ) {
-    this.defaultMiddleware = defaults || MiddlewareProvider.defaultMiddleware();
     this.customMiddlewareResolver = customMiddlewareResolver;
   }
 
-
-
-  middleware(app) {
+  middleware(app, env = process.env.NODE_ENV) {
     return applyMiddleware(
       app,
-      this.defaultMiddleware,
-      this.customMiddlewareResolver.resolve()
+      this.defaultMiddleware(),
+      this.customMiddlewareResolver.resolve(),
+      env === "production" ? this.defaultProductionMiddleware() : {},
+    );
+  }
+
+  postMiddleware(app, env = process.env.NODE_ENV) {
+    return applyMiddleware(
+      app,
+      MiddlewareProvider.postMiddleware(),
     );
   }
 }

@@ -3,6 +3,9 @@ const types = {
   ITravelAgentServer: "ITravelAgentServer",
   ICustomMiddlewareResolver: "ICustomMiddlewareResolver",
   IMiddlewareProvider: "IMiddlewareProvider",
+  IRequireConstructor: "IRequireConstructor",
+  DefaultMiddleware: "DefaultMiddleware",
+  DefaultProductionMiddleware: "DefaultProductionMiddleware",
 };
 
 export default types;

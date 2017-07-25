@@ -3,7 +3,7 @@ import * as path from "path";
 import * as express from "express";
 
 export interface ICustomMiddleware {
-  [key: string]: (request: express.Request, response: express.Response, next: express.NextFunction) => void,
+  [key: string]: express.RequestHandler | express.ErrorRequestHandler,
 }
 
 export interface ICustomMiddlewareResolver {
