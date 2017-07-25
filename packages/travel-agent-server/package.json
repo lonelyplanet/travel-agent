@@ -6,10 +6,15 @@
   "scripts": {
     "build": "tsc"
   },
+  "bin": {
+    "travel-agent": "./bin/travel-agent.js"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^20.0.2",
     "jest": "^20.0.4",
+    "nodemon": "^1.11.0",
+    "ts-node": "^3.3.0",
     "typescript": "^2.4.1"
   },
   "jest": {
