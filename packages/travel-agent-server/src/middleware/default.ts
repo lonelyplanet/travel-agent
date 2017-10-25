@@ -1,11 +1,8 @@
-import * as cookieParser from "cookie-parser";
+/* tslint:disable: object-literal-sort-keys */
 import * as express from "express";
-import * as helmet from "helmet";
 import * as path from "path";
-import * as bodyParser from "body-parser";
-import * as cors from "cors";
-import * as bunyan from "express-bunyan-logger";
-import * as compression from "compression";
+import * as webpack from "webpack";
+import config from "../webpack/config";
 
 const health = express.Router();
 health.get("/health-check", (req, res) => {
@@ -15,13 +12,30 @@ health.get("/health-check", (req, res) => {
 });
 
 export const defaultMiddleware = () => ({
+  bodyParserUrl: require("body-parser").urlencoded({ extended: false }),
+  cookieParser: require("cookie-parser")(),
+  cors: require("cors")(),
   health,
-  cookieParser: cookieParser(),
-  cors: cors(),
-  jsonParser: bodyParser.json(),
-  bodyParserUrl: bodyParser.urlencoded({ extended: false }),
-  static: express.static(path.join(process.cwd(), "public")),
+  jsonParser: require("body-parser").json(),
+  location: (req, res, next) => {
+    res.locals.location = req.url;
+    next();
+  },
 });
+
+export const defaultDevMiddelware = () => {
+  const compiler = webpack(config);
+  return {
+    hot: require("webpack-hot-middleware")(compiler),
+    morgan: require("morgan")("dev"),
+    webpackDevMiddleware: require("webpack-dev-middleware")(compiler, {
+      noInfo: true,
+      publicPath: "/assets",
+      serverSideRender: true,
+    }),
+    static: express.static(path.join(process.cwd(), "public")),
+  };
+};
 
 export const defaultProductionMiddleware = () => {
   const excludes = [
@@ -35,11 +49,12 @@ export const defaultProductionMiddleware = () => {
   ];
 
   return {
-    bunyan: bunyan({
+    bunyan: require("express-bunyan-logger")({
       name: process.env.LP_SERVICE_ID || "travel-agent-server",
       parseUA: false, // Leave user-agent as raw string
       excludes,
     }),
-    compression: compression(),
-  }
+    compression: require("compression")(),
+    static: express.static(path.join(process.cwd(), "public")),
+  };
 };

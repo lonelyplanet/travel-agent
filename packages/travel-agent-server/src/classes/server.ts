@@ -1,88 +1,64 @@
-/* global process,__dirname */
-import {
-  inject,
-  injectable,
-  Container,
-} from "inversify";
-import {
-  ITravelAgentServer,
-  ITravelAgentModule,
-} from "../interfaces";
-import {
-  IControllerConstructor,
-  IController,
-} from "./controller";
-import {
-  IMiddlewareProvider,
-} from "../middleware/middlewareProvider";
-import {
-  ICustomMiddlewareResolver,
-  ICustomMiddleware,
-} from "../middleware/customMiddlewareResolver";
-
-import TYPES from "../types";
 import * as express from "express";
-import container from "../config/container";
+import { Container, inject, injectable } from "inversify";
 import * as path from "path";
-import createEngine from "./reactEngine";
+import { matchPath } from "react-router-dom";
+import container from "../config/container";
+import { IControllerFactory, ITravelAgentModule, ITravelAgentServer, IRoute } from "../interfaces";
+import { ICustomMiddleware, ICustomMiddlewareResolver } from "../middleware/customMiddlewareResolver";
+import { IMiddlewareProvider } from "../middleware/middlewareProvider";
+import TYPES from "../types";
+import { IController, IControllerConstructor } from "./controller";
 import ControllerRegistry from "./controllerRegistry";
+import getBundledAssets from "../utils/getBundledAssets";
+import createEngine from "./reactEngine";
 
 @injectable()
 export default class TravelAgentServer implements ITravelAgentServer {
-  app: express.Application;
-  container: Container;
-  middlewareResolver: IMiddlewareProvider;
+  public app: express.Application;
+  public container: Container;
+  public controllerFactory: IControllerFactory;
+  public middlewareResolver: IMiddlewareProvider;
+  public routes: IRoute[];
+  private defaultRouter: express.Router;
 
   constructor(
     @inject(TYPES.express) express: express.Application,
-    @inject(TYPES.IMiddlewareProvider) middlewareResolver: IMiddlewareProvider
+    @inject(TYPES.IMiddlewareProvider) middlewareResolver: IMiddlewareProvider,
+    @inject(TYPES.IControllerFactory) controllerFactory: IControllerFactory,
   ) {
     this.app = express;
     this.middlewareResolver = middlewareResolver;
+    this.controllerFactory = controllerFactory;
     this.container = container;
 
     this.handler = this.handler.bind(this);
+    this.createDefaultRoute = this.createDefaultRoute.bind(this);
   }
 
-  setup() {
+  public setup() {
     this.middlewareResolver.middleware(this.app);
-
-    if (process.env.NODE_ENV === "production") {
-      this.app.engine("js", createEngine({
-        layout: "dist/layouts/main"
-      }));
-      this.app.set("views", [
-        "dist/modules",
-        "dist/views"
-      ].map(p => path.join(process.cwd(), p))); // specify the views directory
-      this.app.set("view engine", "js"); // register the template engine
-    } else {
-      this.app.engine("tsx", createEngine());
-      this.app.set("views", [
-        "app/modules",
-        "app/views"
-      ].map(p => path.join(process.cwd(), p))); // specify the views directory
-      this.app.set("view engine", "tsx"); // register the template engine
-    }
+    this.createViewEngine();
   }
 
-  postSetup() {
+  public postSetup() {
+    this.addDefaultRoute();
     this.middlewareResolver.postMiddleware(this.app);
   }
 
-  bind<T = {}>(...args) {
+  public bind<T = {}>(...args) {
     return container.bind.apply(container, args);
   }
 
-  addModules() {
+  public addModules() {
     const registry = new ControllerRegistry();
     const controllers = registry.register();
+    this.routes = [];
     controllers.forEach((controller) => {
       injectable()(controller);
       container.bind(controller.name).to(controller);
 
-      const routes = Object.keys(controller.routes)
-      .reduce<Array<IRoute>>((memo, key) => {
+      Object.keys(controller.routes)
+      .reduce<IRoute[]>((memo, key) => {
         const split = key.split(" ");
         const method = split[0].toLocaleLowerCase();
         const url = split[1];
@@ -94,18 +70,65 @@ export default class TravelAgentServer implements ITravelAgentServer {
           url,
           middleware: [],
           routes: controller.routes,
-          controller: controller,
+          controller,
         });
 
         return memo;
-      }, []);
-
-      routes.forEach((route) => {
-        this.app[route.method](route.url, ...route.middleware, (req, res, next) => {
-          this.handler(req, res, next, controller.name, route.handler);
-        });
-      });
+      }, this.routes);
     });
+  }
+
+  private addDefaultRoute() {
+    const router = express.Router();
+    this.defaultRouter = router;
+
+    router.get("*", this.createDefaultRoute("get"));
+    router.post("*", this.createDefaultRoute("post"));
+    router.patch("*", this.createDefaultRoute("patch"));
+    router.delete("*", this.createDefaultRoute("delete"));
+
+    this.app.use(router);
+  }
+
+  private createDefaultRoute(method) {
+    return (req, res, next) => {
+      const matched = this.routes
+      .filter((r) => r.method.toLowerCase() === method.toLowerCase())
+      .some((route) => {
+        const match = matchPath(req.path, { path: route.url, exact: true });
+
+        if (match) {
+          res.locals.assets = getBundledAssets(res);
+          this.handler(req, res, next, route.controller.name, route.handler);
+        }
+
+        return !!match;
+      });
+
+      if (!matched) {
+        return next();
+      }
+    };
+  }
+
+  private createViewEngine() {
+    if (process.env.NODE_ENV === "production") {
+      this.app.engine("js", createEngine({
+        layout: "dist/layout",
+      }));
+      this.app.set("views", [
+        "dist/modules",
+        "dist",
+      ].map((p) => path.join(process.cwd(), p))); // specify the views directory
+      this.app.set("view engine", "js"); // register the template engine
+    } else {
+      this.app.engine("tsx", createEngine());
+      this.app.set("views", [
+        "app/modules",
+        "app",
+      ].map((p) => path.join(process.cwd(), p))); // specify the views directory
+      this.app.set("view engine", "tsx"); // register the template engine
+    }
   }
 
   private handler(
@@ -113,123 +136,9 @@ export default class TravelAgentServer implements ITravelAgentServer {
     res: express.Response,
     next: express.NextFunction,
     controller: string,
-    handler: string
+    handler: string,
   ) {
-    const instance = container.get<IController>(controller);
-    instance.request = req;
-    instance.response = res;
-    instance.next = next;
-    instance[handler]();
+    const instance = this.controllerFactory.create(req, res, next, controller, handler);
+    return instance;
   }
 }
-interface IRoute {
-  handler: string;
-  method: string;
-  url: string;
-  middleware: Object[];
-  routes: Object;
-  controller: IControllerConstructor;
-  // handler(request: express.Request, response: express.Response, next: express.NextFunction): void;
-}
-/*
-const env = process.env.NODE_ENV || "development";
-
-const express = require("express");
-const helmet = require('helmet');
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const utilityRoutes = require("./routes/utility");
-const Promise = require("bluebird");
-const Helmet = require("react-helmet");
-
-require("babel-polyfill");
-
-global.Promise = Promise;
-
-const app = express();
-
-const exphbs = require("express-handlebars");
-const helpers = require("./lib/helpers");
-const hbs = exphbs.create({
-  helpers,
-  defaultLayout: "main",
-  layoutsDir: "app/layouts",
-  partialsDir: [
-    "node_modules/rizzo-next/src",
-    "app",
-  ],
-  extname: ".hbs",
-});
-
-app.set("views", "app");
-
-// Register `hbs` as our view engine using its bound `engine()` function.
-app.engine("hbs", hbs.engine);
-app.set("view engine", "hbs");
-
-app.use(helmet());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "node_modules/rizzo-next/dist")));
-app.use(cors());
-
-const data = require("rizzo-next/lib/data/default.json");
-
-data.components.header.type = "normal";
-data.components.header.navigation.splice(1, 0, {
-  title: "Video",
-  slug: "/video/v",
-});
-
-app.use((req, res, next) => {
-  const head = Helmet.rewind();
-
-  Object.assign(res.locals, {
-    footer: data.components.footer,
-    show_header: true,
-    header: data.components.header,
-    asset_root: process.env.ASSET_HOST,
-    head: {
-      title: head.title.toString(),
-      meta: head.meta.toString(),
-      script: head.script.toString(),
-      link: head.link.toString(),
-    },
-  });
-  next();
-});
-
-app.use((req, res, next) => {
-  if (req.originalUrl.indexOf(".json") > -1) {
-    req.headers["content-type"] = "application/json";
-  }
-
-  next();
-});
-
-if (env === "production") {
-  require("./boot/production")(app);
-} else if (env === "test") {
-  require("./boot/test")(app);
-} else {
-  require("./boot/development")(app);
-}
-
-// adds "/error" and "/server-status" endpoints
-app.use("/", utilityRoutes);
-
-// Catch all route
-app.use((req, res, next) => {
-  req.statsdKey = ["pois", "errors", 404].join(".");
-
-  const err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
-
-module.exports = app;
-*/

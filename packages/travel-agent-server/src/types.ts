@@ -1,11 +1,14 @@
 const types = {
-  express: "express",
-  ITravelAgentServer: "ITravelAgentServer",
+  Container: "Container",
+  DefaultDevMiddleware: "DefaultDevMiddleware",
+  DefaultMiddleware: "DefaultMiddleware",
+  DefaultProductionMiddleware: "DefaultProductionMiddleware",
+  IControllerFactory: "IControllerFactory",
   ICustomMiddlewareResolver: "ICustomMiddlewareResolver",
   IMiddlewareProvider: "IMiddlewareProvider",
   IRequireConstructor: "IRequireConstructor",
-  DefaultMiddleware: "DefaultMiddleware",
-  DefaultProductionMiddleware: "DefaultProductionMiddleware",
+  ITravelAgentServer: "ITravelAgentServer",
+  express: "express",
 };
 
 export default types;

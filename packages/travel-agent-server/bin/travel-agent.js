@@ -1,28 +1,14 @@
 #!/usr/bin/env node
 
-var nodemon = require("nodemon");
-var path = require("path");
+const path = require("path");
+const program = require("commander");
 
-nodemon({
-  ext: "js json ts tsx",
-  ignore: ["components"],
-  watch: [
-    ...[
-      "app/layouts/*",
-      "app/services/*",
-      "app/views/*",
-      "app/modules/**/*controller",
-      "app/modules/**",
-    ].map(p => path.join(process.cwd(), p)),
-    path.join(__dirname, "../dist/**/*"),
-  ],
-  exec: `${path.join(__dirname, "../node_modules/.bin/ts-node")} ${path.join(process.cwd(), "app/index.ts")}`,
-});
+program
+  .version("0.1.0")
 
-nodemon.on("start", function () {
-  console.log("App has started");
-}).on("quit", function () {
-  console.log("App has quit");
-}).on("restart", function (files) {
-  console.log("App restarted due to: ", files);
-});
+program
+  .command("add", "add a new module to the app")
+  .command("build", "build the app")
+  .command("dev", "run server in development mode")
+  .command("start", "run server in production mode")
+  .parse(process.argv);

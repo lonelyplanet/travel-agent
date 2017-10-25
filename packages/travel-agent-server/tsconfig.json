@@ -5,12 +5,15 @@
     "target": "ES5",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "jsx": "react",
     "lib": [
       "es2015",
-      "dom"
+      "dom",
+      "es2017.object"
     ]
   },
   "include": [
+    "app/**/*",
     "src/**/*"
   ]
 }

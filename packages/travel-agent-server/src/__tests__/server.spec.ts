@@ -1,7 +1,5 @@
 import TravelAgentServer from "../classes/server";
 
-describe("TravelAgentServer", () => {
-  it("should work", () => {
-
-  });
-})
+xdescribe("TravelAgentServer", () => {
+  xit("should work", () => void 0);
+});

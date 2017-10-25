@@ -1,18 +1,17 @@
+import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as path from "path";
-import * as express from "express";
+import logger from "../utils/logger";
 
 export interface ICustomMiddleware {
-  [key: string]: express.RequestHandler | express.ErrorRequestHandler,
+  [key: string]: express.RequestHandler | express.ErrorRequestHandler | [string, express.RequestHandler | express.ErrorRequestHandler];
 }
 
 export interface ICustomMiddlewareResolver {
-  resolve(): ICustomMiddleware,
+  resolve(): ICustomMiddleware;
 }
 
-export interface IRequire {
-  (module: string): any;
-}
+export type IRequire = (module: string) => any;
 
 export interface IRequireConstructor extends IRequire {
   resolve(module: string): string;
@@ -20,21 +19,22 @@ export interface IRequireConstructor extends IRequire {
 
 @injectable()
 export default class CustomMiddlewareResolver implements ICustomMiddlewareResolver {
-  middlewarePath = path.join(process.cwd(), "./config");;
-  require: IRequireConstructor;
+  public middlewarePath = path.join(process.cwd(), "./config");
+  public require: IRequireConstructor;
 
   constructor(@inject("IRequireConstructor") require) {
     this.require = require;
   }
 
-  resolve() {
+  public resolve() {
     let customMiddleware: ICustomMiddleware = {};
 
     try {
       const customMiddlewarePath = this.require.resolve(this.middlewarePath);
       customMiddleware = this.require(customMiddlewarePath).middleware;
+    } catch (e) {
+      logger.debug(e);
     }
-    catch(e) {}
 
     return customMiddleware;
   }

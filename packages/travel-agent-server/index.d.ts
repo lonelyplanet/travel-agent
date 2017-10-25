@@ -1,11 +1,11 @@
 import {
   ITravelAgentServer,
-  ITravelAgentServerOptions,
 } from "./src/interfaces";
-import * as express from "express";
 
-
-export default function start(options?: ITravelAgentServerOptions): ITravelAgentServer;
+export default function start(options?: {
+  startWithoutHttp: boolean,
+}): ITravelAgentServer;
 
 export { inject, injectable } from "inversify";
-export { Controller } from "./src";
+
+export * from "./src";

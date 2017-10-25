@@ -1,28 +1,39 @@
 import * as express from "express";
 import {
-  IControllerConstructor,
-} from "../classes/controller";
-import {
   Container,
 } from "inversify";
-
-export interface IHttpServer {
-
-}
+import {
+  IController,
+  IControllerConstructor,
+} from "../classes/controller";
 
 export interface ITravelAgentModule {
   controller: IControllerConstructor;
 }
 
-export interface ITravelAgentServerOptions {
-
-}
-
 export interface ITravelAgentServer {
   app: express.Application;
   container: Container;
-  bind: Function;
+  bind: (name: string) => { to: (name: any) => void };
   addModules(): void;
   postSetup(): void;
   setup(): void;
+}
+
+export interface IControllerFactory {
+  create(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+    controller: string,
+    handler: string): IController;
+}
+
+export interface IRoute {
+  handler: string;
+  method: string;
+  url: string;
+  middleware: object[];
+  routes: object;
+  controller: IControllerConstructor;
 }
