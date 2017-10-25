@@ -46,6 +46,7 @@ const config: webpack.Configuration = {
   resolveLoader: {
     extensions: [".tsx", ".ts", ".js"],
     modules: [
+      "node_modules",
       path.join(__dirname, "..", "..", "node_modules"),
     ],
   },
