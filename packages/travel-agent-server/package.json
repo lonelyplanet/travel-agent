@@ -1,6 +1,6 @@
 {
   "name": "@lonelyplanet/travel-agent",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "dist/index.js",
   "repository": {},
   "scripts": {
@@ -60,8 +60,8 @@
     "inversify": "^4.3.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.0",
-    "nodemon": "^1.12.1",
     "node-notifier": "^5.1.2",
+    "nodemon": "^1.12.1",
     "react-router-dom": "^4.2.2",
     "serve-favicon": "^2.4.5",
     "touch": "^3.1.0",
