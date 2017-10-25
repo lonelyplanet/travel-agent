@@ -4,7 +4,7 @@ const program = require("commander");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const { exec } = require("child_process");
-let config = require("../src/webpack/config").default;
+let config = require("../dist/webpack/config").default;
 
 program
   .version("0.1.0")
@@ -22,7 +22,7 @@ if (program.analyze) {
 
 if (program.production) {
   process.env.NODE_ENV = "production";
-  config = require("../src/webpack/production").default;
+  config = require("../dist/webpack/production").default;
 }
 
 exec("tsc", (err, stdout, stderr) => {
