@@ -1,19 +1,14 @@
 import {
   Controller,
   inject,
-} from "travel-agent-server";
+  get,
+  post,
+} from "@lonelyplanet/travel-agent";
 import {
   IFooService,
 } from "../../services/fooService";
 
 export default class HomeController extends Controller {
-  static routes = {
-    "GET /": "show",
-    "GET /omg": "omg",
-    "GET /html": "html",
-    "GET /html.json": "json",
-  };
-
   foo: IFooService;
 
   constructor(@inject("FooService") foo?: IFooService) {
@@ -22,6 +17,7 @@ export default class HomeController extends Controller {
     this.foo = foo;
   }
 
+  @get("/")
   async show() {
     const foo = await this.foo.fetch();
 
@@ -29,24 +25,32 @@ export default class HomeController extends Controller {
       message: `hell effin yea ${foo[0].name}!`,
     });
   }
+
+  @get("/omg")
   omg() {
     this.response.json({
       home: "OMG",
     });
   }
+
+  @get("/html/:id?")
   html() {
     this.response.set("content-type", "text/html");
     this.response.send(`<!DOCTYPE html>
     <html>
     <body>
-    Hello world
+    Hello world ${this.request.params.id}
     </body>
     </html>
     `);
   }
+
+  @post("/postypost/:id?")
   json() {
     this.response.send({
-      json: "json",
+      json: this.request.body,
+      id: this.request.params.id,
+      qs: this.request.query,
     });
   }
 }

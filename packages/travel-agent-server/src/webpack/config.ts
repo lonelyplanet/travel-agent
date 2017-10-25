@@ -5,6 +5,8 @@ import { commonPlugins } from "./common";
 import Notifier from "./notifier";
 import userConfig from "./userConfig";
 
+console.log(path.join(process.cwd(), "tsconfig.json"));
+
 const config: webpack.Configuration = {
   // context: path.join(process.cwd(), "app"),
   entry: {
@@ -17,6 +19,9 @@ const config: webpack.Configuration = {
       test: /\.ts(x?)$/,
       use: [{
         loader: "ts-loader",
+        options: {
+          configFile: path.join(process.cwd(), "tsconfig.json"),
+        },
       }],
     }],
   },

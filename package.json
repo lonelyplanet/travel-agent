@@ -1,9 +1,18 @@
 {
-	"devDependencies": {
-		"lerna": "^2.0.0"
-	},
-	"dependencies": {
-		"react": "^15.6.1",
-		"react-dom": "^15.6.1"
-	}
+  "name": "travel-agent",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "lerna run lint",
+    "precommit": "npm run lint && npm run test",
+    "test": "lerna run test -- --silent"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lerna": "^2.4.0"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3"
+  }
 }

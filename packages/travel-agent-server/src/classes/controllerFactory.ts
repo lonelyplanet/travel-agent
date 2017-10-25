@@ -27,7 +27,7 @@ export default class ControllerFactory implements IControllerFactory {
     try {
       const result = instance[handler]();
 
-      if (result.then) {
+      if (result && result.then) {
         result.catch((e) => {
           next(e)
         });

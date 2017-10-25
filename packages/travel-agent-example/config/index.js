@@ -7,5 +7,10 @@ module.exports = {
 
       next();
     },
+  },
+  webpack: {
+    entry: {
+      app: "./app/shared/client"
+    }
   }
 }

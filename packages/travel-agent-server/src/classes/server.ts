@@ -9,7 +9,6 @@ import { IMiddlewareProvider } from "../middleware/middlewareProvider";
 import TYPES from "../types";
 import { IController, IControllerConstructor } from "./controller";
 import ControllerRegistry from "./controllerRegistry";
-import getBundledAssets from "../utils/getBundledAssets";
 import createEngine from "./reactEngine";
 
 @injectable()
@@ -98,7 +97,7 @@ export default class TravelAgentServer implements ITravelAgentServer {
         const match = matchPath(req.path, { path: route.url, exact: true });
 
         if (match) {
-          res.locals.assets = getBundledAssets(res);
+          req.params = match.params;
           this.handler(req, res, next, route.controller.name, route.handler);
         }
 

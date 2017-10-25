@@ -1,12 +1,19 @@
 {
   "name": "travel-agent-example",
   "scripts": {
-    "build": "tsc"
+    "build": "travel-agent build",
+    "build:production": "travel-agent build -p",
+    "dev": "travel-agent dev",
+    "start": "travel-agent start"
   },
   "dependencies": {
-    "react": "^15.6.1",
+    "@lonelyplanet/travel-agent": "1.0.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "reflect-metadata": "^0.1.10",
-    "travel-agent-server": "../travel-agent-server",
-    "typescript": "^2.4.1"
+    "typescript": "^2.5.3"
+  },
+  "devDependencies": {
+    "@types/webpack-env": "^1.13.2"
   }
 }

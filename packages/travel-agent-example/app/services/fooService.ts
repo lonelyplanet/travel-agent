@@ -1,4 +1,4 @@
-import { injectable } from "travel-agent-server";
+import { injectable } from "@lonelyplanet/travel-agent";
 
 export interface IFooService {
   fetch(): Promise<Array<{

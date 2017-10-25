@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as React from "react";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
+import getBundledAssets from "../utils/getBundledAssets";
 
 export interface IReactEngineOptions {
   layout?: string;
@@ -24,16 +25,23 @@ export default (engineOptions: IReactEngineOptions = {
       }
 
       const Layout = require(path.join(process.cwd(), options.layout || engineOptions.layout)).default;
+      const assets = getBundledAssets();
       const markup = renderToString(React.createElement(Component, options, null));
-      const locals = { ...options._locals };
+      const locals = {
+        ...options,
+      };
 
       delete locals.webpackStats;
+      delete locals.settings;
+      delete locals._locals;
+      delete locals.cache;
 
       const initialState = JSON.stringify(locals);
 
       const staticMarkup = renderToStaticMarkup(
         React.createElement(Layout, {
           ...options,
+          assets,
           body: markup,
           initialState,
         }),
