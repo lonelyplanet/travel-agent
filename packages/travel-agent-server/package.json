@@ -16,20 +16,13 @@
     "@types/jest": "^21.1.5",
     "@types/webpack": "^3.0.13",
     "@types/webpack-env": "^1.13.2",
-    "chunk-manifest-webpack-plugin": "^1.1.2",
     "jest": "^21.2.1",
     "node-mocks-http": "^1.6.6",
     "node-notifier": "^5.1.2",
-    "nodemon": "^1.12.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "reflect-metadata": "^0.1.10",
-    "ts-node": "^3.3.0",
-    "typescript": "^2.5.3",
-    "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-chunk-hash": "^0.5.0",
-    "webpack-hot-middleware": "^2.20.0",
-    "webpack-manifest-plugin": "^2.0.0-rc.1"
+    "typescript": "^2.5.3"
   },
   "jest": {
     "setupFiles": [
@@ -55,6 +48,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "chunk-manifest-webpack-plugin": "^1.1.2",
     "commander": "^2.11.0",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
@@ -67,11 +61,17 @@
     "inversify": "^4.3.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.0",
+    "nodemon": "^1.12.1",
     "react-router-dom": "^4.2.2",
     "serve-favicon": "^2.4.5",
     "touch": "^3.1.0",
+    "ts-node": "^3.3.0",
     "ts-loader": "^3.0.5",
     "webpack": "^3.8.1",
-    "webpack-dev-middleware": "^1.12.0"
+    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-chunk-hash": "^0.5.0",
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-manifest-plugin": "^2.0.0-rc.1"
   }
 }
