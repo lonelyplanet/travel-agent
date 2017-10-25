@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.1.0...@lonelyplanet/travel-agent@1.1.1) (2017-10-25)
+
+
+### Bug Fixes
+
+* Add npmignore so dist gets pub'd ([ede7e9a](https://github.com/lonelyplanet/travel-agent/commit/ede7e9a))
+
+
+
+
 <a name="1.1.0"></a>
 # 1.1.0 (2017-10-25)
 
