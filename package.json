@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lint": "lerna run lint",
-    "precommit": "npm run lint && npm run test",
-    "test": "lerna run test -- --silent"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "precommit": "npm run test",
+    "publish": "lerna publish --conventional-commits",
+    "release": "standard-version",
+    "test": "lerna run test"
   },
   "author": "",
   "license": "ISC",

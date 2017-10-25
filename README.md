@@ -80,3 +80,13 @@ export default class HomeController extends Controller {
 
 ### Examples
 Look in the `packages/travel-agent-example` for a working example that Should Just Work (tm).
+
+### Running the example
+After cloning the repo, run...
+
+```bash
+npm i
+lerna bootstrap
+cd packages/travel-agent-example
+npm run start
+```
