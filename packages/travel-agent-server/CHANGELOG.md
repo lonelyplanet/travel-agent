@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.1.3...@lonelyplanet/travel-agent@1.1.4) (2017-10-25)
+
+
+### Bug Fixes
+
+* Build scripts needs to pull from dist ([5b50cee](https://github.com/lonelyplanet/travel-agent/commit/5b50cee))
+
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.1.2...@lonelyplanet/travel-agent@1.1.3) (2017-10-25)
 
