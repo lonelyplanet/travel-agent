@@ -1,5 +1,6 @@
 {
   "name": "travel-agent-example",
+  "private": true,
   "scripts": {
     "build": "travel-agent build",
     "build:production": "travel-agent build -p",
