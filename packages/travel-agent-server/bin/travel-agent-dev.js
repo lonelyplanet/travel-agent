@@ -1,5 +1,11 @@
 const nodemon = require("nodemon");
 const path = require("path");
+const fs = require("fs");
+
+const tsNodePath = fs.existsSync(path.join(__dirname, "../node_modules/.bin/ts-node")) ?
+  path.join(__dirname, "../node_modules/.bin/ts-node") :
+  path.join(process.cwd(), "./node_modules/.bin/ts-node");
+
 
 nodemon({
   ext: "js json ts tsx",
@@ -12,7 +18,7 @@ nodemon({
     ].map(p => path.join(process.cwd(), p)),
     path.join(__dirname, "../dist/**/*"),
   ],
-  exec: `${path.join(__dirname, "../node_modules/.bin/ts-node")} --compilerOptions '{"module":"commonjs"}' ${path.join(process.cwd(), "app/index.ts")} `,
+  exec: `${tsNodePath} ${path.join(process.cwd(), "app/index.ts")} `,
 });
 
 nodemon.on("start", function () {
