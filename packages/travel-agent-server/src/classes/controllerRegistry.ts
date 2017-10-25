@@ -17,7 +17,7 @@ export default class ControllerRegistry {
     const baseDir = process.env.NODE_ENV === "production" ?
       "dist" :
       "app";
-    const controllers = glob.sync(`${baseDir}/modules/**/*controller*`);
+    const controllers = glob.sync(`${baseDir}/modules/**/*controller*(.js|.ts)`);
 
     controllers.forEach((controller) => {
       const Controller = require(`${controllerPath}/${controller}`).default;
