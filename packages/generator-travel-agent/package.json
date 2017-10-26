@@ -1,6 +1,6 @@
 {
-  "name": "generator-travel-agent",
-  "version": "0.0.0",
+  "name": "@lonelyplanet/generator-travel-agent",
+  "version": "1.0.0",
   "description": "Generate a travel agent server",
   "homepage": "",
   "author": {
