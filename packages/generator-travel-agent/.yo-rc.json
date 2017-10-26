@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "LP Labs",
+      "authorEmail": "online-dev@lonelyplanet.com",
+      "authorUrl": "https://medium.com/lplabs"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "<%-appname%>",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "travel-agent build",
+    "build:production": "travel-agent build -p",
+    "dev": "travel-agent dev",
+    "start": "travel-agent start"
+  },
+  "dependencies": {
+    "@lonelyplanet/travel-agent": "^1.1.5",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "reflect-metadata": "^0.1.10",
+    "typescript": "^2.5.3"
+  },
+  "devDependencies": {
+    "@types/webpack-env": "^1.13.2"
+  }
+}
