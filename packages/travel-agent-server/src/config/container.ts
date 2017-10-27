@@ -6,7 +6,7 @@ import {
   IControllerFactory,
   ITravelAgentServer,
 } from "../interfaces";
-import CustomMiddlewareResolver, { ICustomMiddlewareResolver } from "../middleware/customMiddlewareResolver";
+import UserConfigResolver, { IUserConfigResolver } from "../classes/userConfigResolver";
 import { defaultDevMiddelware, defaultMiddleware, defaultProductionMiddleware } from "../middleware/default";
 import MiddlewareProvider, { IMiddlewareProvider } from "../middleware/middlewareProvider";
 import TYPES from "../types";
@@ -20,7 +20,7 @@ container.bind<express.Application>(TYPES.express).toFactory(() => {
 container.bind<IControllerFactory>(TYPES.IControllerFactory).to(ControllerFactory);
 container.bind<ITravelAgentServer>(TYPES.ITravelAgentServer).to(TravelAgentServer);
 container.bind<IMiddlewareProvider>(TYPES.IMiddlewareProvider).to(MiddlewareProvider);
-container.bind<ICustomMiddlewareResolver>(TYPES.ICustomMiddlewareResolver).to(CustomMiddlewareResolver);
+container.bind<IUserConfigResolver>(TYPES.IUserConfigResolver).to(UserConfigResolver);
 
 container.bind(TYPES.IRequireConstructor).toConstantValue(require);
 container.bind(TYPES.DefaultMiddleware).toFactory(() => defaultMiddleware);

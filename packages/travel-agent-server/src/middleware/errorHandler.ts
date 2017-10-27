@@ -1,6 +1,12 @@
 import logger from "../utils/logger";
 
-export default (env) => (err, req, res, next) => {
+interface IErrorHandlerOptions {
+  sendProductionErrors: boolean;
+}
+
+export default (env, options: IErrorHandlerOptions = {
+  sendProductionErrors: false,
+}) => (err, req, res, next) => {
   if (res.headersSent) {
     return next(err);
   }
@@ -9,8 +15,8 @@ export default (env) => (err, req, res, next) => {
   logger.debug(err);
 
   const locals = env === "production" ? {
-    error: {},
-    message: "An error has occurred",
+    error: options.sendProductionErrors ? err: {},
+    message: options.sendProductionErrors ? err.message : "An error has occurred",
   } : {
     error: err,
     message: err.message,

@@ -4,7 +4,7 @@ import * as path from "path";
 import { matchPath } from "react-router-dom";
 import container from "../config/container";
 import { IControllerFactory, ITravelAgentModule, ITravelAgentServer, IRoute } from "../interfaces";
-import { ICustomMiddleware, ICustomMiddlewareResolver } from "../middleware/customMiddlewareResolver";
+import { ICustomMiddleware, IUserConfigResolver } from "../classes/userConfigResolver";
 import { IMiddlewareProvider } from "../middleware/middlewareProvider";
 import TYPES from "../types";
 import { IController, IControllerConstructor } from "./controller";

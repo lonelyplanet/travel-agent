@@ -4,7 +4,7 @@ const types = {
   DefaultMiddleware: "DefaultMiddleware",
   DefaultProductionMiddleware: "DefaultProductionMiddleware",
   IControllerFactory: "IControllerFactory",
-  ICustomMiddlewareResolver: "ICustomMiddlewareResolver",
+  IUserConfigResolver: "IUserConfigResolver",
   IMiddlewareProvider: "IMiddlewareProvider",
   IRequireConstructor: "IRequireConstructor",
   ITravelAgentServer: "ITravelAgentServer",

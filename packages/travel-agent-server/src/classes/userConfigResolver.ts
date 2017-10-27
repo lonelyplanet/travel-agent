@@ -7,8 +7,15 @@ export interface ICustomMiddleware {
   [key: string]: express.RequestHandler | express.ErrorRequestHandler | [string, express.RequestHandler | express.ErrorRequestHandler];
 }
 
-export interface ICustomMiddlewareResolver {
-  resolve(): ICustomMiddleware;
+export interface IUserConfig {
+  webpack?: any;
+  middleware?: ICustomMiddleware;
+  postMiddleware?: ICustomMiddleware;
+  sendProductionErrors?: boolean;
+}
+
+export interface IUserConfigResolver {
+  resolve(): IUserConfig;
 }
 
 export type IRequire = (module: string) => any;
@@ -18,7 +25,7 @@ export interface IRequireConstructor extends IRequire {
 }
 
 @injectable()
-export default class CustomMiddlewareResolver implements ICustomMiddlewareResolver {
+export default class UserConfigResolver implements IUserConfigResolver {
   public middlewarePath = path.join(process.cwd(), "./config");
   public require: IRequireConstructor;
 
@@ -27,11 +34,11 @@ export default class CustomMiddlewareResolver implements ICustomMiddlewareResolv
   }
 
   public resolve() {
-    let customMiddleware: ICustomMiddleware = {};
+    let customMiddleware: Partial<IUserConfig> = {};
 
     try {
       const customMiddlewarePath = this.require.resolve(this.middlewarePath);
-      customMiddleware = this.require(customMiddlewarePath).middleware;
+      customMiddleware = this.require(customMiddlewarePath) as IUserConfig;
     } catch (e) {
       logger.debug(e);
     }

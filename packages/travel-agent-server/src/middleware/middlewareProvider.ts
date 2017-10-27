@@ -5,8 +5,9 @@ import logger from "../utils/logger";
 import catchAll from "./catchAll";
 import {
   ICustomMiddleware,
-  ICustomMiddlewareResolver,
-} from "./customMiddlewareResolver";
+  IUserConfigResolver,
+  IUserConfig,
+} from "../classes/userConfigResolver";
 import errorHandler from "./errorHandler";
 
 export const applyMiddleware = (
@@ -35,9 +36,9 @@ export interface IMiddlewareProvider {
 
 @injectable()
 export default class MiddlewareProvider implements IMiddlewareProvider {
-  public static postMiddleware() {
+  public static postMiddleware(options) {
     return {
-      errorHandler: errorHandler(process.env.NODE_ENV),
+      errorHandler: errorHandler(process.env.NODE_ENV, options),
       catchAll,
     };
   }
@@ -45,12 +46,15 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
   @inject(TYPES.DefaultMiddleware) public defaultMiddleware: () => ICustomMiddleware;
   @inject(TYPES.DefaultProductionMiddleware) public defaultProductionMiddleware: () => ICustomMiddleware;
   @inject(TYPES.DefaultDevMiddleware) public defaultDevMiddleware: () => ICustomMiddleware;
-  public customMiddlewareResolver: ICustomMiddlewareResolver;
+  
+  public userConfigResolver: IUserConfigResolver;
+  public userConfig: IUserConfig;
 
   constructor(
-    @inject(TYPES.ICustomMiddlewareResolver) customMiddlewareResolver?: ICustomMiddlewareResolver,
+    @inject(TYPES.IUserConfigResolver) customMiddlewareResolver?: IUserConfigResolver,
   ) {
-    this.customMiddlewareResolver = customMiddlewareResolver;
+    this.userConfigResolver = customMiddlewareResolver;
+    this.userConfig = this.userConfigResolver.resolve();
   }
 
   public middleware(app, env = process.env.NODE_ENV) {
@@ -59,14 +63,17 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
       this.defaultMiddleware(),
       env !== "production" ? this.defaultDevMiddleware() : {},
       env === "production" ? this.defaultProductionMiddleware() : {},
-      this.customMiddlewareResolver.resolve(),
+      this.userConfig.middleware,
     );
   }
 
   public postMiddleware(app, env = process.env.NODE_ENV) {
     return applyMiddleware(
       app,
-      MiddlewareProvider.postMiddleware(),
+      MiddlewareProvider.postMiddleware({
+        sendProductionErrors: this.userConfig.sendProductionErrors,
+      }),
+      this.userConfig.postMiddleware,
     );
   }
 }

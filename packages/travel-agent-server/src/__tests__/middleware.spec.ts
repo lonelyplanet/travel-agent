@@ -1,4 +1,4 @@
-import CustomMiddlewareResolver, { ICustomMiddlewareResolver } from "../middleware/customMiddlewareResolver";
+import UserConfigResolver, { IUserConfigResolver } from "../classes/userConfigResolver";
 import errorHandler from "../middleware/errorHandler";
 import MiddlewareProvider from "../middleware/middlewareProvider";
 
@@ -6,10 +6,12 @@ interface IF { (name: string): any; resolve(name: string): string; }
 
 describe("middleware", () => {
   it("should provide default middleware", () => {
-    class MockCustomProvider implements ICustomMiddlewareResolver {
+    class MockCustomProvider implements IUserConfigResolver {
       public resolve() {
         return {
-          bar: (req, res, next) => void 0,
+          middleware: {
+            bar: (req, res, next) => void 0,
+          }
         };
       }
     }
