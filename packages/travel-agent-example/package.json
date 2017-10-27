@@ -1,6 +1,6 @@
 {
   "name": "travel-agent-example",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "private": true,
   "scripts": {
     "build": "travel-agent build",
@@ -9,7 +9,7 @@
     "start": "travel-agent start"
   },
   "dependencies": {
-    "@lonelyplanet/travel-agent": "^1.1.5",
+    "@lonelyplanet/travel-agent": "^1.2.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "reflect-metadata": "^0.1.10",

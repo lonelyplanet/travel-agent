@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.1.5...@lonelyplanet/travel-agent@1.2.0) (2017-10-27)
+
+
+### Bug Fixes
+
+* Remove console log ([8e37faf](https://github.com/lonelyplanet/travel-agent/commit/8e37faf))
+
+
+### Features
+
+* Add user config resolver ([de41824](https://github.com/lonelyplanet/travel-agent/commit/de41824))
+
+
+
+
 <a name="1.1.5"></a>
 ## [1.1.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.1.4...@lonelyplanet/travel-agent@1.1.5) (2017-10-25)
 

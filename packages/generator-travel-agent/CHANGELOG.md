@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.1...@lonelyplanet/generator-travel-agent@1.1.2) (2017-10-27)
+
+
+### Bug Fixes
+
+* Remove rogue console log ([6b114b2](https://github.com/lonelyplanet/travel-agent/commit/6b114b2))
+
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.0...@lonelyplanet/generator-travel-agent@1.1.1) (2017-10-26)
 
