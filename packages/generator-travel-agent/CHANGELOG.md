@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.3...@lonelyplanet/generator-travel-agent@1.1.4) (2017-10-27)
+
+
+### Bug Fixes
+
+* Update generator start script ([7b253cd](https://github.com/lonelyplanet/travel-agent/commit/7b253cd))
+
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.2...@lonelyplanet/generator-travel-agent@1.1.3) (2017-10-27)
 
