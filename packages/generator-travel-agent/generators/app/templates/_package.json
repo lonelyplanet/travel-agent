@@ -6,7 +6,10 @@
     "build": "travel-agent build",
     "build:production": "travel-agent build -p",
     "dev": "travel-agent dev",
-    "start": "travel-agent start"
+    "lint": "tslint -p tsconfig.json -c tslint.json './app/**/*.ts'",
+    "precommit": "npm run lint && npm run test",
+    "start": "travel-agent start",
+    "test": "jest"
   },
   "dependencies": {
     "@lonelyplanet/travel-agent": "^1.1.5",
@@ -16,6 +19,26 @@
     "typescript": "^2.5.3"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.13.2"
+    "@types/webpack-env": "^1.13.2",
+    "@types/jest": "^21.1.5",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "tslint": "^5.8.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "./testSetup.js"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testMatch": [
+      "**/__tests__/*.(ts|tsx)"
+    ]
   }
 }
