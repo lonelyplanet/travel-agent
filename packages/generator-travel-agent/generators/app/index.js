@@ -28,7 +28,6 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    console.log(this.props);
     this.fs.copy(this.templatePath('app'), this.destinationPath('app'));
     this.fs.copy(this.templatePath('config'), this.destinationPath('config'));
     this.fs.copyTpl(
