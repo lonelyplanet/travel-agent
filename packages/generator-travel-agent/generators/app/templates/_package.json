@@ -8,7 +8,7 @@
     "dev": "travel-agent dev",
     "lint": "tslint -p tsconfig.json -c tslint.json './app/**/*.ts'",
     "precommit": "npm run lint && npm run test",
-    "start": "travel-agent start",
+    "start:production": "travel-agent start",
     "test": "jest"
   },
   "dependencies": {
