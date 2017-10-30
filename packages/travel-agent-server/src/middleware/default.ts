@@ -2,7 +2,6 @@
 import * as express from "express";
 import * as path from "path";
 import * as webpack from "webpack";
-import config from "../webpack/config";
 
 const health = express.Router();
 health.get("/health-check", (req, res) => {
@@ -24,7 +23,9 @@ export const defaultMiddleware = () => ({
 });
 
 export const defaultDevMiddelware = () => {
+  const config = require("../webpack/config").default;
   const compiler = webpack(config);
+
   return {
     hot: require("webpack-hot-middleware")(compiler),
     morgan: require("morgan")("dev"),
