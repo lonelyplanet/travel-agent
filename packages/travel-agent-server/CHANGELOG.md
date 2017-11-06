@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.2.1...@lonelyplanet/travel-agent@1.2.2) (2017-11-06)
+
+
+### Bug Fixes
+
+* Add ability to disable webpack builds ([48d4b7f](https://github.com/lonelyplanet/travel-agent/commit/48d4b7f))
+* Disable webpack build in production mode with option ([d85c944](https://github.com/lonelyplanet/travel-agent/commit/d85c944))
+* Fix config scope issue ([5109f65](https://github.com/lonelyplanet/travel-agent/commit/5109f65))
+
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.2.0...@lonelyplanet/travel-agent@1.2.1) (2017-10-30)
 
