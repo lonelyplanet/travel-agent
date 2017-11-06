@@ -29,8 +29,9 @@ if (program.production) {
   process.env.NODE_ENV = "production";
 }
 
+let config = null;
 if (userConfig.webpack) {
-  let config = require("../dist/webpack/config").default;
+  config = require("../dist/webpack/config").default;
 
   if (program.production) {
     config = require("../dist/webpack/production").default;
