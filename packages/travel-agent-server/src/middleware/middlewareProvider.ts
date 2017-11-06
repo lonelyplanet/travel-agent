@@ -43,10 +43,10 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     };
   }
 
-  @inject(TYPES.DefaultMiddleware) public defaultMiddleware: () => ICustomMiddleware;
-  @inject(TYPES.DefaultProductionMiddleware) public defaultProductionMiddleware: () => ICustomMiddleware;
-  @inject(TYPES.DefaultDevMiddleware) public defaultDevMiddleware: () => ICustomMiddleware;
-  
+  @inject(TYPES.DefaultMiddleware) public defaultMiddleware: (options?: IUserConfig) => ICustomMiddleware;
+  @inject(TYPES.DefaultProductionMiddleware) public defaultProductionMiddleware: (options?: IUserConfig) => ICustomMiddleware;
+  @inject(TYPES.DefaultDevMiddleware) public defaultDevMiddleware: (options?: IUserConfig) => ICustomMiddleware;
+
   public userConfigResolver: IUserConfigResolver;
   public userConfig: IUserConfig;
 
@@ -60,9 +60,9 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
   public middleware(app, env = process.env.NODE_ENV) {
     return applyMiddleware(
       app,
-      this.defaultMiddleware(),
-      env !== "production" ? this.defaultDevMiddleware() : {},
-      env === "production" ? this.defaultProductionMiddleware() : {},
+      this.defaultMiddleware(this.userConfig),
+      env !== "production" ? this.defaultDevMiddleware(this.userConfig) : {},
+      env === "production" ? this.defaultProductionMiddleware(this.userConfig) : {},
       this.userConfig.middleware,
     );
   }

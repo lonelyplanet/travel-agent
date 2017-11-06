@@ -20,9 +20,7 @@ nodemon({
   ignore: ["components"],
   watch: [
     ...[
-      "app/services/*.ts",
-      "app/modules/**/*.ts",
-      "app/shared/**/*.ts",
+      "app/**/*.ts",
     ].map(p => path.join(process.cwd(), p)),
     path.join(__dirname, "../dist/**/*"),
   ],

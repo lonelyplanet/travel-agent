@@ -2,6 +2,7 @@
 import * as express from "express";
 import * as path from "path";
 import * as webpack from "webpack";
+import { IUserConfig } from "../classes/userConfigResolver";
 
 const health = express.Router();
 health.get("/health-check", (req, res) => {
@@ -10,7 +11,7 @@ health.get("/health-check", (req, res) => {
   });
 });
 
-export const defaultMiddleware = () => ({
+export const defaultMiddleware = (options?: IUserConfig) => ({
   bodyParserUrl: require("body-parser").urlencoded({ extended: false }),
   cookieParser: require("cookie-parser")(),
   cors: require("cors")(),
@@ -22,23 +23,28 @@ export const defaultMiddleware = () => ({
   },
 });
 
-export const defaultDevMiddelware = () => {
-  const config = require("../webpack/config").default;
-  const compiler = webpack(config);
-
-  return {
-    hot: require("webpack-hot-middleware")(compiler),
+export const defaultDevMiddelware = (options?: IUserConfig) => {
+  const middleware: { [key: string]: any } = {
     morgan: require("morgan")("dev"),
-    webpackDevMiddleware: require("webpack-dev-middleware")(compiler, {
+    static: express.static(path.join(process.cwd(), "public")),
+  };
+
+  if (options.webpack) {
+    const config = require("../webpack/config").default;
+    const compiler = webpack(config);
+
+    middleware.hot = require("webpack-hot-middleware")(compiler),
+    middleware.webpackDevMiddleware = require("webpack-dev-middleware")(compiler, {
       noInfo: true,
       publicPath: "/assets",
       serverSideRender: true,
-    }),
-    static: express.static(path.join(process.cwd(), "public")),
-  };
+    });
+  }
+
+  return middleware;
 };
 
-export const defaultProductionMiddleware = () => {
+export const defaultProductionMiddleware = (options?: IUserConfig) => {
   const excludes = [
     "body",
     "short-body",
