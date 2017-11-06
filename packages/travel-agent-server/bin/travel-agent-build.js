@@ -1,10 +1,15 @@
 require("ts-node/register")
+require("reflect-metadata");
 const path = require("path");
 const program = require("commander");
 const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const { exec } = require("child_process");
-let config = require("../dist/webpack/config").default;
+let container = require("../dist/config/container").default;
+const TYPES = require("../dist/types");
+
+const userConfigResolver = container.get(TYPES.default.IUserConfigResolver);
+const userConfig = userConfigResolver.resolve();
 
 program
   .version("0.1.0")
@@ -22,38 +27,52 @@ if (program.analyze) {
 
 if (program.production) {
   process.env.NODE_ENV = "production";
-  config = require("../dist/webpack/production").default;
 }
 
+if (userConfig.webpack) {
+  let config = require("../dist/webpack/config").default;
+
+  if (program.production) {
+    config = require("../dist/webpack/production").default;
+  }
+}
+
+const now = new Date();
 exec("tsc", (err, stdout, stderr) => {
-  if (err) {
-    console.error(err);
+  if (err || stderr) {
+    console.error(err || stderr);
     return;
   }
 
-  webpack(config, (err, stats) => {
-    if (err) {
-      console.error(err.stack || err);
-      if (err.details) {
-        console.error(err.details);
+  if (userConfig.webpack) {
+    webpack(config, (err, stats) => {
+      if (err) {
+        console.error(err.stack || err);
+        if (err.details) {
+          console.error(err.details);
+        }
+        return;
       }
-      return;
-    }
 
-    const info = stats.toJson();
+      const info = stats.toJson();
 
-    if (stats.hasErrors()) {
-      console.error(info.errors);
-      return;
-    }
-
-    if (!program.production) {
-      if (stats.hasWarnings()) {
-        console.warn(info.warnings);
+      if (stats.hasErrors()) {
+        console.error(info.errors);
+        return;
       }
-      console.log(stats.toString());
-    } else {
-      console.log(`webpack production build done in ${info.time}ms.`);
-    }
-  });
+
+      if (!program.production) {
+        if (stats.hasWarnings()) {
+          console.warn(info.warnings);
+        }
+        console.log(stats.toString());
+      } else {
+        console.log(`Built in ${new Date() - now}ms.`);
+        console.log(`webpack production build done in ${info.time}ms.`);
+      }
+    });
+  } else {
+    console.log(`Built in ${new Date() - now}ms.`);
+    process.exit(0);
+  }
 });
