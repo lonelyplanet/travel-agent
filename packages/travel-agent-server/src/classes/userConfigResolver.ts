@@ -3,14 +3,18 @@ import { inject, injectable } from "inversify";
 import * as path from "path";
 import logger from "../utils/logger";
 
-export interface ICustomMiddleware {
-  [key: string]: express.RequestHandler | express.ErrorRequestHandler | [string, express.RequestHandler | express.ErrorRequestHandler];
-}
+export type ICustomMiddleware =
+  | express.RequestHandler
+  | express.ErrorRequestHandler
+  | [string, express.RequestHandler | express.ErrorRequestHandler];
 
 export interface IUserConfig {
+  [key: string]: any;
+  airbrakeId?: string;
+  airbrakeKey?: string;
   webpack?: any;
-  middleware?: ICustomMiddleware;
-  postMiddleware?: ICustomMiddleware;
+  middleware?: ICustomMiddleware[];
+  postMiddleware?: ICustomMiddleware[];
   sendProductionErrors?: boolean;
 }
 
