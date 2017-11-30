@@ -20,6 +20,13 @@ export default class ControllerFactory implements IControllerFactory {
     handler: string,
   ): IController {
     const instance = this.container.get<IController>(controller);
+
+    // Make sure the correct handler name is updated in the express internals
+    if (req.route) {
+      const [stack] = req.route.stack;
+      stack.name = handler;
+    }
+
     instance.request = req;
     instance.response = res;
     instance.next = next;
@@ -28,8 +35,8 @@ export default class ControllerFactory implements IControllerFactory {
       const result = instance[handler]();
 
       if (result && result.then) {
-        result.catch((e) => {
-          next(e)
+        result.catch(e => {
+          next(e);
         });
       }
     } catch (e) {
