@@ -33,6 +33,7 @@ export const defaultMiddleware = (options?: IUserConfig) => [
 
     next();
   },
+  health,
 ];
 
 export const defaultDevMiddelware = (options?: IUserConfig) => {
