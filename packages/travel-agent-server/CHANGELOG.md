@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.0...@lonelyplanet/travel-agent@1.3.1) (2017-11-30)
+
+
+### Bug Fixes
+
+* Add health-check back in ([8d01e08](https://github.com/lonelyplanet/travel-agent/commit/8d01e08))
+
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.2.2...@lonelyplanet/travel-agent@1.3.0) (2017-11-30)
 
