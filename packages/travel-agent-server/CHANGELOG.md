@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.2.2...@lonelyplanet/travel-agent@1.3.0) (2017-11-30)
+
+
+### Features
+
+* Move middleware to an array instead of an object ([bce1bac](https://github.com/lonelyplanet/travel-agent/commit/bce1bac))
+
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.2.1...@lonelyplanet/travel-agent@1.2.2) (2017-11-06)
 
