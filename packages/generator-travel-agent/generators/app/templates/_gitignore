@@ -1,0 +1,8 @@
+node_modules
+dist
+public
+npm-debug.log
+
+# OS metadata
+.DS_Store
+Thumbs.db

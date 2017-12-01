@@ -1,22 +1,24 @@
-'use strict';
-const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
+"use strict";
+const Generator = require("yeoman-generator");
+const chalk = require("chalk");
+const yosay = require("yosay");
 
 module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
     this.log(
       yosay(
-        `Welcome to the exceptional ${chalk.red('generator-travel-agent')} generator!`
+        `Welcome to the exceptional ${chalk.red(
+          "generator-travel-agent"
+        )} generator!`
       )
     );
 
     const prompts = [
       {
-        type: 'input',
-        name: 'name',
-        message: 'Your project name',
+        type: "input",
+        name: "name",
+        message: "Your project name",
         default: this.appname // Default to current folder name
       }
     ];
@@ -28,18 +30,22 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copy(this.templatePath('app'), this.destinationPath('app'));
-    this.fs.copy(this.templatePath('config'), this.destinationPath('config'));
+    this.fs.copy(this.templatePath("app"), this.destinationPath("app"));
+    this.fs.copy(this.templatePath("config"), this.destinationPath("config"));
+    this.fs.copy(
+      this.templatePath("_gitignore"),
+      this.destinationPath(".gitignore")
+    );
     this.fs.copyTpl(
-      this.templatePath('_package.json'),
-      this.destinationPath('package.json'),
+      this.templatePath("_package.json"),
+      this.destinationPath("package.json"),
       {
         appname: this.props.name
       }
     );
     this.fs.copy(
-      this.templatePath('tsconfig.json'),
-      this.destinationPath('tsconfig.json')
+      this.templatePath("tsconfig.json"),
+      this.destinationPath("tsconfig.json")
     );
   }
 
