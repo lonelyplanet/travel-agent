@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.2"></a>
+## [1.3.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.1...@lonelyplanet/travel-agent@1.3.2) (2017-12-07)
+
+
+### Bug Fixes
+
+* Support new middleware syntax ([713a2cc](https://github.com/lonelyplanet/travel-agent/commit/713a2cc))
+
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.0...@lonelyplanet/travel-agent@1.3.1) (2017-11-30)
 
