@@ -1,6 +1,6 @@
 {
   "name": "@lonelyplanet/generator-travel-agent",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Generate a travel agent server",
   "homepage": "",
   "author": {
@@ -8,9 +8,14 @@
     "email": "online-dev@lonelyplanet.com",
     "url": "https://medium.com/lplabs"
   },
-  "files": ["generators"],
+  "files": [
+    "generators"
+  ],
   "main": "generators/index.js",
-  "keywords": ["", "yeoman-generator"],
+  "keywords": [
+    "",
+    "yeoman-generator"
+  ],
   "devDependencies": {
     "eslint": "^4.1.0",
     "eslint-config-prettier": "^2.4.0",
@@ -39,8 +44,14 @@
     "testEnvironment": "node"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": "git@github.com:lonelyplanet/travel-agent",
   "license": "MIT"
