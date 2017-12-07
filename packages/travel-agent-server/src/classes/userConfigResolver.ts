@@ -3,10 +3,17 @@ import { inject, injectable } from "inversify";
 import * as path from "path";
 import logger from "../utils/logger";
 
+export interface ICustomMiddlewareObject {
+  route?: string,
+  resolve?: () => ICustomMiddleware,
+  fn?: ICustomMiddleware,
+}
+
 export type ICustomMiddleware =
   | express.RequestHandler
   | express.ErrorRequestHandler
-  | [string, express.RequestHandler | express.ErrorRequestHandler];
+  | [string, express.RequestHandler | express.ErrorRequestHandler]
+  | ICustomMiddlewareObject;
 
 export interface IUserConfig {
   [key: string]: any;
@@ -38,15 +45,15 @@ export default class UserConfigResolver implements IUserConfigResolver {
   }
 
   public resolve() {
-    let customMiddleware: Partial<IUserConfig> = {};
+    let userConfig: Partial<IUserConfig> = {};
 
     try {
       const customMiddlewarePath = this.require.resolve(this.middlewarePath);
-      customMiddleware = this.require(customMiddlewarePath) as IUserConfig;
+      userConfig = this.require(customMiddlewarePath) as IUserConfig;
     } catch (e) {
       logger.debug(e);
     }
 
-    return customMiddleware;
+    return userConfig;
   }
 }

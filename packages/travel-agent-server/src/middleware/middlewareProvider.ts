@@ -6,6 +6,7 @@ import {
   ICustomMiddleware,
   IUserConfigResolver,
   IUserConfig,
+  ICustomMiddlewareObject,
 } from "../classes/userConfigResolver";
 
 export const applyMiddleware = (
@@ -18,6 +19,14 @@ export const applyMiddleware = (
     if (Array.isArray(key) && key.length === 2) {
       const [path, fn] = <[string, express.RequestHandler]>key;
       app.use(path, fn);
+    } else if (typeof key === "object" && key) {
+      const options = key as ICustomMiddlewareObject;
+
+      if (options.resolve) {
+        app.use(options.route || "/", options.resolve());
+      } else {
+        app.use(options.route || "/", options.fn);
+      }
     } else {
       app.use(key);
     }

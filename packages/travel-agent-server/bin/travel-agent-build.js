@@ -41,7 +41,7 @@ if (userConfig.webpack) {
 const now = new Date();
 exec("tsc", (err, stdout, stderr) => {
   if (err || stderr) {
-    console.error(err || stderr);
+    console.error(stdout);
     return;
   }
 

@@ -1,11 +1,7 @@
 import * as express from "express";
-import {
-  Container,
-} from "inversify";
-import {
-  IController,
-  IControllerConstructor,
-} from "../classes/controller";
+import * as inversify from "inversify/dts/interfaces/interfaces";
+import { Container } from "inversify";
+import { IController, IControllerConstructor } from "../classes/controller";
 
 export interface ITravelAgentModule {
   controller: IControllerConstructor;
@@ -14,7 +10,7 @@ export interface ITravelAgentModule {
 export interface ITravelAgentServer {
   app: express.Application;
   container: Container;
-  bind: (name: string) => { to: (name: any) => void };
+  bind: inversify.interfaces.Bind;
   addModules(): void;
   postSetup(): void;
   setup(): void;
@@ -26,7 +22,8 @@ export interface IControllerFactory {
     res: express.Response,
     next: express.NextFunction,
     controller: string,
-    handler: string): IController;
+    handler: string,
+  ): IController;
 }
 
 export interface IRoute {
