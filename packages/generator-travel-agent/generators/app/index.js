@@ -1,4 +1,5 @@
 "use strict";
+
 const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
@@ -9,9 +10,9 @@ module.exports = class extends Generator {
     this.log(
       yosay(
         `Welcome to the exceptional ${chalk.red(
-          "generator-travel-agent"
-        )} generator!`
-      )
+          "generator-travel-agent",
+        )} generator!`,
+      ),
     );
 
     const prompts = [
@@ -19,8 +20,8 @@ module.exports = class extends Generator {
         type: "input",
         name: "name",
         message: "Your project name",
-        default: this.appname // Default to current folder name
-      }
+        default: this.appname, // Default to current folder name
+      },
     ];
 
     return this.prompt(prompts).then(props => {
@@ -34,24 +35,32 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath("config"), this.destinationPath("config"));
     this.fs.copy(
       this.templatePath("_gitignore"),
-      this.destinationPath(".gitignore")
+      this.destinationPath(".gitignore"),
+    );
+    this.fs.copy(
+      this.templatePath("_prettierrc"),
+      this.destinationPath(".prettierrc"),
+    );
+    this.fs.copy(
+      this.templatePath("_eslintrc"),
+      this.destinationPath(".eslintrc"),
     );
     this.fs.copyTpl(
       this.templatePath("_package.json"),
       this.destinationPath("package.json"),
       {
-        appname: this.props.name
-      }
+        appname: this.props.name,
+      },
     );
     this.fs.copy(
       this.templatePath("tsconfig.json"),
-      this.destinationPath("tsconfig.json")
+      this.destinationPath("tsconfig.json"),
     );
   }
 
   install() {
     this.installDependencies({
-      bower: false
+      bower: false,
     });
   }
 };

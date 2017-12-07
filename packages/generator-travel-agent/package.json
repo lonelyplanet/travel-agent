@@ -8,14 +8,9 @@
     "email": "online-dev@lonelyplanet.com",
     "url": "https://medium.com/lplabs"
   },
-  "files": [
-    "generators"
-  ],
+  "files": ["generators"],
   "main": "generators/index.js",
-  "keywords": [
-    "",
-    "yeoman-generator"
-  ],
+  "keywords": ["", "yeoman-generator"],
   "devDependencies": {
     "eslint": "^4.1.0",
     "eslint-config-prettier": "^2.4.0",
@@ -31,7 +26,12 @@
     "yeoman-test": "^1.7.0"
   },
   "dependencies": {
+    "babel-eslint": "^8.0.3",
     "chalk": "^2.1.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.5.1",
     "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
   },
@@ -39,36 +39,8 @@
     "testEnvironment": "node"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "xo",
-      "prettier"
-    ],
-    "env": {
-      "jest": true,
-      "node": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true,
-          "printWidth": 90
-        }
-      ]
-    },
-    "plugins": [
-      "prettier"
-    ]
+    "*.js": ["eslint --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
   },
   "repository": "git@github.com:lonelyplanet/travel-agent",
   "license": "MIT"
