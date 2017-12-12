@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.5"></a>
+## [1.3.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.4...@lonelyplanet/travel-agent@1.3.5) (2017-12-12)
+
+
+### Bug Fixes
+
+* Use webpack merge for user config ([1ec91f3](https://github.com/lonelyplanet/travel-agent/commit/1ec91f3))
+
+
+
+
 <a name="1.3.4"></a>
 ## [1.3.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.3...@lonelyplanet/travel-agent@1.3.4) (2017-12-12)
 
