@@ -21,6 +21,8 @@ nodemon({
   watch: [
     ...[
       "app/**/*.ts",
+      "config/*",
+      ".env*"
     ].map(p => path.join(process.cwd(), p)),
     path.join(__dirname, "../dist/**/*"),
   ],

@@ -3,6 +3,7 @@ require("reflect-metadata");
 const path = require("path");
 const program = require("commander");
 const webpack = require("webpack");
+const merge = require("webpack-merge");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const { exec } = require("child_process");
 let container = require("../dist/config/container").default;
@@ -31,10 +32,16 @@ if (program.production) {
 
 let config = null;
 if (userConfig.webpack) {
-  config = require("../dist/webpack/config").default;
+  config = merge(
+    require("../dist/webpack/config").default,
+    userConfig.webpack,
+  );
 
   if (program.production) {
-    config = require("../dist/webpack/production").default;
+    config = merge(
+      require("../dist/webpack/production").default,
+      userConfig.production.webpack || {},
+    );
   }
 }
 

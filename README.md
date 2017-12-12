@@ -42,6 +42,20 @@ export default class HomeController extends Controller {
 }
 ```
 
+### Configuration
+There are a few configuration options you can define in a `config/index.js` file.
+
+```
+{
+  // An array of middleware
+  middleware: [],
+  webpack: { /* webpack config options */ },
+  production: {
+    webpack: { /* production webpack config options */ },
+  }
+}
+```
+
 ### Using Dependency Injection
 In `app/index.ts` once you call `start`, you can bind services.
 

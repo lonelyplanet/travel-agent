@@ -4,12 +4,12 @@ import * as webpack from "webpack";
 import { commonPlugins } from "./common";
 import Notifier from "./notifier";
 import userConfig from "./userConfig";
+import * as webpackMerge from "webpack-merge";
 
 const config: webpack.Configuration = {
   // context: path.join(process.cwd(), "app"),
   entry: {
     common: ["webpack-hot-middleware/client"],
-    ...userConfig.entry,
   },
   module: {
     rules: [{
@@ -27,7 +27,7 @@ const config: webpack.Configuration = {
     chunkFilename: "[name]-chunk.js",
     filename: "[name].js",
     path: path.join(process.cwd(), "public", "assets"),
-    publicPath: process.env.ASSET_HOST || "/assets/",
+    publicPath: "/assets/",
   },
   plugins: [
     ...commonPlugins,
@@ -50,4 +50,4 @@ const config: webpack.Configuration = {
   },
 };
 
-export default config;
+export default webpackMerge(config, userConfig);
