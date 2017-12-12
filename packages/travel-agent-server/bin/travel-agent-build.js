@@ -53,6 +53,8 @@ exec("tsc", (err, stdout, stderr) => {
         if (err.details) {
           console.error(err.details);
         }
+
+        process.exit(1);
         return;
       }
 
