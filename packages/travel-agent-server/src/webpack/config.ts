@@ -27,7 +27,7 @@ const config: webpack.Configuration = {
     chunkFilename: "[name]-chunk.js",
     filename: "[name].js",
     path: path.join(process.cwd(), "public", "assets"),
-    publicPath: process.env.ASSET_PATH || "/assets/",
+    publicPath: process.env.ASSET_HOST || "/assets/",
   },
   plugins: [
     ...commonPlugins,
