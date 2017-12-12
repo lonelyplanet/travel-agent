@@ -42,6 +42,7 @@ const now = new Date();
 exec("tsc", (err, stdout, stderr) => {
   if (err || stderr) {
     console.error(stdout);
+    process.exit(1);
     return;
   }
 
