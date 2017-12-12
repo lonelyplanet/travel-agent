@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.4"></a>
+## [1.3.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.3...@lonelyplanet/travel-agent@1.3.4) (2017-12-12)
+
+
+### Bug Fixes
+
+* Update asset env var for webpack ([54a19bf](https://github.com/lonelyplanet/travel-agent/commit/54a19bf))
+
+
+
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.2...@lonelyplanet/travel-agent@1.3.3) (2017-12-12)
 
