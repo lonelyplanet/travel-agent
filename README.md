@@ -42,6 +42,26 @@ export default class HomeController extends Controller {
 }
 ```
 
+### Tags
+
+#### Helmet
+You can import `Helmet` like this...
+
+```ts
+import { Helmet } from "@lonelyplanet/travel-agent/helmet";
+
+export default ({}) => (
+  <React.Fragment>
+    <Helmet>
+      <title>Cool, a title tag</title>
+    </Helmet>
+    <div>
+      Oh yeah
+    </div>
+  </React.Fragment>
+)
+```
+
 ### Configuration
 There are a few configuration options you can define in a `config/index.js` file.
 
@@ -108,3 +128,7 @@ lerna bootstrap
 cd packages/travel-agent-example
 npm run start
 ```
+
+### Troubleshooting
+
+* Can't get hot loading to work because of 404? Try nuking your `public/assets` dir and restarting the server

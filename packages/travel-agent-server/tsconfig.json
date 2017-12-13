@@ -5,6 +5,7 @@
     "target": "ES5",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "declaration": true,
     "jsx": "react",
     "lib": [
       "es2015",

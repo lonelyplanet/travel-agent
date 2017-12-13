@@ -9,3 +9,5 @@ export default function start(options?: {
 export { inject, injectable } from "inversify";
 
 export * from "./src";
+
+export { ILayoutOptions } from "./src/classes/reactEngine";
