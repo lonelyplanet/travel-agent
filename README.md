@@ -52,9 +52,13 @@ There are a few configuration options you can define in a `config/index.js` file
   webpack: { /* webpack config options */ },
   production: {
     webpack: { /* production webpack config options */ },
+    airbrakeId: "123445",
+    airbrakeKey: "abckey12345",
   }
 }
 ```
+
+If you would like to disable webpack, simply do `webpack: false`.
 
 ### Using Dependency Injection
 In `app/index.ts` once you call `start`, you can bind services.
