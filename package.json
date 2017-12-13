@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/react-helmet": "^5.0.3",
     "lerna": "^2.4.0"
   },
   "devDependencies": {
