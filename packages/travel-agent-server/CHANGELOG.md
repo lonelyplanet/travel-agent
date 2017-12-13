@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.1...@lonelyplanet/travel-agent@1.4.2) (2017-12-13)
+
+
+### Bug Fixes
+
+* Add helmet types to correct package ([41a0b6a](https://github.com/lonelyplanet/travel-agent/commit/41a0b6a))
+
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.0...@lonelyplanet/travel-agent@1.4.1) (2017-12-13)
 
