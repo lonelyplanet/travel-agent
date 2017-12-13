@@ -7,6 +7,7 @@ import * as makeErrorHandler from "airbrake-js/dist/instrumentation/express";
 import errorHandler from "./errorHandler";
 import catchAll from "./catchAll";
 import { IUserConfig } from "../classes/userConfigResolver";
+import AirbrakeCreds from "../classes/airbrakeCreds";
 
 const health = express.Router();
 health.get("/health-check", (req, res) => {
@@ -84,13 +85,24 @@ export const defaultProductionMiddleware = (options?: IUserConfig) => {
   return config;
 };
 
+const getAirbrakeCreds = (options: IUserConfig) => {
+  if (options.airbrakeId && options.airbrakeKey) {
+    return new AirbrakeCreds(options.airbrakeId, options.airbrakeKey);
+  } else if (options.production.airbrakeId || options.production.airbrakeKey) {
+    return new AirbrakeCreds(options.production.airbrakeId, options.production.airbrakeKey);
+  }
+
+  return new AirbrakeCreds();
+}
+
 export const defaultPostMiddleware = (env, options?: IUserConfig) => {
   const config = [];
 
-  if (env === "production" && options.airbrakeId && options.airbrakeKey) {
+  const airbrakeCreds = getAirbrakeCreds(options);
+  if (env === "production" && airbrakeCreds.airbrakeId && airbrakeCreds.airbrakeKey) {
     const airbrake = new AirbrakeClient({
-      projectId: options.airbrakeId,
-      projectKey: options.airbrakeKey,
+      projectId: airbrakeCreds.airbrakeId,
+      projectKey: airbrakeCreds.airbrakeKey,
     });
 
     config.push(makeErrorHandler(airbrake));

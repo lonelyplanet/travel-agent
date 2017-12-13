@@ -23,6 +23,7 @@ export interface IUserConfig {
   middleware?: ICustomMiddleware[];
   postMiddleware?: ICustomMiddleware[];
   sendProductionErrors?: boolean;
+  production?: IUserConfig;
 }
 
 export interface IUserConfigResolver {
