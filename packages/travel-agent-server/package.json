@@ -63,6 +63,8 @@
     "morgan": "^1.9.0",
     "node-notifier": "^5.1.2",
     "nodemon": "^1.12.1",
+    "pretty": "^2.0.0",
+    "react-helmet": "^5.2.0",
     "react-router-dom": "^4.2.2",
     "serve-favicon": "^2.4.5",
     "touch": "^3.1.0",

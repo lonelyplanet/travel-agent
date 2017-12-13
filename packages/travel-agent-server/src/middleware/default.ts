@@ -1,9 +1,6 @@
 /* tslint:disable: object-literal-sort-keys */
 import * as express from "express";
 import * as path from "path";
-import * as webpack from "webpack";
-import * as AirbrakeClient from "airbrake-js";
-import * as makeErrorHandler from "airbrake-js/dist/instrumentation/express";
 import errorHandler from "./errorHandler";
 import catchAll from "./catchAll";
 import { IUserConfig } from "../classes/userConfigResolver";
@@ -17,6 +14,7 @@ health.get("/health-check", (req, res) => {
 });
 
 export const defaultMiddleware = (options?: IUserConfig) => [
+  require("helmet")(),
   require("body-parser").urlencoded({ extended: false }),
   require("cookie-parser")(),
   require("cors")(),
@@ -44,6 +42,7 @@ export const defaultDevMiddelware = (options?: IUserConfig) => {
   ];
 
   if (options.webpack) {
+    const webpack = require("webpack");
     const config = require("../webpack/config").default;
     const compiler = webpack(config);
 
@@ -51,7 +50,7 @@ export const defaultDevMiddelware = (options?: IUserConfig) => {
     middleware.push(
       require("webpack-dev-middleware")(compiler, {
         noInfo: true,
-        publicPath: "/assets",
+        publicPath: "/assets/",
         serverSideRender: true,
       }),
     );
@@ -88,7 +87,7 @@ export const defaultProductionMiddleware = (options?: IUserConfig) => {
 const getAirbrakeCreds = (options: IUserConfig) => {
   if (options.airbrakeId && options.airbrakeKey) {
     return new AirbrakeCreds(options.airbrakeId, options.airbrakeKey);
-  } else if (options.production.airbrakeId || options.production.airbrakeKey) {
+  } else if (options.production && (options.production.airbrakeId || options.production.airbrakeKey)) {
     return new AirbrakeCreds(options.production.airbrakeId, options.production.airbrakeKey);
   }
 
@@ -100,6 +99,9 @@ export const defaultPostMiddleware = (env, options?: IUserConfig) => {
 
   const airbrakeCreds = getAirbrakeCreds(options);
   if (env === "production" && airbrakeCreds.airbrakeId && airbrakeCreds.airbrakeKey) {
+    const AirbrakeClient = require("airbrake-js");
+    const makeErrorHandler = require("airbrake-js/dist/instrumentation/express");
+
     const airbrake = new AirbrakeClient({
       projectId: airbrakeCreds.airbrakeId,
       projectKey: airbrakeCreds.airbrakeKey,

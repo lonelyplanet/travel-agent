@@ -2,6 +2,10 @@ import * as React from "react";
 
 export default ({
   message,
+  error,
 }) => (
-  <div>{message}</div>
+  <div>
+    <div>{message}</div>
+    <pre>{error.stack}</pre>
+  </div>
 )

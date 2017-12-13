@@ -1,6 +1,6 @@
 import logger from "../utils/logger";
 
-interface IErrorHandlerOptions {
+export interface IErrorHandlerOptions {
   sendProductionErrors: boolean;
 }
 

@@ -1,7 +1,14 @@
 import * as React from "react";
+import { ILayoutOptions } from "@lonelyplanet/travel-agent";
 
-export default ({ body, assets, initialState }) => (
+export default ({ body, assets, initialState, head }: ILayoutOptions) => (
   <html>
+    <head>
+      {head.meta.toComponent()}
+      {head.title.toComponent()}
+      {head.script.toComponent()}
+      {head.style.toComponent()}
+    </head>
     <body>
       <div id="app" dangerouslySetInnerHTML={{ __html: body }}></div>
 

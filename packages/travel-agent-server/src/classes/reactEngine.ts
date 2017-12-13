@@ -1,7 +1,17 @@
 import * as path from "path";
 import * as React from "react";
+import * as pretty from "pretty";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import getBundledAssets from "../utils/getBundledAssets";
+import Helmet, { HelmetData } from "react-helmet";
+
+export interface ILayoutOptions {
+  [key: string]: any;
+  assets: { [key: string]: string },
+  body: string,
+  initialState: string,
+  head: HelmetData;
+}
 
 export interface IReactEngineOptions {
   layout?: string;
@@ -37,15 +47,21 @@ export default (engineOptions: IReactEngineOptions = {
       delete locals.cache;
 
       const initialState = JSON.stringify(locals);
+      const head = Helmet.renderStatic();
 
-      const staticMarkup = renderToStaticMarkup(
+      let staticMarkup = renderToStaticMarkup(
         React.createElement(Layout, {
           ...options,
           assets,
           body: markup,
           initialState,
+          head,
         }),
       );
+
+      if (process.env.NODE_ENV !== "production") {
+        // staticMarkup = pretty(staticMarkup);
+      }
 
       return callback(null, `<!DOCTYPE html>\
       ${staticMarkup}`);

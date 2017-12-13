@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@lonelyplanet/travel-agent": "^1.3.6",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "reflect-metadata": "^0.1.10",
     "typescript": "^2.5.3"
   },
