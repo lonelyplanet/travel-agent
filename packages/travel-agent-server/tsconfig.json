@@ -16,8 +16,5 @@
   "include": [
     "app/**/*",
     "src/**/*"
-  ],
-  "exclude": [
-    "*__tests__*"
   ]
 }
