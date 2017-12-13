@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.6"></a>
+## [1.3.6](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.5...@lonelyplanet/travel-agent@1.3.6) (2017-12-13)
+
+
+### Bug Fixes
+
+* Update airbrake config ([1ddf0a0](https://github.com/lonelyplanet/travel-agent/commit/1ddf0a0))
+
+
+
+
 <a name="1.3.5"></a>
 ## [1.3.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.4...@lonelyplanet/travel-agent@1.3.5) (2017-12-12)
 
