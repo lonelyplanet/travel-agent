@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.6...@lonelyplanet/travel-agent@1.4.0) (2017-12-13)
+
+
+### Bug Fixes
+
+* Exclude jest tests from tsconfig ([3249aff](https://github.com/lonelyplanet/travel-agent/commit/3249aff))
+
+
+### Features
+
+* Add React Helmet support ([c9981d7](https://github.com/lonelyplanet/travel-agent/commit/c9981d7))
+
+
+
+
 <a name="1.3.6"></a>
 ## [1.3.6](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.3.5...@lonelyplanet/travel-agent@1.3.6) (2017-12-13)
 

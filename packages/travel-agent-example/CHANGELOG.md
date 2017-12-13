@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.1.16...travel-agent-example@1.2.0) (2017-12-13)
+
+
+### Features
+
+* Add React Helmet support ([c9981d7](https://github.com/lonelyplanet/travel-agent/commit/c9981d7))
+
+
+
+
 <a name="1.1.16"></a>
 ## [1.1.16](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.1.15...travel-agent-example@1.1.16) (2017-12-13)
 
