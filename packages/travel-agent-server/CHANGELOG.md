@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.3"></a>
+## [1.4.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.2...@lonelyplanet/travel-agent@1.4.3) (2017-12-14)
+
+
+### Bug Fixes
+
+* Locking airbrake-js at 0.9.8 until bug fix released ([df9e304](https://github.com/lonelyplanet/travel-agent/commit/df9e304))
+
+
+
+
 <a name="1.4.2"></a>
 ## [1.4.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.1...@lonelyplanet/travel-agent@1.4.2) (2017-12-13)
 
