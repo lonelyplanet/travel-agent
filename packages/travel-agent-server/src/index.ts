@@ -11,6 +11,11 @@ import {
   ITravelAgentServer,
 } from "./interfaces";
 import TYPES from "./types";
+import * as hook from "css-modules-require-hook";
+
+hook({
+  generateScopedName: '[name]__[local]___[hash:base64:5]',
+});
 
 export { inject, injectable } from "inversify";
 export { Controller } from "./classes/controller";

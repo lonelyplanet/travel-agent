@@ -1,10 +1,12 @@
-require("ts-node/register")
+require("ts-node/register");
 require("reflect-metadata");
 const path = require("path");
+const copyfiles = require("copyfiles");
 const program = require("commander");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const { exec } = require("child_process");
 let container = require("../dist/config/container").default;
 const TYPES = require("../dist/types");
@@ -12,8 +14,7 @@ const TYPES = require("../dist/types");
 const userConfigResolver = container.get(TYPES.default.IUserConfigResolver);
 const userConfig = userConfigResolver.resolve();
 
-program
-  .version("0.1.0")
+program.version("0.1.0");
 
 program
   .option("--analyze", "run the webpack analyzer")
@@ -32,15 +33,12 @@ if (program.production) {
 
 let config = null;
 if (userConfig.webpack) {
-  config = merge(
-    require("../dist/webpack/config").default,
-    userConfig.webpack,
-  );
+  config = require("../dist/webpack/config").default;
 
   if (program.production) {
     config = merge(
       require("../dist/webpack/production").default,
-      userConfig.production.webpack || {},
+      (userConfig.production && userConfig.production.webpack) || {},
     );
   }
 }
@@ -78,8 +76,10 @@ exec("tsc", (err, stdout, stderr) => {
         }
         console.log(stats.toString());
       } else {
-        console.log(`Built in ${new Date() - now}ms.`);
-        console.log(`webpack production build done in ${info.time}ms.`);
+        copyfiles(["app/**/*.css", "dist"], { up: 1 }, () => {
+          console.log(`Built in ${new Date() - now}ms.`);
+          console.log(`webpack production build done in ${info.time}ms.`);
+        });
       }
     });
   } else {
