@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.5"></a>
+## [1.4.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.4...@lonelyplanet/travel-agent@1.4.5) (2017-12-14)
+
+
+### Bug Fixes
+
+* Oh typescript ([3e8c0ef](https://github.com/lonelyplanet/travel-agent/commit/3e8c0ef))
+
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.3...@lonelyplanet/travel-agent@1.4.4) (2017-12-14)
 
