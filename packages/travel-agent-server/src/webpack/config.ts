@@ -5,23 +5,14 @@ import { commonPlugins } from "./common";
 import Notifier from "./notifier";
 import userConfig from "./userConfig";
 import * as webpackMerge from "webpack-merge";
+import { getLoaders } from "./loaders";
 
 const config: webpack.Configuration = {
-  // context: path.join(process.cwd(), "app"),
   entry: {
     common: ["webpack-hot-middleware/client"],
   },
   module: {
-    rules: [{
-      exclude: /node_modules/,
-      test: /\.ts(x?)$/,
-      use: [{
-        loader: "ts-loader",
-        options: {
-          configFile: path.join(process.cwd(), "tsconfig.json"),
-        },
-      }],
-    }],
+    rules: [...getLoaders("dev")],
   },
   output: {
     chunkFilename: "[name]-chunk.js",
@@ -33,20 +24,15 @@ const config: webpack.Configuration = {
     ...commonPlugins,
     new webpack.HotModuleReplacementPlugin(),
     new Notifier(),
+    new webpack.WatchIgnorePlugin([/\.d\.ts$/]),
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
-    modules: [
-      "node_modules",
-      path.join(__dirname, "..", "..", "node_modules"),
-    ],
+    modules: ["node_modules", path.join(__dirname, "..", "..", "node_modules")],
   },
   resolveLoader: {
     extensions: [".tsx", ".ts", ".js"],
-    modules: [
-      "node_modules",
-      path.join(__dirname, "..", "..", "node_modules"),
-    ],
+    modules: ["node_modules", path.join(__dirname, "..", "..", "node_modules")],
   },
 };
 

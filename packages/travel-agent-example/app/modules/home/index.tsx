@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Helmet } from "@lonelyplanet/travel-agent/helmet";
 import Home from "./components/index";
+import * as styles from "./styles/home.css";
 
 export default ({
   message,
 }) => (
-  <div>
+  <div className={styles.home}>
     <Helmet>
       <title>Home Page!!!</title>
       <meta name="description" content="I'm a home page" />

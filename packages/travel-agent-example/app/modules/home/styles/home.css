@@ -1,0 +1,14 @@
+.home {
+  color: red;
+  background: green;
+  outline: 1px solid black;
+}
+
+.foo {
+  color: green;
+}
+
+.bar {
+  color: blue;
+  background: black;
+}
