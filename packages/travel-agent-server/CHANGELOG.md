@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.5...@lonelyplanet/travel-agent@1.5.0) (2017-12-14)
+
+
+### Features
+
+* Add CSS Module support ([1ac4e47](https://github.com/lonelyplanet/travel-agent/commit/1ac4e47))
+
+
+
+
 <a name="1.4.5"></a>
 ## [1.4.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.4...@lonelyplanet/travel-agent@1.4.5) (2017-12-14)
 
