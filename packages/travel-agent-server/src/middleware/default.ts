@@ -1,6 +1,8 @@
 /* tslint:disable: object-literal-sort-keys */
 import * as express from "express";
 import * as path from "path";
+import * as AirbrakeClient from "airbrake-js";
+import makeErrorHandler from "airbrake-js/dist/instrumentation/express";
 import errorHandler from "./errorHandler";
 import catchAll from "./catchAll";
 import { IUserConfig } from "../classes/userConfigResolver";
@@ -99,9 +101,6 @@ export const defaultPostMiddleware = (env, options?: IUserConfig) => {
 
   const airbrakeCreds = getAirbrakeCreds(options);
   if (env === "production" && airbrakeCreds.airbrakeId && airbrakeCreds.airbrakeKey) {
-    const AirbrakeClient = require("airbrake-js");
-    const makeErrorHandler = require("airbrake-js/dist/instrumentation/express");
-
     const airbrake = new AirbrakeClient({
       projectId: airbrakeCreds.airbrakeId,
       projectKey: airbrakeCreds.airbrakeKey,

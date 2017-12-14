@@ -42,9 +42,15 @@ const start = (options: {
 
   const travelAgent = container.get<ITravelAgentServer>(TYPES.ITravelAgentServer);
 
-  travelAgent.setup();
-  travelAgent.addModules();
-  travelAgent.postSetup();
+  try {
+    travelAgent.setup();
+    travelAgent.addModules();
+    travelAgent.postSetup();
+  } catch(e) {
+    console.log("An error occured starting the server...")
+    console.log(e);
+    process.exit(1);
+  }
 
   if (!options.startWithoutHttp) {
     const server = http.createServer(travelAgent.app);
