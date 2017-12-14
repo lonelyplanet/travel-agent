@@ -2,7 +2,7 @@
 import * as express from "express";
 import * as path from "path";
 import * as AirbrakeClient from "airbrake-js";
-import makeErrorHandler from "airbrake-js/dist/instrumentation/express";
+import * as makeErrorHandler from "airbrake-js/dist/instrumentation/express";
 import errorHandler from "./errorHandler";
 import catchAll from "./catchAll";
 import { IUserConfig } from "../classes/userConfigResolver";
