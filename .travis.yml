@@ -2,6 +2,6 @@ language: node_js
 node_js:
   - "8"
 script:
-  - lerna bootstrap
+  - npm run bootstrap
   - npm run build
   - npm run test
