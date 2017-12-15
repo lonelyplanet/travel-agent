@@ -1,4 +1,7 @@
+[![Build Status](https://travis-ci.org/lonelyplanet/travel-agent.svg?branch=master)](https://travis-ci.org/lonelyplanet/travel-agent)
+
 # Travel Agent
+
 A base express app written in TypeScript to be extended with controllers, and custom middleware.
 
 Built in middlware and support for...
@@ -10,20 +13,19 @@ Built in middlware and support for...
 1. Built in Dependency Injection w/ Inversify
 
 ### Modules
+
 Under the `app/modules` directory is where each section of your app can be divided up.
 
 Each "module" should have at least a `controller.ts` and an `index.tsx`.
 
 ### Controllers
+
 Extend the `Controller` class from Travel Agent to create a controller.
 
 There are also decorators for each HTTP method which all take a string.
 
 ```ts
-import {
-  Controller,
-  get,
-} from "@lonelyplanet/travel-agent";
+import { Controller, get } from "@lonelyplanet/travel-agent";
 
 export default class HomeController extends Controller {
   @get("/")
@@ -45,6 +47,7 @@ export default class HomeController extends Controller {
 ### Tags
 
 #### Helmet
+
 You can import `Helmet` like this...
 
 ```ts
@@ -55,14 +58,13 @@ export default ({}) => (
     <Helmet>
       <title>Cool, a title tag</title>
     </Helmet>
-    <div>
-      Oh yeah
-    </div>
+    <div>Oh yeah</div>
   </React.Fragment>
-)
+);
 ```
 
 ### Configuration
+
 There are a few configuration options you can define in a `config/index.js` file.
 
 ```
@@ -81,6 +83,7 @@ There are a few configuration options you can define in a `config/index.js` file
 If you would like to disable webpack, simply do `webpack: false`.
 
 ### Using Dependency Injection
+
 In `app/index.ts` once you call `start`, you can bind services.
 
 ```ts
@@ -117,9 +120,11 @@ export default class HomeController extends Controller {
 ```
 
 ### Examples
+
 Look in the `packages/travel-agent-example` for a working example that Should Just Work (tm).
 
 ### Running the example
+
 After cloning the repo, run...
 
 ```bash
