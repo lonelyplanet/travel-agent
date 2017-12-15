@@ -6,7 +6,8 @@
     "build": "travel-agent build",
     "build:production": "travel-agent build -p",
     "dev": "travel-agent dev",
-    "start": "travel-agent start"
+    "start": "travel-agent start",
+    "test": "echo 'plz I can haz tests'"
   },
   "dependencies": {
     "@lonelyplanet/travel-agent": "^1.5.0",
