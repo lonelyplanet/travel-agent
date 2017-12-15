@@ -20,8 +20,12 @@ export const cssLoader = {
   use: [
     "style-loader",
     {
-      loader:
-        "typings-for-css-modules-loader?namedExport&modules&localIdentName=[name]__[local]___[hash:base64:5]",
+      loader: "typings-for-css-modules-loader",
+      options: {
+        namedExport: true,
+        modules: true,
+        localIdentName: "[name]__[local]___[hash:base64:5]",
+      },
     },
   ],
 };
