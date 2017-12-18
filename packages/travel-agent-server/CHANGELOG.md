@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.5.1"></a>
+## [1.5.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.5.0...@lonelyplanet/travel-agent@1.5.1) (2017-12-18)
+
+
+### Bug Fixes
+
+* Add travis, update loader ([e560a34](https://github.com/lonelyplanet/travel-agent/commit/e560a34)), closes [#7](https://github.com/lonelyplanet/travel-agent/issues/7)
+* Get css files sha'd correctly in prod webpack config ([2aee605](https://github.com/lonelyplanet/travel-agent/commit/2aee605))
+
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.4.5...@lonelyplanet/travel-agent@1.5.0) (2017-12-14)
 
