@@ -50,7 +50,7 @@ const productionConfig: Configuration = {
         NODE_ENV: JSON.stringify("production"),
       },
     }),
-    new ExtractTextPlugin("[name].css", {
+    new ExtractTextPlugin("[name].[chunkhash].css", {
       disable: false,
       allChunks: true,
     }),
