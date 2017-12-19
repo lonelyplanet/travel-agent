@@ -8,6 +8,8 @@ import {
   IUserConfig,
   ICustomMiddlewareObject,
 } from "../classes/userConfigResolver";
+import { ITravelAgentServer } from "../interfaces/index";
+import createPrometheusMiddleware from "./prometheus";
 
 export const applyMiddleware = (
   app,
@@ -36,8 +38,9 @@ export const applyMiddleware = (
 };
 
 export interface IMiddlewareProvider {
-  middleware(app: express.Application, env?: string): ICustomMiddleware[];
-  postMiddleware(app: express.Application, env?: string): ICustomMiddleware[];
+  middleware(app: ITravelAgentServer, env?: string): ICustomMiddleware[];
+  beforeRoutesMiddleware(app: ITravelAgentServer, env?: string): ICustomMiddleware[];
+  postMiddleware(app: ITravelAgentServer, env?: string): ICustomMiddleware[];
 }
 
 @injectable()
@@ -57,6 +60,7 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
   public defaultPostMiddleware: (
     env: string,
     options?: IUserConfig,
+    app?: ITravelAgentServer,
   ) => ICustomMiddleware[];
 
   public userConfigResolver: IUserConfigResolver;
@@ -70,7 +74,7 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     this.userConfig = this.userConfigResolver.resolve();
   }
 
-  public middleware(app, env = process.env.NODE_ENV) {
+  public middleware(app: ITravelAgentServer, env = process.env.NODE_ENV) {
     return applyMiddleware(
       app,
       this.defaultMiddleware(this.userConfig),
@@ -82,11 +86,27 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     );
   }
 
-  public postMiddleware(app, env = process.env.NODE_ENV) {
+  public postMiddleware(app: ITravelAgentServer, env = process.env.NODE_ENV) {
     return applyMiddleware(
       app,
-      this.defaultPostMiddleware(env, this.userConfig),
+      this.defaultPostMiddleware(env, {
+        ...this.userConfig,
+      }, app),
       this.userConfig.postMiddleware || [],
+    );
+  }
+
+  public beforeRoutesMiddleware(app: ITravelAgentServer, env = process.env.NODE_ENV) {
+    const config = this.userConfig;
+    const middleware = [
+      createPrometheusMiddleware({
+        ...(config.prometheus || {}),
+        routes: app.routes.reduce((m, r) => m.concat(r.url), []),
+      }),
+    ];
+    return applyMiddleware(
+      app,
+      middleware,
     );
   }
 }

@@ -2,6 +2,7 @@ import * as express from "express";
 import * as inversify from "inversify/dts/interfaces/interfaces";
 import { Container } from "inversify";
 import { IController, IControllerConstructor } from "../classes/controller";
+import { IMiddlewareProvider } from "../middleware/middlewareProvider";
 
 export interface ITravelAgentModule {
   controller: IControllerConstructor;
@@ -9,11 +10,15 @@ export interface ITravelAgentModule {
 
 export interface ITravelAgentServer {
   app: express.Application;
+  routes: IRoute[];
   container: Container;
   bind: inversify.interfaces.Bind;
+  controllerFactory: IControllerFactory;
+  middlewareResolver: IMiddlewareProvider;
   addModules(): void;
   postSetup(): void;
   setup(): void;
+  use(): express.Application;
 }
 
 export interface IControllerFactory {

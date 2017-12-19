@@ -15,8 +15,15 @@ export type ICustomMiddleware =
   | [string, express.RequestHandler | express.ErrorRequestHandler]
   | ICustomMiddlewareObject;
 
+export interface IPrometheusConfigurationOptions {
+  [key: string]: string | object,
+  routes?: string[],
+  defaultPath?: string,
+};
+
 export interface IUserConfig {
   [key: string]: any;
+  prometheus?: IPrometheusConfigurationOptions;
   airbrakeId?: string;
   airbrakeKey?: string;
   webpack?: any;
@@ -24,6 +31,7 @@ export interface IUserConfig {
   postMiddleware?: ICustomMiddleware[];
   sendProductionErrors?: boolean;
   production?: IUserConfig;
+  serveAssets?: boolean;
 }
 
 export interface IUserConfigResolver {
@@ -41,7 +49,7 @@ export default class UserConfigResolver implements IUserConfigResolver {
   public middlewarePath = path.join(process.cwd(), "./config");
   public require: IRequireConstructor;
 
-  constructor(@inject("IRequireConstructor") require) {
+  constructor( @inject("IRequireConstructor") require) {
     this.require = require;
   }
 
@@ -52,6 +60,7 @@ export default class UserConfigResolver implements IUserConfigResolver {
       const customMiddlewarePath = this.require.resolve(this.middlewarePath);
       userConfig = this.require(customMiddlewarePath) as IUserConfig;
     } catch (e) {
+      logger.debug("Error loading user configuration");
       logger.debug(e);
     }
 

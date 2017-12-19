@@ -7,6 +7,8 @@ import errorHandler from "./errorHandler";
 import catchAll from "./catchAll";
 import { IUserConfig } from "../classes/userConfigResolver";
 import AirbrakeCreds from "../classes/airbrakeCreds";
+import createPrometheusMiddleware from "./prometheus";
+import { ITravelAgentServer } from "../interfaces/index";
 
 const health = express.Router();
 health.get("/health-check", (req, res) => {
@@ -80,8 +82,11 @@ export const defaultProductionMiddleware = (options?: IUserConfig) => {
       excludes,
     }),
     require("compression")(),
-    express.static(path.join(process.cwd(), "public")),
   ];
+
+  if (options.serveAssets) {
+    config.push(express.static(path.join(process.cwd(), "public")));
+  }
 
   return config;
 };
@@ -96,7 +101,7 @@ const getAirbrakeCreds = (options: IUserConfig) => {
   return new AirbrakeCreds();
 }
 
-export const defaultPostMiddleware = (env, options?: IUserConfig) => {
+export const defaultPostMiddleware = (env, options?: IUserConfig, app?: ITravelAgentServer) => {
   const config = [];
 
   const airbrakeCreds = getAirbrakeCreds(options);
