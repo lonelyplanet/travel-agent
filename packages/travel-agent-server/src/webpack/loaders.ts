@@ -1,5 +1,33 @@
 import * as path from "path";
 import * as ExtractTextPlugin from "extract-text-webpack-plugin";
+import * as autoprefixer from "autoprefixer";
+import * as map from "postcss-map";
+import * as nested from "postcss-nested";
+import backpackStyles from "backpack-ui/dist/styles";
+
+const styleLoaders = {
+  css: {
+    loader: "typings-for-css-modules-loader",
+    options: {
+      namedExport: true,
+      modules: true,
+      minimize: false,
+      localIdentName: "[name]__[local]___[hash:base64:5]",
+    },
+  },
+  postcss: {
+    loader: "postcss-loader",
+    options: {
+      plugins: () => [
+        map({
+          maps: [backpackStyles],
+        }),
+        nested(),
+        autoprefixer(),
+      ],
+    },
+  },
+};
 
 export const tsLoader = {
   exclude: /node_modules/,
@@ -19,14 +47,8 @@ export const cssLoader = {
   exclude: /node_modules/,
   use: [
     "style-loader",
-    {
-      loader: "typings-for-css-modules-loader",
-      options: {
-        namedExport: true,
-        modules: true,
-        localIdentName: "[name]__[local]___[hash:base64:5]",
-      },
-    },
+    styleLoaders.css,
+    styleLoaders.postcss,
   ],
 };
 
@@ -35,8 +57,10 @@ const extractCssLoader = {
   include: /app/,
   loader: ExtractTextPlugin.extract({
     fallback: "style-loader",
-    use:
-      "typings-for-css-modules-loader?namedExport&modules&localIdentName=[name]__[local]___[hash:base64:5]",
+    use: [
+      styleLoaders.css,
+      styleLoaders.postcss,
+    ],
   }),
 };
 
