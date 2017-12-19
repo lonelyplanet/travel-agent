@@ -3,6 +3,7 @@ import UserConfigResolver, {
 } from "../classes/userConfigResolver";
 import errorHandler from "../middleware/errorHandler";
 import MiddlewareProvider from "../middleware/middlewareProvider";
+import { ITravelAgentServer } from "../interfaces/index";
 
 interface IF {
   (name: string): any;
@@ -11,6 +12,9 @@ interface IF {
 
 describe("middleware", () => {
   it("should provide default middleware", () => {
+    const AppMock = jest.fn<ITravelAgentServer>(() => ({
+      use: jest.fn(),
+    }));
     class MockCustomProvider implements IUserConfigResolver {
       public resolve() {
         return {
@@ -24,17 +28,13 @@ describe("middleware", () => {
     provider.defaultDevMiddleware = () => [(req, res, next) => void 0];
 
     const middleware = provider.middleware(
-      {
-        use: jest.fn(),
-      },
+      new AppMock(),
       "development",
     );
     expect(middleware.length).toEqual(3);
 
     const production = provider.middleware(
-      {
-        use: jest.fn(),
-      },
+      new AppMock(),
       "production",
     );
     expect(production.length).toEqual(3);

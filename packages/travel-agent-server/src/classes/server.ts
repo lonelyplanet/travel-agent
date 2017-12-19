@@ -34,14 +34,19 @@ export default class TravelAgentServer implements ITravelAgentServer {
     this.createDefaultRoute = this.createDefaultRoute.bind(this);
   }
 
+  public use(...args) {
+    return this.app.use(...args);
+  }
+
   public setup() {
-    this.middlewareResolver.middleware(this.app);
+    this.middlewareResolver.middleware(this);
     this.createViewEngine();
   }
 
   public postSetup() {
+    this.middlewareResolver.beforeRoutesMiddleware(this);
     this.addDefaultRoute();
-    this.middlewareResolver.postMiddleware(this.app);
+    this.middlewareResolver.postMiddleware(this);
   }
 
   public bind<T = {}>(...args) {
@@ -57,23 +62,23 @@ export default class TravelAgentServer implements ITravelAgentServer {
       container.bind(controller.name).to(controller);
 
       Object.keys(controller.routes)
-      .reduce<IRoute[]>((memo, key) => {
-        const split = key.split(" ");
-        const method = split[0].toLocaleLowerCase();
-        const url = split[1];
-        const handler = controller.routes[key];
+        .reduce<IRoute[]>((memo, key) => {
+          const split = key.split(" ");
+          const method = split[0].toLocaleLowerCase();
+          const url = split[1];
+          const handler = controller.routes[key];
 
-        memo.push({
-          handler,
-          method,
-          url,
-          middleware: [],
-          routes: controller.routes,
-          controller,
-        });
+          memo.push({
+            handler,
+            method,
+            url,
+            middleware: [],
+            routes: controller.routes,
+            controller,
+          });
 
-        return memo;
-      }, this.routes);
+          return memo;
+        }, this.routes);
     });
   }
 
@@ -92,17 +97,17 @@ export default class TravelAgentServer implements ITravelAgentServer {
   private createDefaultRoute(method) {
     return (req, res, next) => {
       const matched = this.routes
-      .filter((r) => r.method.toLowerCase() === method.toLowerCase())
-      .some((route) => {
-        const match = matchPath(req.path, { path: route.url, exact: true });
+        .filter((r) => r.method.toLowerCase() === method.toLowerCase())
+        .some((route) => {
+          const match = matchPath(req.path, { path: route.url, exact: true });
 
-        if (match) {
-          req.params = match.params;
-          this.handler(req, res, next, route.controller.name, route.handler);
-        }
+          if (match) {
+            req.params = match.params;
+            this.handler(req, res, next, route.controller.name, route.handler);
+          }
 
-        return !!match;
-      });
+          return !!match;
+        });
 
       if (!matched) {
         return next();

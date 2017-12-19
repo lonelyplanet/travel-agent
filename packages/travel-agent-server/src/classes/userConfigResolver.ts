@@ -2,6 +2,7 @@ import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as path from "path";
 import logger from "../utils/logger";
+import { IPrometheusConfigurationOptions } from "../middleware/prometheus";
 
 export interface ICustomMiddlewareObject {
   route?: string,
@@ -17,6 +18,7 @@ export type ICustomMiddleware =
 
 export interface IUserConfig {
   [key: string]: any;
+  prometheus?: IPrometheusConfigurationOptions;
   airbrakeId?: string;
   airbrakeKey?: string;
   webpack?: any;
@@ -24,6 +26,7 @@ export interface IUserConfig {
   postMiddleware?: ICustomMiddleware[];
   sendProductionErrors?: boolean;
   production?: IUserConfig;
+  serveAssets?: boolean;
 }
 
 export interface IUserConfigResolver {
@@ -41,7 +44,7 @@ export default class UserConfigResolver implements IUserConfigResolver {
   public middlewarePath = path.join(process.cwd(), "./config");
   public require: IRequireConstructor;
 
-  constructor(@inject("IRequireConstructor") require) {
+  constructor( @inject("IRequireConstructor") require) {
     this.require = require;
   }
 
@@ -52,6 +55,7 @@ export default class UserConfigResolver implements IUserConfigResolver {
       const customMiddlewarePath = this.require.resolve(this.middlewarePath);
       userConfig = this.require(customMiddlewarePath) as IUserConfig;
     } catch (e) {
+      logger.debug("Error loading user configuration");
       logger.debug(e);
     }
 

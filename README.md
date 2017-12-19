@@ -71,6 +71,9 @@ There are a few configuration options you can define in a `config/index.js` file
 {
   // An array of middleware
   middleware: [],
+  prometheus: {
+    defaultPath: "other", /* defaults to the current url */,
+  },
   webpack: { /* webpack config options */ },
   production: {
     webpack: { /* production webpack config options */ },

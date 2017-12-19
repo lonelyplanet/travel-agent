@@ -1,16 +1,18 @@
 module.exports = {
+  prometheus: {},
   middleware: [
     (req, res, next) => {
-      if (req.originalUrl.indexOf(".json") > -1) {
-        req.headers["content-type"] = "application/json";
+      if (req.originalUrl.indexOf ('.json') > -1) {
+        req.headers['content-type'] = 'application/json';
       }
 
-      next();
+      next ();
     },
   ],
   webpack: {
     entry: {
-      app: "./app/shared/client",
+      app: './app/shared/client',
     },
   },
+  sendProductionErrors: true,
 };
