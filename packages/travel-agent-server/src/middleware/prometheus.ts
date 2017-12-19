@@ -1,6 +1,16 @@
 import * as promBundle from "express-prom-bundle";
 import * as pathToRegexp from "path-to-regexp";
-import { IPrometheusConfigurationOptions } from "../classes/userConfigResolver";
+
+export interface IPromRoute {
+  route: string,
+  name: string
+}
+
+export interface IPrometheusConfigurationOptions {
+  [key: string]: string | object,
+  routes?: IPromRoute[],
+  defaultPath?: string,
+};
 
 const prometheusHttpRequestBuckets = [
   0.01,
@@ -26,14 +36,14 @@ const prometheusHttpRequestBuckets = [
   10,
 ];
 
-export function customNormalize(url: string, routes: string[], options?) {
+export function customNormalize(url: string, routes: IPromRoute[], options?) {
   // count all docs (no matter which file) as a single url
   for (const route of routes) {
-    const routeRegex = pathToRegexp(route);
+    const routeRegex = pathToRegexp(route.route);
     const [path] = url.split("?");
 
     if (routeRegex.exec(path)) {
-      return route;
+      return route.name;
     }
   }
 

@@ -9,7 +9,7 @@ import {
   ICustomMiddlewareObject,
 } from "../classes/userConfigResolver";
 import { ITravelAgentServer } from "../interfaces/index";
-import createPrometheusMiddleware from "./prometheus";
+import createPrometheusMiddleware, { IPromRoute } from "./prometheus";
 
 export const applyMiddleware = (
   app,
@@ -101,7 +101,13 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     const middleware = [
       createPrometheusMiddleware({
         ...(config.prometheus || {}),
-        routes: app.routes.reduce((m, r) => m.concat(r.url), []),
+        routes: app.routes.reduce<IPromRoute[]>((m, r) => {
+          m.push({
+            route: r.url,
+            name: `${r.controller.name}#${r.handler}`
+          });
+          return m;
+        }, []),
       }),
     ];
     return applyMiddleware(

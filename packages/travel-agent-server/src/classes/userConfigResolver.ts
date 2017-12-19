@@ -2,6 +2,7 @@ import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as path from "path";
 import logger from "../utils/logger";
+import { IPrometheusConfigurationOptions } from "../middleware/prometheus";
 
 export interface ICustomMiddlewareObject {
   route?: string,
@@ -14,12 +15,6 @@ export type ICustomMiddleware =
   | express.ErrorRequestHandler
   | [string, express.RequestHandler | express.ErrorRequestHandler]
   | ICustomMiddlewareObject;
-
-export interface IPrometheusConfigurationOptions {
-  [key: string]: string | object,
-  routes?: string[],
-  defaultPath?: string,
-};
 
 export interface IUserConfig {
   [key: string]: any;
