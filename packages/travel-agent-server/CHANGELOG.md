@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.5.1...@lonelyplanet/travel-agent@1.6.0) (2017-12-19)
+
+
+### Features
+
+* Add PostCSS and backpack-ui styles ([#8](https://github.com/lonelyplanet/travel-agent/issues/8)) ([a3b52db](https://github.com/lonelyplanet/travel-agent/commit/a3b52db))
+
+
+
+
 <a name="1.5.1"></a>
 ## [1.5.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.5.0...@lonelyplanet/travel-agent@1.5.1) (2017-12-18)
 
