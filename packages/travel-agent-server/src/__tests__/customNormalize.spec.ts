@@ -8,6 +8,6 @@ describe("customNormalize", () => {
 
     const path = customNormalize(url, routes);
 
-    expect(path).toBe(":slug(*)/a/:type-:kind/:id/:placeId");
+    expect(path).toBe("(.*)/a/:type-:kind/:id/:placeId");
   });
 });
