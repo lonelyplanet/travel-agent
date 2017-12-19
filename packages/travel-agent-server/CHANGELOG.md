@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.1"></a>
+## [1.6.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.0...@lonelyplanet/travel-agent@1.6.1) (2017-12-19)
+
+
+### Bug Fixes
+
+* Add prometheus metrics as default middleware ([dd46302](https://github.com/lonelyplanet/travel-agent/commit/dd46302))
+
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.5.1...@lonelyplanet/travel-agent@1.6.0) (2017-12-19)
 
