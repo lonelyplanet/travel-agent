@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.2"></a>
+## [1.6.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.1...@lonelyplanet/travel-agent@1.6.2) (2017-12-20)
+
+
+### Bug Fixes
+
+* Move postcss to dependencies ([dad22b6](https://github.com/lonelyplanet/travel-agent/commit/dad22b6))
+
+
+
+
 <a name="1.6.1"></a>
 ## [1.6.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.0...@lonelyplanet/travel-agent@1.6.1) (2017-12-19)
 
