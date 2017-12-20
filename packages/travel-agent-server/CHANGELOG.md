@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.3"></a>
+## [1.6.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.2...@lonelyplanet/travel-agent@1.6.3) (2017-12-20)
+
+
+### Bug Fixes
+
+* Move dependencies some more ([535bb15](https://github.com/lonelyplanet/travel-agent/commit/535bb15))
+
+
+
+
 <a name="1.6.2"></a>
 ## [1.6.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.1...@lonelyplanet/travel-agent@1.6.2) (2017-12-20)
 
