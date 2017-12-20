@@ -37,6 +37,9 @@ import { IControllerFactory, IControllerRegistry, IRoute } from "../interfaces";
 import { IControllerConstructor } from "../classes/controller";
 import TravelAgentServer from "../classes/server";
 
+let TestController = require("./fixtures/controller");
+let TestControllerFactory = require("../classes/controllerFactory");
+
 describe("TravelAgentServer", () => {
   let mockControllerFactory;
   let mockControllerRegistry;
