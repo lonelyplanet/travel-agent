@@ -19,6 +19,7 @@ describe("generator-travel-agent:app", () => {
       ".prettierrc",
       ".eslintrc",
       "tsconfig.json",
+      "tslint.json",
     ]);
     assert.fileContent("package.json", "dotcom-foo");
   });

@@ -56,6 +56,10 @@ module.exports = class extends Generator {
       this.templatePath("tsconfig.json"),
       this.destinationPath("tsconfig.json"),
     );
+    this.fs.copy(
+      this.templatePath("tslint.json"),
+      this.destinationPath("tslint.json"),
+    );
   }
 
   install() {

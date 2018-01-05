@@ -5,13 +5,10 @@ const touch = require("touch");
 const fs = require("fs");
 
 const controllerTemplate = (name) => `\
-import { Controller, inject } from "@lonelyplanet/travel-agent-server";
+import { Controller, inject, get } from "@lonelyplanet/travel-agent";
 
 export default class ${name[0].toUpperCase() + name.substr(1, name.length)}Controller extends Controller {
-  public static routes = {
-    [\`GET /${name}\`]: "show",
-  };
-
+  @get("/${name}")
   public async show() {
     this.response.render("${name}");
   }
@@ -26,12 +23,13 @@ export default () => (
     <h1>${name}</h1>
   </div>
 );
-`
+`;
 
 program
-  .version("0.1.0")
+  .version("0.1.0");
 
-program.command("module [name]")
+program
+  .command("module [name]")
   .description("add a new module")
   .action((name) => {
     const modulesPath = path.join(process.cwd(), "app", "modules");

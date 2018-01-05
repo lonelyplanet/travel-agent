@@ -1,26 +1,28 @@
 /** @flow */
-import * as glob from "glob";
 import * as path from "path";
-import {
-  IControllerConstructor,
-} from "./controller";
+import { inject, injectable } from "inversify";
+import { IControllerConstructor } from "./controller";
+import getFilePaths from "../utils/getFilePaths";
+import isProdEnv from "../utils/isProdEnv";
+import { IControllerRegistry, IRequireConstructor } from "../interfaces/index";
 
-export default class ControllerRegistry {
+@injectable()
+export default class ControllerRegistry implements IControllerRegistry {
+  public require: IRequireConstructor;
   public controllers: IControllerConstructor[];
 
-  constructor() {
+  constructor( @inject("IRequireConstructor") require) {
+    this.require = require;
     this.controllers = [];
   }
 
   public register() {
     const controllerPath = path.join(process.cwd());
-    const baseDir = process.env.NODE_ENV === "production" ?
-      "dist" :
-      "app";
-    const controllers = glob.sync(`${baseDir}/modules/**/*controller*(.js|.ts)`);
+    const baseDir = isProdEnv() ? "dist" : "app";
+    const controllers = getFilePaths(`${baseDir}/modules/**/*controller*(.js|.ts)`);
 
     controllers.forEach((controller) => {
-      const Controller = require(`${controllerPath}/${controller}`).default;
+      const Controller = this.require(`${controllerPath}/${controller}`).default;
       this.controllers.push(Controller);
     });
 

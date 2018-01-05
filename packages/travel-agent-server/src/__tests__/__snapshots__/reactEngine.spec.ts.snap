@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reactEngine generateMarkup should generate the correct markup 1`] = `"<html><body><div id=\\"app\\"><div class=\\"my-component\\" data-reactroot=\\"\\" data-reactid=\\"1\\" data-react-checksum=\\"131210646\\">This is my message</div></div><script type=\\"application/json\\" id=\\"initialState\\">{\\"message\\":\\"This is my message\\"}</script><script src=\\"/assets/vendor.js\\"></script></body></html>"`;
+
+exports[`reactEngine generateMarkup should generate the correct markup if the layout is false 1`] = `"<div class=\\"my-component\\" data-reactroot=\\"\\" data-reactid=\\"1\\" data-react-checksum=\\"131210646\\">This is my message</div>"`;
+
+exports[`reactEngine getMarkupWithDoctype should add the doctype to the html string 1`] = `"<!DOCTYPE html>  <html><body>Hello</body></html>"`;
+
+exports[`reactEngine reactEngine default should call the callback with the correct markup 1`] = `
+Array [
+  null,
+  "<!DOCTYPE html>  <html><body><div id=\\"app\\"><div class=\\"my-component\\" data-reactroot=\\"\\" data-reactid=\\"1\\" data-react-checksum=\\"131210646\\">This is my message</div></div><script type=\\"application/json\\" id=\\"initialState\\">{\\"message\\":\\"This is my message\\"}</script><script src=\\"/assets/vendor.js\\"></script></body></html>",
+]
+`;

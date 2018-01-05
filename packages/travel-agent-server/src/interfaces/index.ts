@@ -31,6 +31,10 @@ export interface IControllerFactory {
   ): IController;
 }
 
+export interface IControllerRegistry {
+  register(): IControllerConstructor[];
+}
+
 export interface IRoute {
   handler: string;
   method: string;
@@ -38,4 +42,10 @@ export interface IRoute {
   middleware: object[];
   routes: object;
   controller: IControllerConstructor;
+}
+
+export type IRequire = (module: string) => any;
+
+export interface IRequireConstructor extends IRequire {
+  resolve(module: string): string;
 }

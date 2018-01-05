@@ -1,8 +1,9 @@
 import * as path from "path";
 import * as React from "react";
-import * as pretty from "pretty";
+// import * as pretty from "pretty";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import getBundledAssets from "../utils/getBundledAssets";
+import isProdEnv from "../utils/isProdEnv";
 import Helmet, { HelmetData } from "react-helmet";
 
 export interface ILayoutOptions {
@@ -17,62 +18,64 @@ export interface IReactEngineOptions {
   layout?: string;
 }
 
+export function getInitialState(options): string {
+  const locals = { ...options };
+  delete locals.webpackStats;
+  delete locals.settings;
+  delete locals._locals;
+  delete locals.cache;
+
+  return JSON.stringify(locals);
+}
+
+export function getMarkupWithDoctype(markup: string): string {
+  return `<!DOCTYPE html>\
+  ${markup}`;
+};
+
+export function generateMarkup(req: NodeRequire, filePath: string, options, defaultLayout: string): string {
+  const Component = req(`${filePath}`).default;
+  const markup = renderToString(React.createElement(Component, options, null));
+
+  if (options.layout === false || filePath.indexOf("error") > -1) {
+    return markup;
+  }
+
+  const Layout = req(path.join(process.cwd(), options.layout || defaultLayout)).default;
+  const assets = getBundledAssets();
+  const initialState = getInitialState(options);
+  const head = Helmet.renderStatic();
+
+  // pretty(markup) for prod?
+  return renderToStaticMarkup(
+    React.createElement(Layout, {
+      ...options,
+      assets,
+      body: markup,
+      initialState,
+      head,
+    }),
+  );
+};
+
 export default (engineOptions: IReactEngineOptions = {
-    layout: "app/layout",
-  }) => {
+  layout: "app/layout",
+}, req = require) => {
   function ReactEngine(filePath: string, options, callback) {
-    const moduleDetectRegEx = /.*\.tsx$/;
-
     try {
-      const Component = require(`${filePath}`).default;
+      const markup = getMarkupWithDoctype(generateMarkup(req, filePath, options, engineOptions.layout));
+      return callback(null, markup);
 
-      if (options.layout === false || filePath.indexOf("error") > -1) {
-        const markup = renderToString(
-          React.createElement(Component, options, null),
-        );
-        return callback(null, `<!DOCTYPE html>\
-        ${markup}`);
-      }
-
-      const Layout = require(path.join(process.cwd(), options.layout || engineOptions.layout)).default;
-      const assets = getBundledAssets();
-      const markup = renderToString(React.createElement(Component, options, null));
-      const locals = {
-        ...options,
-      };
-
-      delete locals.webpackStats;
-      delete locals.settings;
-      delete locals._locals;
-      delete locals.cache;
-
-      const initialState = JSON.stringify(locals);
-      const head = Helmet.renderStatic();
-
-      let staticMarkup = renderToStaticMarkup(
-        React.createElement(Layout, {
-          ...options,
-          assets,
-          body: markup,
-          initialState,
-          head,
-        }),
-      );
-
-      if (process.env.NODE_ENV !== "production") {
-        // staticMarkup = pretty(staticMarkup);
-      }
-
-      return callback(null, `<!DOCTYPE html>\
-      ${staticMarkup}`);
     } catch (e) {
       return callback(e);
+
     } finally {
-      if (process.env.NODE_ENV !== "production") {
-        // Remove all files from the module cache that are in the view folder.
-        Object.keys(require.cache).forEach((module) => {
-          if (moduleDetectRegEx.test(require.cache[module].filename)) {
-            delete require.cache[module];
+      // For prod, remove all files from the module cache that are in the view folder.
+      if (isProdEnv()) {
+        const moduleDetectRegEx = /.*\.tsx$/;
+        Object.keys(req.cache).forEach((module) => {
+          if (moduleDetectRegEx.test(req.cache[module].filename)) {
+            delete req.cache[module];
           }
         });
       }

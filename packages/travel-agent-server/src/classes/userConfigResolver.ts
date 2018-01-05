@@ -3,6 +3,7 @@ import { inject, injectable } from "inversify";
 import * as path from "path";
 import logger from "../utils/logger";
 import { IPrometheusConfigurationOptions } from "../middleware/prometheus";
+import { IRequireConstructor } from "../interfaces/index";
 
 export interface ICustomMiddlewareObject {
   route?: string,
@@ -31,12 +32,6 @@ export interface IUserConfig {
 
 export interface IUserConfigResolver {
   resolve(): IUserConfig;
-}
-
-export type IRequire = (module: string) => any;
-
-export interface IRequireConstructor extends IRequire {
-  resolve(module: string): string;
 }
 
 @injectable()

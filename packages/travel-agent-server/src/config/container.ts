@@ -1,8 +1,9 @@
 import * as express from "express";
 import { Container } from "inversify";
 import ControllerFactory from "../classes/controllerFactory";
+import ControllerRegistry from "../classes/controllerRegistry";
 import TravelAgentServer from "../classes/server";
-import { IControllerFactory, ITravelAgentServer } from "../interfaces";
+import { IControllerFactory, IControllerRegistry, ITravelAgentServer } from "../interfaces";
 import UserConfigResolver, {
   IUserConfigResolver,
 } from "../classes/userConfigResolver";
@@ -23,9 +24,16 @@ container.bind<express.Application>(TYPES.express).toFactory(() => {
   return express();
 });
 
+container.bind<express.Router>(TYPES.expressRouter).toFactory(() => {
+  return express.Router();
+});
+
 container
   .bind<IControllerFactory>(TYPES.IControllerFactory)
   .to(ControllerFactory);
+container
+  .bind<IControllerRegistry>(TYPES.IControllerRegistry)
+  .to(ControllerRegistry);
 container
   .bind<ITravelAgentServer>(TYPES.ITravelAgentServer)
   .to(TravelAgentServer);

@@ -1,36 +1,42 @@
-import * as express from "express";
+import { Application, Router } from "express";
 import { Container, inject, injectable } from "inversify";
 import * as path from "path";
-import { matchPath } from "react-router-dom";
 import container from "../config/container";
-import { IControllerFactory, ITravelAgentModule, ITravelAgentServer, IRoute } from "../interfaces";
+import { IControllerFactory, IControllerRegistry, ITravelAgentModule, ITravelAgentServer, IRoute } from "../interfaces";
 import { ICustomMiddleware, IUserConfigResolver } from "../classes/userConfigResolver";
 import { IMiddlewareProvider } from "../middleware/middlewareProvider";
 import TYPES from "../types";
 import { IController, IControllerConstructor } from "./controller";
-import ControllerRegistry from "./controllerRegistry";
 import createEngine from "./reactEngine";
+import isProdEnv from "../utils/isProdEnv";
+import findMatchingRoutes from "../utils/findMatchingRoutes";
+import logger from "../utils/logger";
 
 @injectable()
 export default class TravelAgentServer implements ITravelAgentServer {
-  public app: express.Application;
+  public app: Application;
   public container: Container;
   public controllerFactory: IControllerFactory;
+  public controllerRegistry: IControllerRegistry;
   public middlewareResolver: IMiddlewareProvider;
   public routes: IRoute[];
-  private defaultRouter: express.Router;
+  private defaultRouter: Router;
 
   constructor(
-    @inject(TYPES.express) express: express.Application,
+    @inject(TYPES.express) express: Application,
+    @inject(TYPES.expressRouter) expressRouter: Router,
     @inject(TYPES.IMiddlewareProvider) middlewareResolver: IMiddlewareProvider,
     @inject(TYPES.IControllerFactory) controllerFactory: IControllerFactory,
+    @inject(TYPES.IControllerRegistry) controllerRegistry: IControllerRegistry,
   ) {
     this.app = express;
     this.middlewareResolver = middlewareResolver;
     this.controllerFactory = controllerFactory;
+    this.controllerRegistry = controllerRegistry;
     this.container = container;
+    this.routes = [];
+    this.defaultRouter = expressRouter;
 
-    this.handler = this.handler.bind(this);
     this.createDefaultRoute = this.createDefaultRoute.bind(this);
   }
 
@@ -45,7 +51,7 @@ export default class TravelAgentServer implements ITravelAgentServer {
 
   public postSetup() {
     this.middlewareResolver.beforeRoutesMiddleware(this);
-    this.addDefaultRoute();
+    this.addDefaultRoute(this.defaultRouter);
     this.middlewareResolver.postMiddleware(this);
   }
 
@@ -54,69 +60,68 @@ export default class TravelAgentServer implements ITravelAgentServer {
   }
 
   public addModules() {
-    const registry = new ControllerRegistry();
-    const controllers = registry.register();
-    this.routes = [];
+    const controllers = this.controllerRegistry.register();
     controllers.forEach((controller) => {
       injectable()(controller);
       container.bind(controller.name).to(controller);
-
-      Object.keys(controller.routes)
-        .reduce<IRoute[]>((memo, key) => {
-          const split = key.split(" ");
-          const method = split[0].toLocaleLowerCase();
-          const url = split[1];
-          const handler = controller.routes[key];
-
-          memo.push({
-            handler,
-            method,
-            url,
-            middleware: [],
-            routes: controller.routes,
-            controller,
-          });
-
-          return memo;
-        }, this.routes);
+      this.routes.push(...this.buildRouteObjects(controller));
     });
   }
 
-  private addDefaultRoute() {
-    const router = express.Router();
-    this.defaultRouter = router;
+  private buildRouteObjects(controller: IControllerConstructor): IRoute[] {
+    return Object.keys(controller.routes)
+      .reduce<IRoute[]>((memo, key) => {
+        const split = key.split(" ");
+        const method = split[0].toLocaleLowerCase();
+        const url = split[1];
+        const handler = controller.routes[key];
 
-    router.get("*", this.createDefaultRoute("get"));
-    router.post("*", this.createDefaultRoute("post"));
-    router.patch("*", this.createDefaultRoute("patch"));
-    router.delete("*", this.createDefaultRoute("delete"));
+        memo.push({
+          handler,
+          method,
+          url,
+          middleware: [],
+          routes: controller.routes,
+          controller,
+        });
+
+        return memo;
+      }, []);
+  }
+
+  private addDefaultRoute(router: Router) {
+    router.route("*")
+      .get(this.createDefaultRoute("get"))
+      .post(this.createDefaultRoute("post"))
+      .patch(this.createDefaultRoute("patch"))
+      .delete(this.createDefaultRoute("delete"));
 
     this.app.use(router);
   }
 
-  private createDefaultRoute(method) {
+  private createDefaultRoute(method: string) {
     return (req, res, next) => {
-      const matched = this.routes
-        .filter((r) => r.method.toLowerCase() === method.toLowerCase())
-        .some((route) => {
-          const match = matchPath(req.path, { path: route.url, exact: true });
+      const matchingRoutes = findMatchingRoutes(req.path, method, this.routes);
 
-          if (match) {
-            req.params = match.params;
-            this.handler(req, res, next, route.controller.name, route.handler);
-          }
-
-          return !!match;
-        });
-
-      if (!matched) {
+      if (!matchingRoutes.length) {
         return next();
       }
+
+      if (matchingRoutes.length > 1) {
+        const matches = matchingRoutes.map((route, index) => {
+          return `\n${index  + 1}: Controller ${route.controllerName} - method ${route.handler}`;
+        });
+        logger.warn(`Multiple matching routes for route ${method.toUpperCase()} ${req.path}`, ...matches);
+      }
+
+      const route = matchingRoutes[0]
+      req.params = route.params;
+      this.controllerFactory.create(req, res, next, route.controllerName, route.handler);
     };
   }
 
   private createViewEngine() {
-    if (process.env.NODE_ENV === "production") {
+    if (isProdEnv()) {
       this.app.engine("js", createEngine({
         layout: "dist/layout",
       }));
@@ -133,16 +138,5 @@ export default class TravelAgentServer implements ITravelAgentServer {
       ].map((p) => path.join(process.cwd(), p))); // specify the views directory
       this.app.set("view engine", "tsx"); // register the template engine
     }
-  }
-
-  private handler(
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-    controller: string,
-    handler: string,
-  ) {
-    const instance = this.controllerFactory.create(req, res, next, controller, handler);
-    return instance;
   }
 }

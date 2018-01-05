@@ -4,4 +4,7 @@ export default {
   debug: (...args) => {
     return !prod && console.log.apply(console, args);
   },
+  warn: (...args) => {
+    return console.warn.apply(console, args);
+  },
 };

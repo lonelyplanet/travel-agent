@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TravelAgentServer addModules should add the controller routes to the server's routes 1`] = `
+Array [
+  Object {
+    "controller": Object {
+      "default": [Function],
+      "name": "TestController",
+      "routes": Object {
+        "GET /show-stuff": "show",
+      },
+    },
+    "handler": "show",
+    "method": "get",
+    "middleware": Array [],
+    "routes": Object {
+      "GET /show-stuff": "show",
+    },
+    "url": "/show-stuff",
+  },
+  Object {
+    "controller": Object {
+      "default": [Function],
+      "name": "AnotherController",
+      "routes": Object {
+        "GET /data": "fetchData",
+        "POST /data": "saveData",
+      },
+    },
+    "handler": "fetchData",
+    "method": "get",
+    "middleware": Array [],
+    "routes": Object {
+      "GET /data": "fetchData",
+      "POST /data": "saveData",
+    },
+    "url": "/data",
+  },
+  Object {
+    "controller": Object {
+      "default": [Function],
+      "name": "AnotherController",
+      "routes": Object {
+        "GET /data": "fetchData",
+        "POST /data": "saveData",
+      },
+    },
+    "handler": "saveData",
+    "method": "post",
+    "middleware": Array [],
+    "routes": Object {
+      "GET /data": "fetchData",
+      "POST /data": "saveData",
+    },
+    "url": "/data",
+  },
+]
+`;

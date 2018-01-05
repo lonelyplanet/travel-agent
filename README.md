@@ -122,11 +122,11 @@ export default class HomeController extends Controller {
 }
 ```
 
-### Examples
+## Examples
 
 Look in the `packages/travel-agent-example` for a working example that Should Just Work (tm).
 
-### Running the example
+### Running the included example
 
 After cloning the repo, run...
 
@@ -135,6 +135,51 @@ npm i
 lerna bootstrap
 cd packages/travel-agent-example
 npm run start
+```
+
+### Getting started with your own app
+
+#### Install the Yeoman generator
+
+```
+npm install -g yo @lonelyplanet/generator-travel-agent
+```
+
+You'll need to have Node >= 8 on your machine.
+
+#### Create your app
+
+```
+mkdir my-app
+cd my-app
+yo @lonelyplanet/travel-agent
+```
+
+#### Run the app
+
+```
+travel-agent dev
+```
+
+Open http://localhost:3000 to view it in the browser.
+
+#### Other commands
+
+* Add a new module to your app
+
+```
+travel-agent add module my-module-name
+```
+
+* Build the app into the `dist` folder
+
+```
+travel-agent build
+```
+
+* Run the server in production mode
+```
+travel-agent start
 ```
 
 ### Troubleshooting
