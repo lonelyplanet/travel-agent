@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.9"></a>
+## [1.1.9](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.8...@lonelyplanet/generator-travel-agent@1.1.9) (2018-01-05)
+
+
+
+
+**Note:** Version bump only for package @lonelyplanet/generator-travel-agent
+
 <a name="1.1.8"></a>
 ## [1.1.8](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.7...@lonelyplanet/generator-travel-agent@1.1.8) (2017-12-18)
 
