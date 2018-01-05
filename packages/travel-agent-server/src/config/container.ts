@@ -55,6 +55,9 @@ container
 container
   .bind(TYPES.DefaultPostMiddleware)
   .toFactory(() => defaultPostMiddleware);
+
 container.bind("container").toConstantValue(container);
+container.bind(TYPES.ICwd).toConstantValue(process.cwd());
+container.bind(TYPES.IIsProdEnv).toConstantValue(process.env.NODE_ENV === "production");
 
 export default container;

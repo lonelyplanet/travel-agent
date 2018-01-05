@@ -12,6 +12,8 @@ const types = {
   ITravelAgentServer: "ITravelAgentServer",
   express: "express",
   expressRouter: "expressRouter",
+  ICwd: "cwd",
+  IIsProdEnv: "isProdEnv",
 };
 
 export default types;

@@ -3,7 +3,6 @@ import * as React from "react";
 // import * as pretty from "pretty";
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import getBundledAssets from "../utils/getBundledAssets";
-import isProdEnv from "../utils/isProdEnv";
 import Helmet, { HelmetData } from "react-helmet";
 
 export interface ILayoutOptions {
@@ -16,6 +15,7 @@ export interface ILayoutOptions {
 
 export interface IReactEngineOptions {
   layout?: string;
+  isProdEnv?: boolean;
 }
 
 export function getInitialState(options): string {
@@ -58,9 +58,10 @@ export function generateMarkup(req: NodeRequire, filePath: string, options, defa
   );
 };
 
-export default (engineOptions: IReactEngineOptions = {
-  layout: "app/layout",
-}, req = require) => {
+export default (
+  engineOptions: IReactEngineOptions = { layout: "app/layout", isProdEnv: false },
+  req = require
+) => {
   function ReactEngine(filePath: string, options, callback) {
     try {
       const markup = getMarkupWithDoctype(generateMarkup(req, filePath, options, engineOptions.layout));
@@ -71,7 +72,7 @@ export default (engineOptions: IReactEngineOptions = {
 
     } finally {
       // For prod, remove all files from the module cache that are in the view folder.
-      if (isProdEnv()) {
+      if (engineOptions.isProdEnv) {
         const moduleDetectRegEx = /.*\.tsx$/;
         Object.keys(req.cache).forEach((module) => {
           if (moduleDetectRegEx.test(req.cache[module].filename)) {

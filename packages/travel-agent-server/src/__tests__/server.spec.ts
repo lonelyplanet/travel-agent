@@ -1,7 +1,3 @@
-const isProdEnvDefault = jest.fn();
-jest.mock("../utils/isProdEnv", () => ({ default: isProdEnvDefault }));
-import isProdEnv from "../utils/isProdEnv";
-
 const loggerWarn = jest.fn();
 jest.mock("../utils/logger", () => ({
   default: { debug: jest.fn(), warn: loggerWarn },
@@ -37,15 +33,14 @@ import { IControllerFactory, IControllerRegistry, IRoute } from "../interfaces";
 import { IControllerConstructor } from "../classes/controller";
 import TravelAgentServer from "../classes/server";
 
-let TestController = require("./fixtures/controller");
-let TestControllerFactory = require("../classes/controllerFactory");
-
 describe("TravelAgentServer", () => {
   let mockControllerFactory;
   let mockControllerRegistry;
   let mockMiddlewareResolver;
   let mockExpress;
   let mockExpressRouter;
+  const mockCwd = "/dev/my-app";
+  let mockIsProdEnv;
 
   beforeEach(() => {
     mockControllerFactory = jest.fn<IControllerFactory>();
@@ -53,6 +48,7 @@ describe("TravelAgentServer", () => {
     mockMiddlewareResolver = jest.fn<IMiddlewareProvider>();
     mockExpress = jest.fn<express.Application>();
     mockExpressRouter = jest.fn<express.Router>();
+    mockIsProdEnv = false;
   });
 
   afterEach(() => {
@@ -75,50 +71,51 @@ describe("TravelAgentServer", () => {
 
     afterEach(() => {
       createEngineDefault.mockReset();
-      isProdEnvDefault.mockReset();
       engine.mockReset();
       set.mockReset();
       middlewareResolverMiddleware.mockReset();
     });
 
     it("should set up the middleware in the dev environment", () => {
-      isProdEnvDefault.mockReturnValue(false);
       const setupTestExpress = jest.fn<express.Application>(() => ({ engine, set }));
       const server = new TravelAgentServer(
         new setupTestExpress(),
         new mockExpressRouter(),
         new MiddlewareResolver(),
         new mockControllerFactory(),
-        new mockControllerRegistry()
+        new mockControllerRegistry(),
+        mockCwd,
+        mockIsProdEnv,
       );
       const results = server.setup();
 
       expect(middlewareResolverMiddleware).toHaveBeenCalled();
       expect(engine).toHaveBeenCalledWith("tsx", "createEngine called");
       expect(set.mock.calls[0][0]).toEqual("views");
-      expect(set.mock.calls[0][1][0]).toContain("travel-agent-server/app/modules");
-      expect(set.mock.calls[0][1][1]).toContain("travel-agent-server/app");
+      expect(set.mock.calls[0][1][0]).toContain("/dev/my-app/app/modules");
+      expect(set.mock.calls[0][1][1]).toContain("/dev/my-app/app");
       expect(set.mock.calls[1]).toEqual(["view engine", "tsx"]);
     });
 
     it("should set up the middleware in the prod environment", () => {
-      isProdEnvDefault.mockReturnValue(true);
       const setupTestExpress = jest.fn<express.Application>(() => ({ engine, set }));
       const server = new TravelAgentServer(
         new setupTestExpress(),
         new mockExpressRouter(),
         new MiddlewareResolver(),
         new mockControllerFactory(),
-        new mockControllerRegistry()
+        new mockControllerRegistry(),
+        mockCwd,
+        true,
       );
       const results = server.setup();
 
       expect(middlewareResolverMiddleware).toHaveBeenCalled();
       expect(engine).toHaveBeenCalledWith("js", "createEngine called");
-      expect(createEngineDefault).toHaveBeenCalledWith({ layout: "dist/layout" });
+      expect(createEngineDefault).toHaveBeenCalledWith({ layout: "dist/layout", isProdEnv: true });
       expect(set.mock.calls[0][0]).toEqual("views");
-      expect(set.mock.calls[0][1][0]).toContain("travel-agent-server/dist/modules");
-      expect(set.mock.calls[0][1][1]).toContain("travel-agent-server/dist");
+      expect(set.mock.calls[0][1][0]).toContain("/dev/my-app/dist/modules");
+      expect(set.mock.calls[0][1][1]).toContain("/dev/my-app/dist");
       expect(set.mock.calls[1]).toEqual(["view engine", "js"]);
     });
   });
@@ -206,7 +203,9 @@ describe("TravelAgentServer", () => {
         new postSetupTestExpressRouter(),
         new postSetupTestMiddlewareResolver(),
         new ControllerFactory(jest.fn()),
-        new mockControllerRegistry()
+        new mockControllerRegistry(),
+        mockCwd,
+        mockIsProdEnv,
       );
       server.routes = routes;
       const results = server.postSetup();
@@ -266,7 +265,9 @@ describe("TravelAgentServer", () => {
         new mockExpressRouter(),
         new mockMiddlewareResolver(),
         new mockControllerFactory(),
-        new ControllerRegistry(jest.fn<NodeRequire>()),
+        new ControllerRegistry(jest.fn<NodeRequire>(), mockCwd, mockIsProdEnv),
+        mockCwd,
+        mockIsProdEnv,
       );
       const results = server.addModules();
       expect(server.routes).toMatchSnapshot();
@@ -282,7 +283,9 @@ describe("TravelAgentServer", () => {
         new mockExpressRouter(),
         new mockMiddlewareResolver(),
         new mockControllerFactory(),
-        new mockControllerRegistry()
+        new mockControllerRegistry(),
+        mockCwd,
+        mockIsProdEnv,
       );
       const results = server.use("a", 2, ["three"]);
       expect(use).toHaveBeenCalledWith("a", 2, ["three"]);
@@ -297,6 +300,8 @@ describe("TravelAgentServer", () => {
         new mockMiddlewareResolver(),
         new mockControllerFactory(),
         new mockControllerRegistry(),
+        mockCwd,
+        mockIsProdEnv,
       );
       const results = server.bind("FooService");
       expect(server.container.isBound("FooService")).toBeTruthy();
