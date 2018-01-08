@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.5"></a>
+## [1.6.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.4...@lonelyplanet/travel-agent@1.6.5) (2018-01-08)
+
+
+### Bug Fixes
+
+* Fix paths for css modules to generate classnames correctly ([29b6c68](https://github.com/lonelyplanet/travel-agent/commit/29b6c68))
+
+
+
+
 <a name="1.6.4"></a>
 ## [1.6.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.3...@lonelyplanet/travel-agent@1.6.4) (2018-01-05)
 
