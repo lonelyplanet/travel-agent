@@ -13,6 +13,7 @@ const styleLoaders = {
       modules: true,
       minimize: false,
       localIdentName: "[name]__[local]___[hash:base64:5]",
+      context: path.resolve(process.cwd(), "app"),
     },
   },
   postcss: {
@@ -45,11 +46,7 @@ export const tsLoader = {
 export const cssLoader = {
   test: /\.css$/,
   exclude: /node_modules/,
-  use: [
-    "style-loader",
-    styleLoaders.css,
-    styleLoaders.postcss,
-  ],
+  use: ["style-loader", styleLoaders.css, styleLoaders.postcss],
 };
 
 const extractCssLoader = {
@@ -57,10 +54,7 @@ const extractCssLoader = {
   include: /app/,
   loader: ExtractTextPlugin.extract({
     fallback: "style-loader",
-    use: [
-      styleLoaders.css,
-      styleLoaders.postcss,
-    ],
+    use: [styleLoaders.css, styleLoaders.postcss],
   }),
 };
 

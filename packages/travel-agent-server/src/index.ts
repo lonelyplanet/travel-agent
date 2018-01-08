@@ -3,18 +3,18 @@ import * as dotenv from "dotenv";
 import * as http from "http";
 import { inject, injectable } from "inversify";
 import * as path from "path";
-import {
-  IController,
-} from "./classes/controller";
+import { IController } from "./classes/controller";
 import container from "./config/container";
-import {
-  ITravelAgentServer,
-} from "./interfaces";
+import { ITravelAgentServer } from "./interfaces";
 import TYPES from "./types";
 import * as hook from "css-modules-require-hook";
 
 hook({
-  generateScopedName: '[name]__[local]___[hash:base64:5]',
+  generateScopedName: "[name]__[local]___[hash:base64:5]",
+  rootDir: path.resolve(
+    process.cwd(),
+    process.env.NODE_ENV === "production" ? "dist" : "app",
+  ),
 });
 
 export { inject, injectable } from "inversify";
@@ -22,8 +22,8 @@ export { Controller } from "./classes/controller";
 
 export * from "./classes/decorators";
 
-function normalizePort(val: number|string): number|string|boolean {
-  const port: number = (typeof val === "string") ? parseInt(val, 10) : val;
+function normalizePort(val: number | string): number | string | boolean {
+  const port: number = typeof val === "string" ? parseInt(val, 10) : val;
   if (isNaN(port)) {
     return val;
   } else if (port >= 0) {
@@ -34,25 +34,29 @@ function normalizePort(val: number|string): number|string|boolean {
 }
 
 dotenv.config({
-  path: (process.env.ENV_PATH || path.join(process.cwd(), ".env")),
+  path: process.env.ENV_PATH || path.join(process.cwd(), ".env"),
   silent: true,
 });
 
-const start = (options: {
-  startWithoutHttp?: boolean,
-} = {
-  startWithoutHttp: false,
-}) => {
+const start = (
+  options: {
+    startWithoutHttp?: boolean;
+  } = {
+    startWithoutHttp: false,
+  },
+) => {
   const port = normalizePort(process.env.PORT || 3000);
 
-  const travelAgent = container.get<ITravelAgentServer>(TYPES.ITravelAgentServer);
+  const travelAgent = container.get<ITravelAgentServer>(
+    TYPES.ITravelAgentServer,
+  );
 
   try {
     travelAgent.setup();
     travelAgent.addModules();
     travelAgent.postSetup();
-  } catch(e) {
-    console.log("An error occured starting the server...")
+  } catch (e) {
+    console.log("An error occured starting the server...");
     console.log(e);
     process.exit(1);
   }
@@ -69,7 +73,7 @@ const start = (options: {
     if (error.syscall !== "listen") {
       throw error;
     }
-    const bind = (typeof port === "string") ? "Pipe " + port : "Port " + port;
+    const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
     switch (error.code) {
       case "EACCES":
         console.error(`${bind} requires elevated privileges`);
@@ -87,9 +91,10 @@ const start = (options: {
   function createOnListening(server) {
     return () => {
       const addr = server.address();
-      const bind = (typeof addr === "string") ? `pipe ${addr}` : `port ${addr.port}`;
+      const bind =
+        typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
       console.log(`Listening on ${bind}`);
-    }
+    };
   }
 
   return travelAgent;
