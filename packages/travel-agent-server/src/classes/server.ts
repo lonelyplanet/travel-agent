@@ -8,7 +8,6 @@ import { IMiddlewareProvider } from "../middleware/middlewareProvider";
 import TYPES from "../types";
 import { IController, IControllerConstructor } from "./controller";
 import createEngine from "./reactEngine";
-import isProdEnv from "../utils/isProdEnv";
 import findMatchingRoutes from "../utils/findMatchingRoutes";
 import logger from "../utils/logger";
 
@@ -21,6 +20,8 @@ export default class TravelAgentServer implements ITravelAgentServer {
   public middlewareResolver: IMiddlewareProvider;
   public routes: IRoute[];
   private defaultRouter: Router;
+  private cwd: string;
+  private isProdEnv: boolean;
 
   constructor(
     @inject(TYPES.express) express: Application,
@@ -28,6 +29,8 @@ export default class TravelAgentServer implements ITravelAgentServer {
     @inject(TYPES.IMiddlewareProvider) middlewareResolver: IMiddlewareProvider,
     @inject(TYPES.IControllerFactory) controllerFactory: IControllerFactory,
     @inject(TYPES.IControllerRegistry) controllerRegistry: IControllerRegistry,
+    @inject(TYPES.ICwd) cwd: string,
+    @inject(TYPES.IIsProdEnv) isProdEnv: boolean,
   ) {
     this.app = express;
     this.middlewareResolver = middlewareResolver;
@@ -36,6 +39,8 @@ export default class TravelAgentServer implements ITravelAgentServer {
     this.container = container;
     this.routes = [];
     this.defaultRouter = expressRouter;
+    this.cwd = cwd;
+    this.isProdEnv = isProdEnv;
 
     this.createDefaultRoute = this.createDefaultRoute.bind(this);
   }
@@ -121,21 +126,22 @@ export default class TravelAgentServer implements ITravelAgentServer {
   }
 
   private createViewEngine() {
-    if (isProdEnv()) {
+    if (this.isProdEnv) {
       this.app.engine("js", createEngine({
         layout: "dist/layout",
+        isProdEnv: true,
       }));
       this.app.set("views", [
         "dist/modules",
         "dist",
-      ].map((p) => path.join(process.cwd(), p))); // specify the views directory
+      ].map((p) => path.join(this.cwd, p))); // specify the views directory
       this.app.set("view engine", "js"); // register the template engine
     } else {
       this.app.engine("tsx", createEngine());
       this.app.set("views", [
         "app/modules",
         "app",
-      ].map((p) => path.join(process.cwd(), p))); // specify the views directory
+      ].map((p) => path.join(this.cwd, p))); // specify the views directory
       this.app.set("view engine", "tsx"); // register the template engine
     }
   }

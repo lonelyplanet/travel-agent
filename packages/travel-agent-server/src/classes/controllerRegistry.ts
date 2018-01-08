@@ -3,22 +3,30 @@ import * as path from "path";
 import { inject, injectable } from "inversify";
 import { IControllerConstructor } from "./controller";
 import getFilePaths from "../utils/getFilePaths";
-import isProdEnv from "../utils/isProdEnv";
+import TYPES from "../types";
 import { IControllerRegistry, IRequireConstructor } from "../interfaces/index";
 
 @injectable()
 export default class ControllerRegistry implements IControllerRegistry {
   public require: IRequireConstructor;
   public controllers: IControllerConstructor[];
+  private cwd: string;
+  private isProdEnv: boolean
 
-  constructor( @inject("IRequireConstructor") require) {
+  constructor(
+    @inject("IRequireConstructor") require,
+    @inject(TYPES.ICwd) cwd: string,
+    @inject(TYPES.IIsProdEnv) isProdEnv: boolean,
+  ) {
     this.require = require;
     this.controllers = [];
+    this.cwd = cwd;
+    this.isProdEnv = isProdEnv;
   }
 
   public register() {
-    const controllerPath = path.join(process.cwd());
-    const baseDir = isProdEnv() ? "dist" : "app";
+    const controllerPath = path.join(this.cwd);
+    const baseDir = this.isProdEnv ? "dist" : "app";
     const controllers = getFilePaths(`${baseDir}/modules/**/*controller*(.js|.ts)`);
 
     controllers.forEach((controller) => {

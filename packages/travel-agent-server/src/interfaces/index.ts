@@ -46,6 +46,9 @@ export interface IRoute {
 
 export type IRequire = (module: string) => any;
 
+export type ICwd = string;
+export type IIsProdEnv = boolean;
+
 export interface IRequireConstructor extends IRequire {
   resolve(module: string): string;
 }

@@ -2,10 +2,6 @@ const getBundledAssetsDefault = jest.fn();
 jest.mock("../utils/getBundledAssets", () => ({ default: getBundledAssetsDefault }));
 import getBundledAssets from "../utils/getBundledAssets";
 
-const isProdEnvDefault = jest.fn();
-jest.mock("../utils/isProdEnv", () => ({ default: isProdEnvDefault }));
-import isProdEnv from "../utils/isProdEnv";
-
 import reactEngine, { getInitialState, generateMarkup, getMarkupWithDoctype } from "../classes/reactEngine";
 
 const TestComponent = require("./fixtures/component");
@@ -29,7 +25,6 @@ describe("reactEngine", () => {
 
   beforeEach(() => {
     getBundledAssetsDefault.mockReturnValue({ "vendor.js": "/assets/vendor.js" });
-    isProdEnvDefault.mockReturnValue(false);
     callback = jest.fn();
     req = jest.fn<NodeRequire>(() => ({ cache: "stuff" }))
       .mockImplementationOnce((id: string) => TestComponent)
@@ -93,8 +88,7 @@ describe("reactEngine", () => {
     });
 
     it("should remove cached views from require in a prod environment", () => {
-      isProdEnvDefault.mockReturnValue(true);
-      reactEngine({ layout: "app/layout" }, req)(filePath, options, callback);
+      reactEngine({ layout: "app/layout", isProdEnv: true }, req)(filePath, options, callback);
 
       expect(callback).toHaveBeenCalled();
       expect(req.cache).toEqual({ "ts-file.ts": { filename: "ts-file.ts" } });

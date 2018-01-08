@@ -3,7 +3,8 @@ import { inject, injectable } from "inversify";
 import * as path from "path";
 import logger from "../utils/logger";
 import { IPrometheusConfigurationOptions } from "../middleware/prometheus";
-import { IRequireConstructor } from "../interfaces/index";
+import { IRequireConstructor, ICwd } from "../interfaces/index";
+import TYPES from "../types";
 
 export interface ICustomMiddlewareObject {
   route?: string,
@@ -36,16 +37,20 @@ export interface IUserConfigResolver {
 
 @injectable()
 export default class UserConfigResolver implements IUserConfigResolver {
-  public middlewarePath = path.join(process.cwd(), "./config");
+  public middlewarePath: string;
   public require: IRequireConstructor;
+  private cwd: string;
 
-  constructor( @inject("IRequireConstructor") require) {
+  constructor(
+    @inject(TYPES.IRequireConstructor) require,
+    @inject(TYPES.ICwd) cwd: string,
+  ) {
     this.require = require;
+    this.middlewarePath = path.join(cwd, "./config");
   }
 
   public resolve() {
     let userConfig: Partial<IUserConfig> = {};
-
     try {
       const customMiddlewarePath = this.require.resolve(this.middlewarePath);
       userConfig = this.require(customMiddlewarePath) as IUserConfig;
