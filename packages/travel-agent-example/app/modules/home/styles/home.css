@@ -1,14 +1,20 @@
 .home {
-  color: red;
-  background: green;
-  outline: 1px solid black;
+  color: map(colors, accentRed);
+  background: map(colors, accentGreen);
+  font-family: map(fonts, benton);
+  font-size: map(typography, fontSizeHeading1)px;
+  outline: 1px solid map(colors, bgOverlay);
+
+  @media (min-width: map(mq, min, 720)) {
+    background: map(colors, accentPink);
+  }
 }
 
 .foo {
-  color: green;
+  color: map(colors, accentGreen);
 }
 
 .bar {
-  color: blue;
-  background: black;
+  color: map(colors, accentBlue);
+  background: map(colors, bgOverlay);
 }
