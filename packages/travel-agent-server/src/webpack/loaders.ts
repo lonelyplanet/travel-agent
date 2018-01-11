@@ -3,7 +3,16 @@ import * as ExtractTextPlugin from "extract-text-webpack-plugin";
 import * as autoprefixer from "autoprefixer";
 import * as map from "postcss-map";
 import * as nested from "postcss-nested";
-import backpackStyles from "backpack-ui/dist/styles";
+import {
+  colors,
+  dimensions,
+  fonts,
+  mq,
+  spacing,
+  timing,
+  typography,
+  zIndex,
+} from "backpack-ui/dist/styles";
 
 const styleLoaders = {
   css: {
@@ -21,7 +30,21 @@ const styleLoaders = {
     options: {
       plugins: () => [
         map({
-          maps: [backpackStyles],
+          maps: [
+            { colors },
+            { dimensions },
+            {
+              fonts: {
+                benton: fonts.benton.join(", "),
+                miller: fonts.miller.join(", "),
+              },
+            },
+            { mq },
+            { spacing },
+            { timing },
+            { typography },
+            { zIndex },
+          ],
         }),
         nested(),
         autoprefixer(),
