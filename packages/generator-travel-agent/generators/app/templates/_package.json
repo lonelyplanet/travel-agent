@@ -7,6 +7,7 @@
     "build:production": "travel-agent build -p",
     "dev": "travel-agent dev",
     "lint": "tslint -p tsconfig.json -c tslint.json './app/**/*.ts'",
+    "stylelint": "stylelint ./app/**/*.css",
     "precommit": "npm run lint && npm run test",
     "start:production": "travel-agent start",
     "test": "jest"
@@ -25,6 +26,8 @@
     "@types/webpack-env": "^1.13.2",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.0.0",
     "tslint": "^5.8.0"
   },
   "jest": {
