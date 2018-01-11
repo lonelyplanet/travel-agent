@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.10"></a>
+## [1.1.10](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.9...@lonelyplanet/generator-travel-agent@1.1.10) (2018-01-11)
+
+
+### Bug Fixes
+
+* Add editorconfig, stylelintrc to generator ([a45cad8](https://github.com/lonelyplanet/travel-agent/commit/a45cad8))
+* Add stylelint to generator's package.json ([3285008](https://github.com/lonelyplanet/travel-agent/commit/3285008))
+
+
+
+
 <a name="1.1.9"></a>
 ## [1.1.9](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.8...@lonelyplanet/generator-travel-agent@1.1.9) (2018-01-05)
 
