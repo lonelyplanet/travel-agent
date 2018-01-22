@@ -3,3 +3,4 @@ dist
 public
 lerna-debug.log
 coverage
+.idea

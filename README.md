@@ -112,7 +112,7 @@ export default class HomeController extends Controller {
   }
 
   @get("/")
-  async show() {
+  public async show() {
     const foo = await this.foo.fetch();
 
     this.response.render("home", {
@@ -178,6 +178,7 @@ travel-agent build
 ```
 
 * Run the server in production mode
+
 ```
 travel-agent start
 ```
