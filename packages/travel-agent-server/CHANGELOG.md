@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.7"></a>
+## [1.6.7](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.6...@lonelyplanet/travel-agent@1.6.7) (2018-01-22)
+
+
+### Bug Fixes
+
+* Add link to readme in travel agent server package ([2bf8a54](https://github.com/lonelyplanet/travel-agent/commit/2bf8a54))
+
+
+
+
 <a name="1.6.6"></a>
 ## [1.6.6](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.5...@lonelyplanet/travel-agent@1.6.6) (2018-01-12)
 
