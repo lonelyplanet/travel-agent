@@ -75,6 +75,7 @@
     "nodemon": "^1.12.1",
     "path-to-regexp": "^2.1.0",
     "postcss": "^6.0.14",
+    "postcss-grid-span": "^1.0.0",
     "postcss-loader": "^2.0.9",
     "postcss-map": "^0.9.0",
     "postcss-nested": "^3.0.0",
