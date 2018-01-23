@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as ExtractTextPlugin from "extract-text-webpack-plugin";
 import * as autoprefixer from "autoprefixer";
+import * as gridSpan from "postcss-grid-span";
 import * as map from "postcss-map";
 import * as nested from "postcss-nested";
 import {
@@ -45,6 +46,12 @@ const styleLoaders = {
             { typography },
             { zIndex },
           ],
+        }),
+        gridSpan({
+          appendUnit: true,
+          columns: 12,
+          gap: 30,
+          maxWidth: 1290,
         }),
         nested(),
         autoprefixer(),
