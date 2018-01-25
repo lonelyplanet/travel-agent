@@ -76,7 +76,7 @@
     "path-to-regexp": "^2.1.0",
     "postcss": "^6.0.14",
     "postcss-custom-media": "^6.0.0",
-    "postcss-grid-span": "^1.0.0",
+    "postcss-grid-span": "^1.1.0",
     "postcss-loader": "^2.0.9",
     "postcss-map": "^0.9.0",
     "postcss-nested": "^3.0.0",
