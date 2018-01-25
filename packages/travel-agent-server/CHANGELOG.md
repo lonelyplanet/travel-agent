@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.7.1"></a>
+## [1.7.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.0...@lonelyplanet/travel-agent@1.7.1) (2018-01-25)
+
+
+### Bug Fixes
+
+* Update postcss-grid-span to 1.1.0 ([#20](https://github.com/lonelyplanet/travel-agent/issues/20)) ([cf902a0](https://github.com/lonelyplanet/travel-agent/commit/cf902a0))
+
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.7...@lonelyplanet/travel-agent@1.7.0) (2018-01-25)
 
