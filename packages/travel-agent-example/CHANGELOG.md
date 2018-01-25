@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.10"></a>
+## [1.3.10](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.9...travel-agent-example@1.3.10) (2018-01-25)
+
+
+### Bug Fixes
+
+* Update example app styles to show postcss examples ([e05fcff](https://github.com/lonelyplanet/travel-agent/commit/e05fcff))
+* Update example app styles with custom media query example ([0699ffe](https://github.com/lonelyplanet/travel-agent/commit/0699ffe))
+
+
+
+
 <a name="1.3.9"></a>
 ## [1.3.9](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.8...travel-agent-example@1.3.9) (2018-01-22)
 

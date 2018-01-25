@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.7...@lonelyplanet/travel-agent@1.7.0) (2018-01-25)
+
+
+### Features
+
+* Install postcss-custom-media plugin ([0d96189](https://github.com/lonelyplanet/travel-agent/commit/0d96189))
+* Install postcss-grid-span plugin ([faaa2af](https://github.com/lonelyplanet/travel-agent/commit/faaa2af))
+
+
+
+
 <a name="1.6.7"></a>
 ## [1.6.7](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.6.6...@lonelyplanet/travel-agent@1.6.7) (2018-01-22)
 
