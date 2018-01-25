@@ -4,6 +4,7 @@ import * as autoprefixer from "autoprefixer";
 import * as gridSpan from "postcss-grid-span";
 import * as map from "postcss-map";
 import * as nested from "postcss-nested";
+import * as customMedia from "postcss-custom-media";
 import {
   colors,
   dimensions,
@@ -53,6 +54,7 @@ const styleLoaders = {
           gap: 30,
           maxWidth: 1290,
         }),
+        customMedia(),
         nested(),
         autoprefixer(),
       ],

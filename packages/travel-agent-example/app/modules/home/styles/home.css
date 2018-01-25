@@ -1,3 +1,5 @@
+@custom-media --tablet (min-width: map(mq, min, 768));
+
 .home {
   display: grid;
   color: map(colors, accentRed);
@@ -7,7 +9,7 @@
   max-width: span(4);
   padding: 2em;
 
-  @media (min-width: map(mq, min, 768)) {
+  @media (--tablet) {
     max-width: span(10);
   }
 }
