@@ -1,6 +1,6 @@
 {
   "name": "@lonelyplanet/travel-agent",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "main": "dist/index.js",
   "repository": {},
   "scripts": {

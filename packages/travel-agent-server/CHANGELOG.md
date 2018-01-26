@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.7.2"></a>
+## [1.7.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.1...@lonelyplanet/travel-agent@1.7.2) (2018-01-26)
+
+
+### Bug Fixes
+
+* Bust require cache in development mode ([4e1decd](https://github.com/lonelyplanet/travel-agent/commit/4e1decd))
+
+
+
+
 <a name="1.7.1"></a>
 ## [1.7.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.0...@lonelyplanet/travel-agent@1.7.1) (2018-01-25)
 
