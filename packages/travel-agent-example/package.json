@@ -1,6 +1,6 @@
 {
   "name": "travel-agent-example",
-  "version": "1.3.12",
+  "version": "1.3.13",
   "private": true,
   "scripts": {
     "build": "travel-agent build",
@@ -10,7 +10,7 @@
     "test": "echo 'plz I can haz tests'"
   },
   "dependencies": {
-    "@lonelyplanet/travel-agent": "^1.7.2",
+    "@lonelyplanet/travel-agent": "^1.7.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "reflect-metadata": "^0.1.10",

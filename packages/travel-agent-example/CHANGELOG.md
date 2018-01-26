@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.13"></a>
+## [1.3.13](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.12...travel-agent-example@1.3.13) (2018-01-26)
+
+
+
+
+**Note:** Version bump only for package travel-agent-example
+
 <a name="1.3.12"></a>
 ## [1.3.12](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.11...travel-agent-example@1.3.12) (2018-01-26)
 

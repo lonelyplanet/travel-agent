@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.7.3"></a>
+## [1.7.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.2...@lonelyplanet/travel-agent@1.7.3) (2018-01-26)
+
+
+### Bug Fixes
+
+* Bump package-locks ([8a52110](https://github.com/lonelyplanet/travel-agent/commit/8a52110))
+
+
+
+
 <a name="1.7.2"></a>
 ## [1.7.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.1...@lonelyplanet/travel-agent@1.7.2) (2018-01-26)
 
