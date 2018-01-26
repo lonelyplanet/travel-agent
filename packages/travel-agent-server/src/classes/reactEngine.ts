@@ -7,9 +7,9 @@ import Helmet, { HelmetData } from "react-helmet";
 
 export interface ILayoutOptions {
   [key: string]: any;
-  assets: { [key: string]: string },
-  body: string,
-  initialState: string,
+  assets: { [key: string]: string };
+  body: string;
+  initialState: string;
   head: HelmetData;
 }
 
@@ -31,9 +31,14 @@ export function getInitialState(options): string {
 export function getMarkupWithDoctype(markup: string): string {
   return `<!DOCTYPE html>\
   ${markup}`;
-};
+}
 
-export function generateMarkup(req: NodeRequire, filePath: string, options, defaultLayout: string): string {
+export function generateMarkup(
+  req: NodeRequire,
+  filePath: string,
+  options,
+  defaultLayout: string,
+): string {
   const Component = req(`${filePath}`).default;
   const markup = renderToString(React.createElement(Component, options, null));
 
@@ -41,7 +46,8 @@ export function generateMarkup(req: NodeRequire, filePath: string, options, defa
     return markup;
   }
 
-  const Layout = req(path.join(process.cwd(), options.layout || defaultLayout)).default;
+  const Layout = req(path.join(process.cwd(), options.layout || defaultLayout))
+    .default;
   const assets = getBundledAssets();
   const initialState = getInitialState(options);
   const head = Helmet.renderStatic();
@@ -56,25 +62,28 @@ export function generateMarkup(req: NodeRequire, filePath: string, options, defa
       head,
     }),
   );
-};
+}
 
 export default (
-  engineOptions: IReactEngineOptions = { layout: "app/layout", isProdEnv: false },
-  req = require
+  engineOptions: IReactEngineOptions = {
+    layout: "app/layout",
+    isProdEnv: false,
+  },
+  req = require,
 ) => {
   function ReactEngine(filePath: string, options, callback) {
     try {
-      const markup = getMarkupWithDoctype(generateMarkup(req, filePath, options, engineOptions.layout));
+      const markup = getMarkupWithDoctype(
+        generateMarkup(req, filePath, options, engineOptions.layout),
+      );
       return callback(null, markup);
-
     } catch (e) {
       return callback(e);
-
     } finally {
       // For prod, remove all files from the module cache that are in the view folder.
-      if (engineOptions.isProdEnv) {
+      if (!engineOptions.isProdEnv) {
         const moduleDetectRegEx = /.*\.tsx$/;
-        Object.keys(req.cache).forEach((module) => {
+        Object.keys(req.cache).forEach(module => {
           if (moduleDetectRegEx.test(req.cache[module].filename)) {
             delete req.cache[module];
           }
