@@ -6,8 +6,8 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "precommit": "npm run test",
-    "prepublishOnly": "npm run test && npm run build",
-    "publish": "lerna publish --conventional-commits",
+    "preship": "npm run test && npm run build",
+    "ship": "lerna publish --conventional-commits",
     "release": "standard-version",
     "test": "lerna run test"
   },
