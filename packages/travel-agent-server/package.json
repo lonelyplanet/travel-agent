@@ -21,6 +21,7 @@
     "autoprefixer": "^7.2.3",
     "jest": "^21.2.1",
     "node-mocks-http": "^1.6.6",
+    "postcss-calc": "^6.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "reflect-metadata": "^0.1.10",

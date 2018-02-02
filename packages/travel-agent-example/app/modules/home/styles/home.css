@@ -3,6 +3,7 @@
 .home {
   display: grid;
   color: map(colors, accentRed);
+  font-size: calc(map(typography, fontSizeHeading6) * 1px);
   outline: 1px solid map(colors, borderPrimary);
   margin-left: auto;
   margin-right: auto;
