@@ -23,24 +23,23 @@ export const applyMiddleware = (
       app.use(path, fn);
     } else if (typeof key === "object" && key) {
       const options = key as ICustomMiddlewareObject;
-
+      const route = options.route || "/";
       if (options.resolve) {
-        app.use(options.route || "/", options.resolve());
+        app.use(route, options.resolve());
       } else {
-        app.use(options.route || "/", options.fn);
+        app.use(route, options.fn);
       }
     } else {
       app.use(key);
     }
   });
-
   return allMiddleware;
 };
 
 export interface IMiddlewareProvider {
-  middleware(app: ITravelAgentServer, env?: string): ICustomMiddleware[];
-  beforeRoutesMiddleware(app: ITravelAgentServer, env?: string): ICustomMiddleware[];
-  postMiddleware(app: ITravelAgentServer, env?: string): ICustomMiddleware[];
+  middleware(app: ITravelAgentServer): ICustomMiddleware[];
+  beforeRoutesMiddleware(app: ITravelAgentServer): ICustomMiddleware[];
+  postMiddleware(app: ITravelAgentServer): ICustomMiddleware[];
 }
 
 @injectable()
@@ -58,45 +57,47 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
 
   @inject(TYPES.DefaultPostMiddleware)
   public defaultPostMiddleware: (
-    env: string,
+    isProdEnv: boolean,
     options?: IUserConfig,
     app?: ITravelAgentServer,
   ) => ICustomMiddleware[];
 
   public userConfigResolver: IUserConfigResolver;
   public userConfig: IUserConfig;
+  private isProdEnv: boolean
 
   constructor(
+    @inject(TYPES.IIsProdEnv) isProdEnv: boolean,
     @inject(TYPES.IUserConfigResolver)
     customMiddlewareResolver?: IUserConfigResolver,
   ) {
+    this.isProdEnv = isProdEnv;
     this.userConfigResolver = customMiddlewareResolver;
     this.userConfig = this.userConfigResolver.resolve();
   }
 
-  public middleware(app: ITravelAgentServer, env = process.env.NODE_ENV) {
+  public middleware(app: ITravelAgentServer) {
     return applyMiddleware(
       app,
       this.defaultMiddleware(this.userConfig),
-      env !== "production" ? this.defaultDevMiddleware(this.userConfig) : [],
-      env === "production"
+      this.isProdEnv
         ? this.defaultProductionMiddleware(this.userConfig)
-        : [],
+        : this.defaultDevMiddleware(this.userConfig),
       this.userConfig.middleware,
     );
   }
 
-  public postMiddleware(app: ITravelAgentServer, env = process.env.NODE_ENV) {
+  public postMiddleware(app: ITravelAgentServer) {
     return applyMiddleware(
       app,
-      this.defaultPostMiddleware(env, {
+      this.defaultPostMiddleware(this.isProdEnv, {
         ...this.userConfig,
       }, app),
       this.userConfig.postMiddleware || [],
     );
   }
 
-  public beforeRoutesMiddleware(app: ITravelAgentServer, env = process.env.NODE_ENV) {
+  public beforeRoutesMiddleware(app: ITravelAgentServer) {
     const config = this.userConfig;
     const middleware = [
       createPrometheusMiddleware({

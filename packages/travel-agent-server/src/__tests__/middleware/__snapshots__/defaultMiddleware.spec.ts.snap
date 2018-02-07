@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defaultMiddleware defaultProductionMiddleware should return the production middleware (without options or name) 1`] = `
+Array [
+  Object {
+    "excludes": Array [
+      "body",
+      "short-body",
+      "req-headers",
+      "res-headers",
+      "req",
+      "res",
+      "incoming",
+      "response-hrtime",
+    ],
+    "name": "travel-agent-server",
+    "parseUA": false,
+  },
+]
+`;

@@ -81,7 +81,7 @@ describe("TravelAgentServer", () => {
       const server = new TravelAgentServer(
         new setupTestExpress(),
         new mockExpressRouter(),
-        new MiddlewareResolver(),
+        new MiddlewareResolver(mockIsProdEnv),
         new mockControllerFactory(),
         new mockControllerRegistry(),
         mockCwd,
@@ -102,7 +102,7 @@ describe("TravelAgentServer", () => {
       const server = new TravelAgentServer(
         new setupTestExpress(),
         new mockExpressRouter(),
-        new MiddlewareResolver(),
+        new MiddlewareResolver(true),
         new mockControllerFactory(),
         new mockControllerRegistry(),
         mockCwd,

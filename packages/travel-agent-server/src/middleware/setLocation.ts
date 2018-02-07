@@ -5,10 +5,6 @@ export default (
   res: express.Response,
   next: express.NextFunction,
 ) => {
-  const err = new Error("Not Found");
-  (err as any).status = 404;
-
-  res.status(404);
-
-  next(err);
+  res.locals.location = req.url;
+  next();
 };

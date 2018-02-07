@@ -41,7 +41,7 @@
       "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
     },
     "testMatch": [
-      "**/__tests__/*.spec.(ts|tsx)"
+      "**/__tests__/**/*.spec.(ts|tsx)"
     ]
   },
   "peerDependencies": {
