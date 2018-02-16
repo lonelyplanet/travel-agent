@@ -12,4 +12,4 @@ export default ({ body, assets, initialState }) => (
       <script src={assets["app.js"]} />
     </body>
   </html>
-)
+);
