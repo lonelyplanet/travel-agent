@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export default ({ body, assets, initialState }) => (
-  <html>
+  <html lang="en">
     <body>
       <div id="app" dangerouslySetInnerHTML={{ __html: body }}></div>
 
@@ -12,4 +12,4 @@ export default ({ body, assets, initialState }) => (
       <script src={assets["app.js"]} />
     </body>
   </html>
-)
+);

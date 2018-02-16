@@ -37,7 +37,7 @@ export default class HomeController extends Controller {
   html() {
     this.response.set("content-type", "text/html");
     this.response.send(`<!DOCTYPE html>
-    <html>
+    <html lang="en">
     <body>
     Hello world ${this.request.params.id}
     </body>
