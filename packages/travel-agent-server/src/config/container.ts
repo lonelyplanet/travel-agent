@@ -8,11 +8,11 @@ import UserConfigResolver, {
   IUserConfigResolver,
 } from "../classes/userConfigResolver";
 import {
-  defaultDevMiddelware,
+  defaultDevMiddleware,
   defaultMiddleware,
   defaultProductionMiddleware,
   defaultPostMiddleware,
-} from "../middleware/default";
+} from "../middleware/defaultMiddleware";
 import MiddlewareProvider, {
   IMiddlewareProvider,
 } from "../middleware/middlewareProvider";
@@ -51,7 +51,7 @@ container
   .toFactory(() => defaultProductionMiddleware);
 container
   .bind(TYPES.DefaultDevMiddleware)
-  .toFactory(() => defaultDevMiddelware);
+  .toFactory(() => defaultDevMiddleware);
 container
   .bind(TYPES.DefaultPostMiddleware)
   .toFactory(() => defaultPostMiddleware);

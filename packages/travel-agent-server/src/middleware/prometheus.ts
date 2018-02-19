@@ -37,32 +37,29 @@ const prometheusHttpRequestBuckets = [
 ];
 
 export function customNormalize(url: string, routes: IPromRoute[], options?) {
+  const [path] = url.split("?");
+
   // count all docs (no matter which file) as a single url
   for (const route of routes) {
     const routeRegex = pathToRegexp(route.route);
-    const [path] = url.split("?");
 
     if (routeRegex.exec(path)) {
       return route.name;
     }
   }
 
-  return options.defaultPath || url;
+  return options && options.defaultPath ? options.defaultPath : url;
 }
 
 export default function createPrometheusMiddleware({
   routes = [],
   defaultPath,
 }: IPrometheusConfigurationOptions) {
-
   promBundle.normalizePath = req => {
     const { url } = req;
-
-    const normalized = customNormalize(url, routes, {
+    return customNormalize(url, routes, {
       defaultPath,
     });
-
-    return normalized;
   };
 
   promBundle.promClient.register.setDefaultLabels({ direction: "inbound" });

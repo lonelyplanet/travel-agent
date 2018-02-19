@@ -7,7 +7,8 @@ import errorHandler from "./errorHandler";
 import catchAll from "./catchAll";
 import { IUserConfig } from "../classes/userConfigResolver";
 import AirbrakeCreds from "../classes/airbrakeCreds";
-import createPrometheusMiddleware from "./prometheus";
+import setLocation from "./setLocation";
+import handleFavicon from "./handleFavicon";
 import { ITravelAgentServer } from "../interfaces/index";
 
 const health = express.Router();
@@ -17,42 +18,37 @@ health.get("/health-check", (req, res) => {
   });
 });
 
-export const defaultMiddleware = (options?: IUserConfig) => [
-  require("helmet")(),
-  require("body-parser").urlencoded({ extended: false }),
-  require("cookie-parser")(),
-  require("cors")(),
-  require("body-parser").json(),
-  (req, res, next) => {
-    res.locals.location = req.url;
-    next();
-  },
-  (req, res, next) => {
-    if (req.url.indexOf(/favicon.ico$/) > -1) {
-      res.writeHead(200, { "Content-Type": "image/x-icon" });
-      res.end();
-      return;
-    }
+export const defaultMiddleware = (
+  options?: IUserConfig,
+  req: NodeRequire = require,
+) => [
+    req("helmet")(),
+    req("body-parser").urlencoded({ extended: false }),
+    req("cookie-parser")(),
+    req("cors")(),
+    req("body-parser").json(),
+    setLocation,
+    handleFavicon,
+    health,
+  ];
 
-    next();
-  },
-  health,
-];
-
-export const defaultDevMiddelware = (options?: IUserConfig) => {
+export const defaultDevMiddleware = (
+  options?: IUserConfig,
+  req: NodeRequire = require,
+) => {
   const middleware = [
-    require("morgan")("dev"),
+    req("morgan")("dev"),
     express.static(path.join(process.cwd(), "public")),
   ];
 
   if (options.webpack) {
-    const webpack = require("webpack");
-    const config = require("../webpack/config").default;
+    const webpack = req("webpack");
+    const config = req("../webpack/config").default;
     const compiler = webpack(config);
 
-    middleware.push(require("webpack-hot-middleware")(compiler));
     middleware.push(
-      require("webpack-dev-middleware")(compiler, {
+      req("webpack-hot-middleware")(compiler),
+      req("webpack-dev-middleware")(compiler, {
         noInfo: true,
         publicPath: "/assets/",
         serverSideRender: true,
@@ -63,7 +59,11 @@ export const defaultDevMiddelware = (options?: IUserConfig) => {
   return middleware;
 };
 
-export const defaultProductionMiddleware = (options?: IUserConfig) => {
+export const defaultProductionMiddleware = (
+  options?: IUserConfig,
+  name: string = process.env.LP_SERVICE_ID,
+  req: NodeRequire = require,
+) => {
   const excludes = [
     "body",
     "short-body",
@@ -75,20 +75,20 @@ export const defaultProductionMiddleware = (options?: IUserConfig) => {
     "response-hrtime",
   ];
 
-  const config = [
-    require("express-bunyan-logger")({
-      name: process.env.LP_SERVICE_ID || "travel-agent-server",
+  const middleware = [
+    req("express-bunyan-logger")({
+      name: name || "travel-agent-server",
       parseUA: false, // Leave user-agent as raw string
       excludes,
     }),
-    require("compression")(),
+    req("compression")(),
   ];
 
   if (options.serveAssets) {
-    config.push(express.static(path.join(process.cwd(), "public")));
+    middleware.push(express.static(path.join(process.cwd(), "public")));
   }
 
-  return config;
+  return middleware;
 };
 
 const getAirbrakeCreds = (options: IUserConfig) => {
@@ -101,26 +101,25 @@ const getAirbrakeCreds = (options: IUserConfig) => {
   return new AirbrakeCreds();
 }
 
-export const defaultPostMiddleware = (env, options?: IUserConfig, app?: ITravelAgentServer) => {
-  const config = [];
-
+export const defaultPostMiddleware = (isProdEnv: boolean, options?: IUserConfig, app?: ITravelAgentServer) => {
+  const middleware = [];
   const airbrakeCreds = getAirbrakeCreds(options);
-  if (env === "production" && airbrakeCreds.airbrakeId && airbrakeCreds.airbrakeKey) {
+
+  if (isProdEnv && airbrakeCreds.airbrakeId && airbrakeCreds.airbrakeKey) {
     const airbrake = new AirbrakeClient({
       projectId: airbrakeCreds.airbrakeId,
       projectKey: airbrakeCreds.airbrakeKey,
     });
 
-    config.push(makeErrorHandler(airbrake));
+    middleware.push(makeErrorHandler(airbrake));
   }
 
-  config.push(catchAll);
-
-  config.push(
-    errorHandler(env, {
+  middleware.push(
+    catchAll,
+    errorHandler(isProdEnv, {
       sendProductionErrors: options.sendProductionErrors,
     }),
   );
 
-  return config;
+  return middleware;
 };

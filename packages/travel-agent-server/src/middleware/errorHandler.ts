@@ -5,7 +5,7 @@ export interface IErrorHandlerOptions {
 }
 
 export default (
-  env,
+  isProdEnv: boolean,
   options: IErrorHandlerOptions = {
     sendProductionErrors: false,
   },
@@ -15,21 +15,21 @@ export default (
   }
 
   res.status(err.status || 500);
-  env === "development" && logger.debug(err);
+  !isProdEnv && logger.debug(err);
 
   const locals =
-    env === "production"
+    isProdEnv
       ? {
-          error: options.sendProductionErrors ? err : {},
-          message: options.sendProductionErrors
-            ? err.message
-            : "An error has occurred",
-        }
+        error: options.sendProductionErrors ? err : {},
+        message: options.sendProductionErrors
+          ? err.message
+          : "An error has occurred",
+      }
       : {
-          error: err,
-          message: err.message,
-          stack: err.stack,
-        };
+        error: err,
+        message: err.message,
+        stack: err.stack,
+      };
 
   if (req.headers["content-type"] === "application/json") {
     return res.json(locals);
