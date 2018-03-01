@@ -58,7 +58,9 @@ const styleLoaders = {
         calc(),
         customMedia(),
         nested(),
-        autoprefixer(),
+        autoprefixer({
+          grid: false,
+        }),
       ],
     },
   },
