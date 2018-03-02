@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.3...@lonelyplanet/travel-agent@1.8.0) (2018-03-02)
+
+
+### Bug Fixes
+
+* add middlewareProvider unit tests ([#22](https://github.com/lonelyplanet/travel-agent/issues/22)) ([089ecb2](https://github.com/lonelyplanet/travel-agent/commit/089ecb2))
+* Bump a few deps ([704b803](https://github.com/lonelyplanet/travel-agent/commit/704b803))
+* Disable prefixes for CSS grid layout properties ([#24](https://github.com/lonelyplanet/travel-agent/issues/24)) ([29942eb](https://github.com/lonelyplanet/travel-agent/commit/29942eb))
+
+
+### Features
+
+* Add postcss-calc plugin ([20b9815](https://github.com/lonelyplanet/travel-agent/commit/20b9815))
+
+
+
+
 <a name="1.7.3"></a>
 ## [1.7.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.2...@lonelyplanet/travel-agent@1.7.3) (2018-01-26)
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.11"></a>
+## [1.1.11](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.10...@lonelyplanet/generator-travel-agent@1.1.11) (2018-03-02)
+
+
+### Bug Fixes
+
+* Add missing lang attribute to HTML element ([066d441](https://github.com/lonelyplanet/travel-agent/commit/066d441))
+
+
+
+
 <a name="1.1.10"></a>
 ## [1.1.10](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/generator-travel-agent@1.1.9...@lonelyplanet/generator-travel-agent@1.1.10) (2018-01-12)
 

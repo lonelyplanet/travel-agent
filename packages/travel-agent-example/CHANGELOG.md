@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.14"></a>
+## [1.3.14](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.13...travel-agent-example@1.3.14) (2018-03-02)
+
+
+### Bug Fixes
+
+* Add calc() example to example app styles ([98e7763](https://github.com/lonelyplanet/travel-agent/commit/98e7763))
+* Bump a few deps ([704b803](https://github.com/lonelyplanet/travel-agent/commit/704b803))
+
+
+
+
 <a name="1.3.13"></a>
 ## [1.3.13](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.12...travel-agent-example@1.3.13) (2018-01-26)
 
