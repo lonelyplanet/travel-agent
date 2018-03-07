@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.8.1"></a>
+## [1.8.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.8.0...@lonelyplanet/travel-agent@1.8.1) (2018-03-07)
+
+
+### Bug Fixes
+
+* Update backpack-ui to 4.63.0 in travel-agent-server ([#26](https://github.com/lonelyplanet/travel-agent/issues/26)) ([6a0be34](https://github.com/lonelyplanet/travel-agent/commit/6a0be34))
+
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.7.3...@lonelyplanet/travel-agent@1.8.0) (2018-03-02)
 
