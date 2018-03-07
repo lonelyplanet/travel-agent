@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "airbrake-js": "0.9.8",
-    "backpack-ui": "^4.63.0",
+    "backpack-ui": "^4.64.0",
     "body-parser": "^1.18.2",
     "chokidar": "^2.0.2",
     "chunk-manifest-webpack-plugin": "^1.1.2",
