@@ -3,9 +3,7 @@ import { Helmet } from "@lonelyplanet/travel-agent/helmet";
 import Home from "./components/index";
 import * as styles from "./styles/home.css";
 
-export default ({
-  message,
-}) => (
+export default ({ message }) => (
   <div className={styles.home}>
     <Helmet>
       <title>Home Page!!!</title>

@@ -1,12 +1,19 @@
 /* tslint:disable: no-var-requires */
 import * as path from "path";
 
-let userConfig;
+let config: { default?: { webpack: any }; webpack: any } = {
+  webpack: {},
+};
+
 try {
   const userConfigPath = path.join(process.cwd(), "config");
-  userConfig = require(userConfigPath).webpack;
+  config = require(userConfigPath);
+
+  if (config.default) {
+    config = config.default;
+  }
 } catch (e) {
   throw new Error("Missing webpack property in config");
 }
 
-export default userConfig;
+export const userConfig = config.webpack;

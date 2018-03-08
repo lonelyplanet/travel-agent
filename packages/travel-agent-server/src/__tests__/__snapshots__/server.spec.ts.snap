@@ -4,7 +4,7 @@ exports[`TravelAgentServer addModules should add the controller routes to the se
 Array [
   Object {
     "controller": Object {
-      "default": [Function],
+      "default": [MockFunction],
       "name": "TestController",
       "routes": Object {
         "GET /show-stuff": "show",
@@ -20,7 +20,7 @@ Array [
   },
   Object {
     "controller": Object {
-      "default": [Function],
+      "default": [MockFunction],
       "name": "AnotherController",
       "routes": Object {
         "GET /data": "fetchData",
@@ -38,7 +38,7 @@ Array [
   },
   Object {
     "controller": Object {
-      "default": [Function],
+      "default": [MockFunction],
       "name": "AnotherController",
       "routes": Object {
         "GET /data": "fetchData",

@@ -1,4 +1,5 @@
 /* tslint:disable: no-console */
+require("ts-node/register");
 import * as dotenv from "dotenv";
 import * as http from "http";
 import { inject, injectable } from "inversify";

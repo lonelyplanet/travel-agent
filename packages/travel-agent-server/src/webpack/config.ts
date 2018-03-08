@@ -3,7 +3,7 @@ import * as path from "path";
 import * as webpack from "webpack";
 import { commonPlugins } from "./common";
 import Notifier from "./notifier";
-import userConfig from "./userConfig";
+import { userConfig } from "./userConfig";
 import * as webpackMerge from "webpack-merge";
 import { getLoaders } from "./loaders";
 

@@ -13,19 +13,19 @@
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.11.1",
-    "@types/jest": "^20.0.5",
+    "@types/jest": "^20.0.8",
     "@types/react": "^16.0.29",
     "@types/react-dom": "^16.0.3",
     "@types/react-helmet": "^5.0.3",
     "@types/webpack": "^3.8.4",
     "autoprefixer": "^7.2.3",
-    "jest": "^21.2.1",
+    "jest": "^22.4.2",
     "node-mocks-http": "^1.6.6",
     "postcss-calc": "^6.0.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "reflect-metadata": "^0.1.10",
-    "typescript": "^2.7.0"
+    "typescript": "^2.7.2"
   },
   "jest": {
     "setupFiles": [
@@ -51,7 +51,7 @@
     "typescript": "^2.0.0"
   },
   "dependencies": {
-    "airbrake-js": "0.9.8",
+    "airbrake-js": "1.0.7",
     "backpack-ui": "^4.64.0",
     "body-parser": "^1.18.2",
     "chokidar": "^2.0.2",
@@ -86,7 +86,7 @@
     "react-helmet": "^5.2.0",
     "react-router-dom": "^4.2.2",
     "serve-favicon": "^2.4.5",
-    "style-loader": "^0.19.1",
+    "style-loader": "^0.20.2",
     "touch": "^3.1.0",
     "ts-loader": "^3.0.5",
     "ts-node": "^5.0.1",
@@ -94,7 +94,7 @@
     "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-chunk-hash": "^0.5.0",
-    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-middleware": "^1.12.2",
     "webpack-hot-middleware": "^2.20.0",
     "webpack-manifest-plugin": "^2.0.0-rc.1",
     "webpack-merge": "^4.1.1"

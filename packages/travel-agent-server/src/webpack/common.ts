@@ -1,5 +1,5 @@
 import * as webpack from "webpack";
-import userConfig from "./userConfig";
+import { userConfig } from "./userConfig";
 import { isVendor } from "./utils";
 import * as ManifestPlugin from "webpack-manifest-plugin";
 

@@ -9,7 +9,7 @@ import { commonPlugins } from "./common";
 import config from "./config";
 import { isVendor } from "./utils";
 import { getLoaders } from "./loaders";
-import userConfig from "./userConfig";
+import { userConfig } from "./userConfig";
 import userConfigProduction from "./userProductionConfig";
 
 const productionConfig: Configuration = {

@@ -7,9 +7,9 @@ import { IRequireConstructor, ICwd } from "../interfaces/index";
 import TYPES from "../types";
 
 export interface ICustomMiddlewareObject {
-  route?: string,
-  resolve?: () => ICustomMiddleware,
-  fn?: ICustomMiddleware,
+  route?: string;
+  resolve?: () => ICustomMiddleware;
+  fn?: ICustomMiddleware;
 }
 
 export type ICustomMiddleware =
@@ -57,6 +57,10 @@ export default class UserConfigResolver implements IUserConfigResolver {
     } catch (e) {
       logger.debug("Error loading user configuration");
       logger.debug(e);
+    }
+
+    if (userConfig.default) {
+      return userConfig.default;
     }
 
     return userConfig;
