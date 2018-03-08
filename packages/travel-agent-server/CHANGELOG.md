@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.10.1"></a>
+## [1.10.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.0...@lonelyplanet/travel-agent@1.10.1) (2018-03-08)
+
+
+### Bug Fixes
+
+* Update ts-node path ([94cfe88](https://github.com/lonelyplanet/travel-agent/commit/94cfe88))
+
+
+
+
 <a name="1.10.0"></a>
 # [1.10.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.9.0...@lonelyplanet/travel-agent@1.10.0) (2018-03-08)
 
