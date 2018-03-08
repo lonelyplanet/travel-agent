@@ -20,7 +20,7 @@ const server = spawn(
   "node",
   [
     "-r",
-    `${tsNodePath}/register`,
+    `ts-node/register`,
     program.debug ? "--inspect" : "",
     path.join(process.cwd(), "app/index"),
   ].filter(arg => arg),
