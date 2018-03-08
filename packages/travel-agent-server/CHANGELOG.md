@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.8.1...@lonelyplanet/travel-agent@1.9.0) (2018-03-08)
+
+
+### Features
+
+* Support TS config file ([97d436c](https://github.com/lonelyplanet/travel-agent/commit/97d436c))
+
+
+
+
 <a name="1.8.1"></a>
 ## [1.8.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.8.0...@lonelyplanet/travel-agent@1.8.1) (2018-03-07)
 

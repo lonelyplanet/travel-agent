@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.15...travel-agent-example@1.4.0) (2018-03-08)
+
+
+### Features
+
+* Support TS config file ([97d436c](https://github.com/lonelyplanet/travel-agent/commit/97d436c))
+
+
+
+
 <a name="1.3.15"></a>
 ## [1.3.15](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.3.14...travel-agent-example@1.3.15) (2018-03-07)
 
