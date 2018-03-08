@@ -9,6 +9,21 @@ import container from "./config/container";
 import { ITravelAgentServer } from "./interfaces";
 import TYPES from "./types";
 import * as hook from "css-modules-require-hook";
+import * as chokidar from "chokidar";
+
+if (process.env.NODE_ENV === "development") {
+  chokidar
+    .watch(path.join(process.cwd(), "app"), {
+      ignored: /(^|[\/\\])\../,
+    })
+    .on("change", path => {
+      Object.keys(require.cache).forEach(function(id) {
+        if (/\/app\//.test(id)) {
+          delete require.cache[id];
+        }
+      });
+    });
+}
 
 hook({
   generateScopedName: "[name]__[local]___[hash:base64:5]",
