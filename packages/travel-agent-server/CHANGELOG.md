@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.10.2"></a>
+## [1.10.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.1...@lonelyplanet/travel-agent@1.10.2) (2018-03-12)
+
+
+### Bug Fixes
+
+* Remove trailing comma in bin files ([#30](https://github.com/lonelyplanet/travel-agent/issues/30)) ([c87240f](https://github.com/lonelyplanet/travel-agent/commit/c87240f))
+
+
+
+
 <a name="1.10.1"></a>
 ## [1.10.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.0...@lonelyplanet/travel-agent@1.10.1) (2018-03-08)
 
