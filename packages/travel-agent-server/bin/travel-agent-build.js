@@ -38,7 +38,7 @@ if (userConfig.webpack) {
   if (program.production) {
     config = merge(
       require("../dist/webpack/production").default,
-      (userConfig.production && userConfig.production.webpack) || {},
+      (userConfig.production && userConfig.production.webpack) || {}
     );
   }
 }

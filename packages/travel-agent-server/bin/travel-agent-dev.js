@@ -23,7 +23,7 @@ const server = spawn(
     `ts-node/register`,
     program.debug ? "--inspect" : "",
     path.join(process.cwd(), "app/index"),
-  ].filter(arg => arg),
+  ].filter(arg => arg)
 );
 
 server.stdout.on("data", data => {
