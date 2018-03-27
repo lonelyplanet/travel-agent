@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.10.3"></a>
+## [1.10.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.2...@lonelyplanet/travel-agent@1.10.3) (2018-03-27)
+
+
+### Bug Fixes
+
+* Fix package lock ([9a2f354](https://github.com/lonelyplanet/travel-agent/commit/9a2f354))
+* Fix the analyze option in build ([ed02ced](https://github.com/lonelyplanet/travel-agent/commit/ed02ced))
+
+
+
+
 <a name="1.10.2"></a>
 ## [1.10.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.1...@lonelyplanet/travel-agent@1.10.2) (2018-03-12)
 
