@@ -4,6 +4,7 @@ const types = {
   DefaultMiddleware: "DefaultMiddleware",
   DefaultProductionMiddleware: "DefaultProductionMiddleware",
   DefaultPostMiddleware: "DefaultPostMiddleware",
+  DefaultTestMiddleware: "DefaultTestMiddleware",
   IControllerFactory: "IControllerFactory",
   IControllerRegistry: "IControllerRegistry",
   IUserConfigResolver: "IUserConfigResolver",
@@ -14,6 +15,7 @@ const types = {
   expressRouter: "expressRouter",
   ICwd: "cwd",
   IIsProdEnv: "isProdEnv",
+  NodeEnv: "NodeEnv",
 };
 
 export default types;

@@ -3,6 +3,8 @@ import start from "@lonelyplanet/travel-agent";
 import * as home from "./modules/home";
 import FooService from "./services/fooService";
 
-const app = start();
+const server = start();
 
-app.bind("FooService").to(FooService);
+server.bind("FooService").to(FooService);
+
+export const app = server.app;
