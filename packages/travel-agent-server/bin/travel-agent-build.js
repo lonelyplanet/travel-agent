@@ -22,11 +22,6 @@ program
   .description("run a webpack build")
   .parse(process.argv);
 
-if (program.analyze) {
-  config.plugins = config.plugins || [];
-  config.plugins.push(new BundleAnalyzerPlugin());
-}
-
 if (program.production) {
   process.env.NODE_ENV = "production";
 }
@@ -38,8 +33,13 @@ if (userConfig.webpack) {
   if (program.production) {
     config = merge(
       require("../dist/webpack/production").default,
-      (userConfig.production && userConfig.production.webpack) || {}
+      (userConfig.production && userConfig.production.webpack) || {},
     );
+  }
+
+  if (program.analyze) {
+    config.plugins = config.plugins || [];
+    config.plugins.push(new BundleAnalyzerPlugin());
   }
 }
 
