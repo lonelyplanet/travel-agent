@@ -32,7 +32,10 @@ export interface IControllerFactory {
 }
 
 export interface IControllerRegistry {
-  register(): IControllerConstructor[];
+  register(): {
+    constructor: IControllerConstructor;
+    get: () => IControllerConstructor;
+  }[];
 }
 
 export interface IRoute {

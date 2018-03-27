@@ -9,9 +9,12 @@ import { IControllerRegistry, IRequireConstructor } from "../interfaces/index";
 @injectable()
 export default class ControllerRegistry implements IControllerRegistry {
   public require: IRequireConstructor;
-  public controllers: IControllerConstructor[];
+  public controllers: {
+    constructor: IControllerConstructor;
+    get: () => IControllerConstructor;
+  }[];
   private cwd: string;
-  private isProdEnv: boolean
+  private isProdEnv: boolean;
 
   constructor(
     @inject("IRequireConstructor") require,
@@ -27,11 +30,17 @@ export default class ControllerRegistry implements IControllerRegistry {
   public register() {
     const controllerPath = path.join(this.cwd);
     const baseDir = this.isProdEnv ? "dist" : "app";
-    const controllers = getFilePaths(`${baseDir}/modules/**/*controller*(.js|.ts)`);
+    const controllers = getFilePaths(
+      `${baseDir}/modules/**/*controller*(.js|.ts)`,
+    );
 
-    controllers.forEach((controller) => {
-      const Controller = this.require(`${controllerPath}/${controller}`).default;
-      this.controllers.push(Controller);
+    controllers.forEach(controller => {
+      const Controller = this.require(`${controllerPath}/${controller}`)
+        .default;
+      this.controllers.push({
+        constructor: Controller,
+        get: () => this.require(`${controllerPath}/${controller}`).default,
+      });
     });
 
     return this.controllers;

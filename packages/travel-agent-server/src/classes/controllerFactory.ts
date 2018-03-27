@@ -19,7 +19,11 @@ export default class ControllerFactory implements IControllerFactory {
     controller: string,
     handler: string,
   ): IController {
-    const instance = this.container.get<IController>(controller);
+    const instance = this.container.getNamed<IController>(
+      TYPES.Controller,
+      controller,
+    );
+    console.log(instance);
 
     // Make sure the correct handler name is updated in the express internals
     if (req.route) {

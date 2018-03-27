@@ -1,12 +1,5 @@
-import {
-  Controller,
-  inject,
-  get,
-  post,
-} from "@lonelyplanet/travel-agent";
-import {
-  IFooService,
-} from "../../services/fooService";
+import { Controller, inject, get, post } from "@lonelyplanet/travel-agent";
+import { IFooService } from "../../services/fooService";
 
 export default class HomeController extends Controller {
   foo: IFooService;

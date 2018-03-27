@@ -3,7 +3,11 @@ import { Container } from "inversify";
 import ControllerFactory from "../classes/controllerFactory";
 import ControllerRegistry from "../classes/controllerRegistry";
 import TravelAgentServer from "../classes/server";
-import { IControllerFactory, IControllerRegistry, ITravelAgentServer } from "../interfaces";
+import {
+  IControllerFactory,
+  IControllerRegistry,
+  ITravelAgentServer,
+} from "../interfaces";
 import UserConfigResolver, {
   IUserConfigResolver,
 } from "../classes/userConfigResolver";
@@ -58,6 +62,8 @@ container
 
 container.bind("container").toConstantValue(container);
 container.bind(TYPES.ICwd).toConstantValue(process.cwd());
-container.bind(TYPES.IIsProdEnv).toConstantValue(process.env.NODE_ENV === "production");
+container
+  .bind(TYPES.IIsProdEnv)
+  .toConstantValue(process.env.NODE_ENV === "production");
 
 export default container;

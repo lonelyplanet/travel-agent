@@ -12,7 +12,11 @@ program
   .description("run a dev server")
   .parse(process.argv);
 
-const tsNodePath = path.join(__dirname, "../", "node_modules", "ts-node");
+const tsNodePath = fs.existsSync(
+  path.join(__dirname, "../node_modules/ts-node"),
+)
+  ? path.join(__dirname, "../node_modules/ts-node")
+  : path.join(process.cwd(), "./node_modules/ts-node");
 
 process.env.NODE_ENV = "development";
 
@@ -20,7 +24,7 @@ const server = spawn(
   "node",
   [
     "-r",
-    `ts-node/register`,
+    `${tsNodePath}/register`,
     program.debug ? "--inspect" : "",
     path.join(process.cwd(), "app/index"),
   ].filter(arg => arg)
