@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.11.0"></a>
+# [1.11.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.3...@lonelyplanet/travel-agent@1.11.0) (2018-03-28)
+
+
+### Bug Fixes
+
+* Add new loaders for plain css modules ([c44df7d](https://github.com/lonelyplanet/travel-agent/commit/c44df7d))
+
+
+### Features
+
+* Make the app testable ([56bd8a3](https://github.com/lonelyplanet/travel-agent/commit/56bd8a3))
+
+
+
+
 <a name="1.10.3"></a>
 ## [1.10.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.10.2...@lonelyplanet/travel-agent@1.10.3) (2018-03-27)
 

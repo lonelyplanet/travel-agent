@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.4.4...travel-agent-example@1.5.0) (2018-03-28)
+
+
+### Features
+
+* Make the app testable ([56bd8a3](https://github.com/lonelyplanet/travel-agent/commit/56bd8a3))
+
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/lonelyplanet/travel-agent/compare/travel-agent-example@1.4.3...travel-agent-example@1.4.4) (2018-03-27)
 
