@@ -85,6 +85,12 @@ export const cssLoader = {
   use: ["style-loader", styleLoaders.css, styleLoaders.postcss],
 };
 
+const cssLoaderVendor = {
+  test: /\.css$/,
+  include: /node_modules/,
+  use: ["style-loader", "typings-for-css-modules-loader"],
+};
+
 const extractCssLoader = {
   test: /\.css$/,
   include: /app/,
@@ -94,9 +100,18 @@ const extractCssLoader = {
   }),
 };
 
+const extractCssLoaderVendor = {
+  test: /\.css$/,
+  include: /node_modules/,
+  loader: ExtractTextPlugin.extract({
+    fallback: "style-loader",
+    use: ["typings-for-css-modules-loader"],
+  }),
+};
+
 const loaders = {
-  dev: [tsLoader, cssLoader],
-  prod: [tsLoader, extractCssLoader],
+  dev: [tsLoader, cssLoader, cssLoaderVendor],
+  prod: [tsLoader, extractCssLoader, extractCssLoaderVendor],
 };
 
 export const getLoaders = (env: "dev" | "prod") => loaders[env];
