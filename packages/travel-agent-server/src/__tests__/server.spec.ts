@@ -77,7 +77,10 @@ describe("TravelAgentServer", () => {
     });
 
     it("should set up the middleware in the dev environment", () => {
-      const setupTestExpress = jest.fn<express.Application>(() => ({ engine, set }));
+      const setupTestExpress = jest.fn<express.Application>(() => ({
+        engine,
+        set,
+      }));
       const server = new TravelAgentServer(
         new setupTestExpress(),
         new mockExpressRouter(),
@@ -98,11 +101,14 @@ describe("TravelAgentServer", () => {
     });
 
     it("should set up the middleware in the prod environment", () => {
-      const setupTestExpress = jest.fn<express.Application>(() => ({ engine, set }));
+      const setupTestExpress = jest.fn<express.Application>(() => ({
+        engine,
+        set,
+      }));
       const server = new TravelAgentServer(
         new setupTestExpress(),
         new mockExpressRouter(),
-        new MiddlewareResolver(true),
+        new MiddlewareResolver("development"),
         new mockControllerFactory(),
         new mockControllerRegistry(),
         mockCwd,
@@ -112,7 +118,10 @@ describe("TravelAgentServer", () => {
 
       expect(middlewareResolverMiddleware).toHaveBeenCalled();
       expect(engine).toHaveBeenCalledWith("js", "createEngine called");
-      expect(createEngineDefault).toHaveBeenCalledWith({ layout: "dist/layout", isProdEnv: true });
+      expect(createEngineDefault).toHaveBeenCalledWith({
+        layout: "dist/layout",
+        isProdEnv: true,
+      });
       expect(set.mock.calls[0][0]).toEqual("views");
       expect(set.mock.calls[0][1][0]).toContain("/dev/my-app/dist/modules");
       expect(set.mock.calls[0][1][1]).toContain("/dev/my-app/dist");
@@ -146,13 +155,21 @@ describe("TravelAgentServer", () => {
       const route = jest.fn(() => ({ get }));
       const beforeRoutesMiddleware = jest.fn();
       const postMiddleware = jest.fn();
-      const postSetupTestExpress = jest.fn<express.Application>(() => ({ use }));
-      const postSetupTestExpressRouter = jest.fn<express.Router>(() => ({ route }));
-      const postSetupTestMiddlewareResolver = jest.fn<IMiddlewareProvider>(() => ({
-        beforeRoutesMiddleware,
-        postMiddleware
+      const postSetupTestExpress = jest.fn<express.Application>(() => ({
+        use,
       }));
-      let controllerConstructor = jest.fn<IControllerConstructor>((name) => ({ name }));
+      const postSetupTestExpressRouter = jest.fn<express.Router>(() => ({
+        route,
+      }));
+      const postSetupTestMiddlewareResolver = jest.fn<IMiddlewareProvider>(
+        () => ({
+          beforeRoutesMiddleware,
+          postMiddleware,
+        }),
+      );
+      let controllerConstructor = jest.fn<IControllerConstructor>(name => ({
+        name,
+      }));
       const routes: IRoute[] = [
         {
           handler: "omg",
@@ -161,42 +178,47 @@ describe("TravelAgentServer", () => {
           middleware: [],
           routes: {},
           controller: new controllerConstructor("omgController"),
-        }, {
+        },
+        {
           handler: "fetch",
           method: "GET",
           url: "/",
           middleware: [],
           routes: {},
           controller: new controllerConstructor("fetchController"),
-        }, {
+        },
+        {
           handler: "remove",
           method: "DELETE",
           url: "/:id",
           middleware: [],
           routes: {},
           controller: new controllerConstructor("deleteController"),
-        }, {
+        },
+        {
           handler: "save",
           method: "post",
           url: "/:id?",
           middleware: [],
           routes: {},
           controller: new controllerConstructor("saveController"),
-        }, {
+        },
+        {
           handler: "optionalUpdate",
           method: "patch",
           url: "/:id?",
           middleware: [],
           routes: {},
           controller: new controllerConstructor("optionalUpdateController"),
-        }, {
+        },
+        {
           handler: "update",
           method: "patch",
           url: "/:id",
           middleware: [],
           routes: {},
           controller: new controllerConstructor("updateController"),
-        }
+        },
       ];
       const server = new TravelAgentServer(
         new postSetupTestExpress(),
@@ -217,20 +239,44 @@ describe("TravelAgentServer", () => {
 
       const getCreateDefaultRoute = get.mock.calls[0][0];
       getCreateDefaultRoute(req, res, next);
-      expect(controllerFactoryCreate.mock.calls[0]).toEqual([req, res, next, "fetchController", "fetch"]);
+      expect(controllerFactoryCreate.mock.calls[0]).toEqual([
+        req,
+        res,
+        next,
+        "fetchController",
+        "fetch",
+      ]);
 
-      let reqWithPath = mocks.createRequest({ path: "/omg" })
+      let reqWithPath = mocks.createRequest({ path: "/omg" });
       getCreateDefaultRoute(reqWithPath, res, next);
-      expect(controllerFactoryCreate.mock.calls[1]).toEqual([reqWithPath, res, next, "omgController", "omg"]);
+      expect(controllerFactoryCreate.mock.calls[1]).toEqual([
+        reqWithPath,
+        res,
+        next,
+        "omgController",
+        "omg",
+      ]);
 
       const postCreateDefaultRoute = post.mock.calls[0][0];
       postCreateDefaultRoute(req, res, next);
-      expect(controllerFactoryCreate.mock.calls[2]).toEqual([req, res, next, "saveController", "save"]);
+      expect(controllerFactoryCreate.mock.calls[2]).toEqual([
+        req,
+        res,
+        next,
+        "saveController",
+        "save",
+      ]);
 
       const patchCreateDefaultRoute = patch.mock.calls[0][0];
-      reqWithPath = mocks.createRequest({ path: "/123" })
+      reqWithPath = mocks.createRequest({ path: "/123" });
       patchCreateDefaultRoute(reqWithPath, res, next);
-      expect(controllerFactoryCreate.mock.calls[3]).toEqual([reqWithPath, res, next, "optionalUpdateController", "optionalUpdate"]);
+      expect(controllerFactoryCreate.mock.calls[3]).toEqual([
+        reqWithPath,
+        res,
+        next,
+        "optionalUpdateController",
+        "optionalUpdate",
+      ]);
       expect(loggerWarn).toHaveBeenCalledTimes(1);
 
       const deleteCreateDefaultRoute = routerDelete.mock.calls[0][0];
@@ -247,11 +293,12 @@ describe("TravelAgentServer", () => {
           default: jest.fn(),
           routes: { "GET /show-stuff": "show" },
           name: "TestController",
-        }, {
+        },
+        {
           default: jest.fn(),
           routes: { "GET /data": "fetchData", "POST /data": "saveData" },
           name: "AnotherController",
-        }
+        },
       ]);
     });
 

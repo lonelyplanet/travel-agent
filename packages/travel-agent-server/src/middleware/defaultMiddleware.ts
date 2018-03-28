@@ -22,15 +22,15 @@ export const defaultMiddleware = (
   options?: IUserConfig,
   req: NodeRequire = require,
 ) => [
-    req("helmet")(),
-    req("body-parser").urlencoded({ extended: false }),
-    req("cookie-parser")(),
-    req("cors")(),
-    req("body-parser").json(),
-    setLocation,
-    handleFavicon,
-    health,
-  ];
+  req("helmet")(),
+  req("body-parser").urlencoded({ extended: false }),
+  req("cookie-parser")(),
+  req("cors")(),
+  req("body-parser").json(),
+  setLocation,
+  handleFavicon,
+  health,
+];
 
 export const defaultDevMiddleware = (
   options?: IUserConfig,
@@ -56,6 +56,14 @@ export const defaultDevMiddleware = (
     );
   }
 
+  return middleware;
+};
+
+export const defaultTestMiddleware = (
+  options?: IUserConfig,
+  req: NodeRequire = require,
+) => {
+  const middleware = [];
   return middleware;
 };
 
@@ -94,14 +102,24 @@ export const defaultProductionMiddleware = (
 const getAirbrakeCreds = (options: IUserConfig) => {
   if (options.airbrakeId && options.airbrakeKey) {
     return new AirbrakeCreds(options.airbrakeId, options.airbrakeKey);
-  } else if (options.production && (options.production.airbrakeId || options.production.airbrakeKey)) {
-    return new AirbrakeCreds(options.production.airbrakeId, options.production.airbrakeKey);
+  } else if (
+    options.production &&
+    (options.production.airbrakeId || options.production.airbrakeKey)
+  ) {
+    return new AirbrakeCreds(
+      options.production.airbrakeId,
+      options.production.airbrakeKey,
+    );
   }
 
   return new AirbrakeCreds();
-}
+};
 
-export const defaultPostMiddleware = (isProdEnv: boolean, options?: IUserConfig, app?: ITravelAgentServer) => {
+export const defaultPostMiddleware = (
+  isProdEnv: boolean,
+  options?: IUserConfig,
+  app?: ITravelAgentServer,
+) => {
   const middleware = [];
   const airbrakeCreds = getAirbrakeCreds(options);
 
