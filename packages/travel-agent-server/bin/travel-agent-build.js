@@ -1,4 +1,3 @@
-require("ts-node/register");
 require("reflect-metadata");
 const path = require("path");
 const copyfiles = require("copyfiles");
@@ -11,20 +10,25 @@ const { exec } = require("child_process");
 let container = require("../dist/config/container").default;
 const TYPES = require("../dist/types");
 
-const userConfigResolver = container.get(TYPES.default.IUserConfigResolver);
-const userConfig = userConfigResolver.resolve();
-
 program.version("0.1.0");
 
 program
   .option("--analyze", "run the webpack analyzer")
   .option("-p, --production", "production build")
+  .option("--config [config]", "TypeScript config file")
   .description("run a webpack build")
   .parse(process.argv);
 
 if (program.production) {
   process.env.NODE_ENV = "production";
 }
+
+require("ts-node").register({
+  project: program.config,
+});
+
+const userConfigResolver = container.get(TYPES.default.IUserConfigResolver);
+const userConfig = userConfigResolver.resolve();
 
 let config = null;
 if (userConfig.webpack) {
@@ -44,7 +48,10 @@ if (userConfig.webpack) {
 }
 
 const now = new Date();
-exec("tsc", (err, stdout, stderr) => {
+const tsProject = program.config || null;
+const command = `tsc${tsProject ? ` -p ${tsProject}` : ""}`;
+
+exec(command, (err, stdout, stderr) => {
   if (err || stderr) {
     console.error(stdout);
     process.exit(1);
