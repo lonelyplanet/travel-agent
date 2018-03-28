@@ -87,7 +87,7 @@ export default class MiddlewareProvider implements IMiddlewareProvider {
     } else if (this.nodeEnv === "production") {
       middleware = this.defaultProductionMiddleware(this.userConfig);
     } else {
-      this.defaultDevMiddleware(this.userConfig);
+      middleware = this.defaultDevMiddleware(this.userConfig);
     }
 
     return applyMiddleware(
