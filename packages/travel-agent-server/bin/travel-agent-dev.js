@@ -9,6 +9,7 @@ program.version("0.1.0");
 
 program
   .option("-d, --debug", "run the nodejs inspector")
+  .option("--config [config]", "path to tsconfig for running the server")
   .description("run a dev server")
   .parse(process.argv);
 
@@ -23,7 +24,13 @@ const server = spawn(
     `ts-node/register`,
     program.debug ? "--inspect" : "",
     path.join(process.cwd(), "app/index"),
-  ].filter(arg => arg)
+  ].filter(arg => arg),
+  {
+    env: {
+      ...process.env,
+      TS_NODE_PROJECT: program.config,
+    },
+  },
 );
 
 server.stdout.on("data", data => {
