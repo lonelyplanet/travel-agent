@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.11.2"></a>
+## [1.11.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.11.1...@lonelyplanet/travel-agent@1.11.2) (2018-03-28)
+
+
+### Bug Fixes
+
+* Support loading different tsconfig files ([e85b5a8](https://github.com/lonelyplanet/travel-agent/commit/e85b5a8))
+
+
+
+
 <a name="1.11.1"></a>
 ## [1.11.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.11.0...@lonelyplanet/travel-agent@1.11.1) (2018-03-28)
 
