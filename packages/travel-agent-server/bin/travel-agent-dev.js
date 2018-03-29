@@ -28,7 +28,7 @@ const server = spawn(
   {
     env: {
       ...process.env,
-      TS_NODE_PROJECT: program.config,
+      TS_NODE_PROJECT: program.config || "tsconfig.json",
     },
   },
 );
