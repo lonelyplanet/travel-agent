@@ -29,6 +29,7 @@ export interface IUserConfig {
   sendProductionErrors?: boolean;
   production?: IUserConfig;
   serveAssets?: boolean;
+  disableDefaultLoggingMiddleware?: boolean;
 }
 
 export interface IUserConfigResolver {
