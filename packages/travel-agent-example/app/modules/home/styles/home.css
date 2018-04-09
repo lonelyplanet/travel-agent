@@ -2,7 +2,7 @@
 
 .home {
   display: grid;
-  color: map(colors, accentRed);
+  color: rgba(map(colors, accentRed), 0.8);
   font-size: calc(map(typography, fontSizeHeading6) * 1px);
   outline: 1px solid map(colors, borderPrimary);
   margin-left: auto;

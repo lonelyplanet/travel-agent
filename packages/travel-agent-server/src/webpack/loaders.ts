@@ -2,6 +2,7 @@ import * as path from "path";
 import * as ExtractTextPlugin from "extract-text-webpack-plugin";
 import * as autoprefixer from "autoprefixer";
 import * as gridSpan from "postcss-grid-span";
+import * as hexrgba from "postcss-hexrgba";
 import * as map from "postcss-map";
 import * as nested from "postcss-nested";
 import * as customMedia from "postcss-custom-media";
@@ -58,6 +59,7 @@ const styleLoaders = {
         calc(),
         customMedia(),
         nested(),
+        hexrgba(),
         autoprefixer({
           grid: false,
         }),
