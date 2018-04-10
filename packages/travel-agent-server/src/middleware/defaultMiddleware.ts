@@ -19,6 +19,10 @@ health.get("/health-check", (req, res) => {
   });
 });
 
+const shouldEnableDefaultLoggers = (options: IUserConfig) => {
+  return !options.disableDefaultLoggingMiddleware;
+};
+
 export const defaultMiddleware = (
   options?: IUserConfig,
   req: NodeRequire = require,
@@ -41,7 +45,7 @@ export const defaultDevMiddleware = (
     express.static(path.join(process.cwd(), "public")),
   ];
 
-  if (options.disableDefaultLoggingMiddleware !== true) {
+  if (shouldEnableDefaultLoggers(options)) {
     middleware.push(req("morgan")("dev"));
   }
 
@@ -80,7 +84,7 @@ export const defaultProductionMiddleware = (
     req("compression")(),
   ];
 
-  if (options.disableDefaultLoggingMiddleware !== true) {
+  if (shouldEnableDefaultLoggers(options)) {
     const excludes = [
       "body",
       "short-body",
