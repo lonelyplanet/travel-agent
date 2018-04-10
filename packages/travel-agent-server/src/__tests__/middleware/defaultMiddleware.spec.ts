@@ -120,8 +120,15 @@ describe("defaultMiddleware", () => {
     it("should return the dev middleware (without webpack)", () => {
       const middleware = defaultDevMiddleware({}, req);
       expect(middleware).toEqual([
-        "morgan-dev middleware",
         "express static middleware",
+        "morgan-dev middleware",
+      ]);
+    });
+
+    it("should not return morgan if logging is explicitly disabled", () => {
+      const middleware = defaultDevMiddleware({ disableDefaultLoggingMiddleware: true }, req);
+      expect(middleware).not.toContain([
+        "morgan-dev middleware",
       ]);
     });
 
@@ -136,8 +143,8 @@ describe("defaultMiddleware", () => {
         serverSideRender: true,
       });
       expect(middleware).toEqual([
-        "morgan-dev middleware",
         "express static middleware",
+        "morgan-dev middleware",
         "webpack-hot-middleware middleware",
         "webpack-dev-middleware middleware",
       ]);
@@ -151,8 +158,8 @@ describe("defaultMiddleware", () => {
     beforeEach(() => {
       expressBunyanLoggerMock = jest.fn(() => "express-bunyan-logger middleware")
       req = jest.fn<NodeRequire>()
-        .mockImplementationOnce((pkg: string) => expressBunyanLoggerMock)
-        .mockImplementationOnce((pkg: string) => () => "compression middleware");
+        .mockImplementationOnce((pkg: string) => () => "compression middleware")
+        .mockImplementationOnce((pkg: string) => expressBunyanLoggerMock);
       staticMock.mockImplementation((path: string) => "express static middleware");
     });
 
@@ -168,8 +175,16 @@ describe("defaultMiddleware", () => {
       expect(expressBunyanLoggerMock.mock.calls[0]).toMatchSnapshot();
       expect(middleware.length).toBe(2);
       expect(middleware).toEqual([
-        "express-bunyan-logger middleware",
         "compression middleware",
+        "express-bunyan-logger middleware",
+      ]);
+    });
+
+    it("should not return bunyan in production middleware if logging is disabled", () => {
+      const middleware = defaultProductionMiddleware({ disableDefaultLoggingMiddleware: true }, null, req);
+
+      expect(middleware).not.toContain([
+        "express-bunyan-logger middleware",
       ]);
     });
 
@@ -179,8 +194,8 @@ describe("defaultMiddleware", () => {
       expect(expressBunyanLoggerMock.mock.calls[0][0].name).toBe("lp-service-id");
       expect(middleware.length).toBe(3);
       expect(middleware).toEqual([
-        "express-bunyan-logger middleware",
         "compression middleware",
+        "express-bunyan-logger middleware",
         "express static middleware",
       ]);
     });

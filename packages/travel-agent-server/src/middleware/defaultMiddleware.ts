@@ -1,5 +1,6 @@
 /* tslint:disable: object-literal-sort-keys */
 import * as express from "express";
+import { Handler } from "express-serve-static-core";
 import * as path from "path";
 import * as AirbrakeClient from "airbrake-js";
 import * as makeErrorHandler from "airbrake-js/dist/instrumentation/express";
@@ -17,6 +18,10 @@ health.get("/health-check", (req, res) => {
     success: true,
   });
 });
+
+const shouldEnableDefaultLoggers = (options: IUserConfig) => {
+  return !options.disableDefaultLoggingMiddleware;
+};
 
 export const defaultMiddleware = (
   options?: IUserConfig,
@@ -37,9 +42,12 @@ export const defaultDevMiddleware = (
   req: NodeRequire = require,
 ) => {
   const middleware = [
-    req("morgan")("dev"),
     express.static(path.join(process.cwd(), "public")),
   ];
+
+  if (shouldEnableDefaultLoggers(options)) {
+    middleware.push(req("morgan")("dev"));
+  }
 
   if (options.webpack) {
     const webpack = req("webpack");
@@ -72,25 +80,28 @@ export const defaultProductionMiddleware = (
   name: string = process.env.LP_SERVICE_ID,
   req: NodeRequire = require,
 ) => {
-  const excludes = [
-    "body",
-    "short-body",
-    "req-headers",
-    "res-headers",
-    "req",
-    "res",
-    "incoming",
-    "response-hrtime",
+  const middleware = [
+    req("compression")(),
   ];
 
-  const middleware = [
-    req("express-bunyan-logger")({
+  if (shouldEnableDefaultLoggers(options)) {
+    const excludes = [
+      "body",
+      "short-body",
+      "req-headers",
+      "res-headers",
+      "req",
+      "res",
+      "incoming",
+      "response-hrtime",
+    ];
+
+    middleware.push(req("express-bunyan-logger")({
       name: name || "travel-agent-server",
       parseUA: false, // Leave user-agent as raw string
       excludes,
-    }),
-    req("compression")(),
-  ];
+    }));
+  }
 
   if (options.serveAssets) {
     middleware.push(express.static(path.join(process.cwd(), "public")));
