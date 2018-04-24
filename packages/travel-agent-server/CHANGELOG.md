@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.11.4...@lonelyplanet/travel-agent@1.12.0) (2018-04-24)
+
+
+### Bug Fixes
+
+* address review feedback ([4f7d041](https://github.com/lonelyplanet/travel-agent/commit/4f7d041))
+* Updates to build script ([072bb0f](https://github.com/lonelyplanet/travel-agent/commit/072bb0f))
+
+
+### Features
+
+* add configuration option that disables default logging middleware ([859430b](https://github.com/lonelyplanet/travel-agent/commit/859430b))
+
+
+
+
 <a name="1.11.4"></a>
 ## [1.11.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.11.3...@lonelyplanet/travel-agent@1.11.4) (2018-03-29)
 
