@@ -1,5 +1,6 @@
 require("reflect-metadata");
 const path = require("path");
+const fs = require("fs");
 const copyfiles = require("copyfiles");
 const program = require("commander");
 const webpack = require("webpack");
@@ -14,6 +15,7 @@ program.version("0.1.0");
 
 program
   .option("--analyze", "run the webpack analyzer")
+  .option("--json", "output webpack stats as JSON")
   .option("-p, --production", "production build")
   .option("--config [config]", "TypeScript config file")
   .description("run a webpack build")
@@ -59,7 +61,22 @@ exec(command, (err, stdout, stderr) => {
   }
 
   if (userConfig.webpack) {
+    if (program.json) {
+      config.stats = {};
+      config.stats = "detailed";
+    }
+
     webpack(config, (err, stats) => {
+      if (program.json) {
+        return fs.writeFileSync(
+          path.join(process.cwd(), "stats.json"),
+          JSON.stringify(
+            stats.toJson({
+              modules: true,
+            }),
+          ),
+        );
+      }
       if (err) {
         console.error(err.stack || err);
         if (err.details) {
@@ -74,7 +91,7 @@ exec(command, (err, stdout, stderr) => {
 
       if (stats.hasErrors()) {
         console.error(info.errors);
-        return;
+        return process.exit(1);
       }
 
       if (!program.production) {
