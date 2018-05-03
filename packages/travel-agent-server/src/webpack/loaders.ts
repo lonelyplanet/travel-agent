@@ -17,7 +17,7 @@ import {
   zIndex,
 } from "backpack-ui/dist/styles";
 
-const styleLoaders = {
+export const styleLoaders = {
   css: {
     loader: "typings-for-css-modules-loader",
     options: {
@@ -85,13 +85,13 @@ export const cssLoader = {
   use: ["style-loader", styleLoaders.css, styleLoaders.postcss],
 };
 
-const cssLoaderVendor = {
+export const cssLoaderVendor = {
   test: /\.css$/,
   include: /node_modules/,
   use: ["style-loader", "typings-for-css-modules-loader"],
 };
 
-const extractCssLoader = {
+export const extractCssLoader = {
   test: /\.css$/,
   include: /app/,
   loader: ExtractTextPlugin.extract({
@@ -100,7 +100,7 @@ const extractCssLoader = {
   }),
 };
 
-const extractCssLoaderVendor = {
+export const extractCssLoaderVendor = {
   test: /\.css$/,
   include: /node_modules/,
   loader: ExtractTextPlugin.extract({
