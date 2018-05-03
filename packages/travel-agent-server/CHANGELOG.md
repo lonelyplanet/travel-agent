@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.12.1"></a>
+## [1.12.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.0...@lonelyplanet/travel-agent@1.12.1) (2018-05-03)
+
+
+### Bug Fixes
+
+* Export all loaders ([93d9381](https://github.com/lonelyplanet/travel-agent/commit/93d9381))
+
+
+
+
 <a name="1.12.0"></a>
 # [1.12.0](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.11.4...@lonelyplanet/travel-agent@1.12.0) (2018-04-24)
 
