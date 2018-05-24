@@ -1,13 +1,12 @@
 import * as ChunkManifestPlugin from "chunk-manifest-webpack-plugin";
 import * as ExtractTextPlugin from "extract-text-webpack-plugin";
-import * as webpackMerge from "webpack-merge";
 import * as path from "path";
 import * as webpack from "webpack";
+import { Configuration } from "webpack";
 import * as WebpackChunkHash from "webpack-chunk-hash";
-import { NewModule, Configuration } from "webpack";
+import * as webpackMerge from "webpack-merge";
 import { commonPlugins } from "./common";
 import config from "./config";
-import { isVendor } from "./utils";
 import { getLoaders } from "./loaders";
 import { userConfig } from "./userConfig";
 import userConfigProduction from "./userProductionConfig";
@@ -35,6 +34,7 @@ const productionConfig: Configuration = {
     new WebpackChunkHash(),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: userConfigProduction.devtool,
       beautify: false,
       comments: false,
       compress: {
