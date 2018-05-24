@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.12.2"></a>
+## [1.12.2](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.1...@lonelyplanet/travel-agent@1.12.2) (2018-05-24)
+
+
+### Bug Fixes
+
+* enable source maps for production builds ([7b4e25a](https://github.com/lonelyplanet/travel-agent/commit/7b4e25a))
+
+
+
+
 <a name="1.12.1"></a>
 ## [1.12.1](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.0...@lonelyplanet/travel-agent@1.12.1) (2018-05-03)
 
