@@ -34,6 +34,7 @@ hook({
 
 export { inject, injectable } from "inversify";
 export { Controller } from "./classes/controller";
+export { ILayoutOptions } from "./classes/reactEngine";
 
 export * from "./classes/decorators";
 
