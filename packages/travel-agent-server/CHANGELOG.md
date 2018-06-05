@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.12.4"></a>
+## [1.12.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.3...@lonelyplanet/travel-agent@1.12.4) (2018-06-05)
+
+
+### Bug Fixes
+
+* export travel agent server ([abdbb3b](https://github.com/lonelyplanet/travel-agent/commit/abdbb3b))
+
+
+
+
 <a name="1.12.3"></a>
 ## [1.12.3](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.2...@lonelyplanet/travel-agent@1.12.3) (2018-05-24)
 
