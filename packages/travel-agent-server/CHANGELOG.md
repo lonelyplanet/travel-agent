@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.12.5"></a>
+## [1.12.5](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.4...@lonelyplanet/travel-agent@1.12.5) (2018-10-10)
+
+
+### Bug Fixes
+
+* removed gzip compression ([27a3850](https://github.com/lonelyplanet/travel-agent/commit/27a3850))
+
+
+
+
 <a name="1.12.4"></a>
 ## [1.12.4](https://github.com/lonelyplanet/travel-agent/compare/@lonelyplanet/travel-agent@1.12.3...@lonelyplanet/travel-agent@1.12.4) (2018-06-05)
 
