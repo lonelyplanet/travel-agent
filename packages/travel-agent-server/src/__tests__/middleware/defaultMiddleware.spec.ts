@@ -2,24 +2,31 @@ const staticMock = jest.fn();
 const routerMock = jest.fn(() => ({ get: jest.fn() }));
 jest.mock("express", () => ({
   static: staticMock,
-  Router: routerMock
+  Router: routerMock,
 }));
-import * as express from "express";;
+import * as express from "express";
 
 const AirbrakeClientMock = jest.fn();
 jest.mock("airbrake-js", () => AirbrakeClientMock);
 import AirbrakeClient from "airbrake-js";
 
 const AirbrakeCredsMock = jest.fn();
-jest.mock("../../classes/airbrakeCreds", () => ({ default: AirbrakeCredsMock }));
+jest.mock("../../classes/airbrakeCreds", () => ({
+  default: AirbrakeCredsMock,
+}));
 import AirbrakeCreds from "../../classes/airbrakeCreds";
 
 const makeErrorHandlerMock = jest.fn();
-jest.mock("airbrake-js/dist/instrumentation/express", () => makeErrorHandlerMock);
+jest.mock(
+  "airbrake-js/dist/instrumentation/express",
+  () => makeErrorHandlerMock,
+);
 import * as makeErrorHandler from "airbrake-js/dist/instrumentation/express";
 
 const errorHandlerMock = jest.fn();
-jest.mock("../../middleware/errorHandler", () => ({ default: errorHandlerMock }));
+jest.mock("../../middleware/errorHandler", () => ({
+  default: errorHandlerMock,
+}));
 import errorHandler from "../../middleware/errorHandler";
 
 const catchAllMock = jest.fn();
@@ -31,7 +38,9 @@ jest.mock("../../middleware/setLocation", () => ({ default: setLocationMock }));
 import setLocation from "../../middleware/setLocation";
 
 const handleFaviconMock = jest.fn();
-jest.mock("../../middleware/handleFavicon", () => ({ default: handleFaviconMock }));
+jest.mock("../../middleware/handleFavicon", () => ({
+  default: handleFaviconMock,
+}));
 import handleFavicon from "../../middleware/handleFavicon";
 
 import {
@@ -50,9 +59,12 @@ describe("defaultMiddleware", () => {
     beforeEach(() => {
       urlencodedMock = jest.fn();
       jsonMock = jest.fn();
-      req = jest.fn<NodeRequire>()
+      req = jest
+        .fn<NodeRequire>()
         .mockImplementationOnce((pkg: string) => () => "helmet")
-        .mockImplementationOnce((pkg: string) => ({ urlencoded: urlencodedMock }))
+        .mockImplementationOnce((pkg: string) => ({
+          urlencoded: urlencodedMock,
+        }))
         .mockImplementationOnce((pkg: string) => () => "cookie-parser")
         .mockImplementationOnce((pkg: string) => () => "cors")
         .mockImplementationOnce((pkg: string) => ({ json: jsonMock }));
@@ -74,15 +86,14 @@ describe("defaultMiddleware", () => {
       expect(middleware[5]).toEqual(setLocationMock);
       expect(middleware[6]).toEqual(handleFaviconMock);
 
-      expect(req).toHaveBeenCalledWith("helmet")
-      expect(req).toHaveBeenCalledWith("body-parser")
+      expect(req).toHaveBeenCalledWith("helmet");
+      expect(req).toHaveBeenCalledWith("body-parser");
       expect(req).toHaveBeenCalledWith("cookie-parser");
       expect(req).toHaveBeenCalledWith("cors");
 
       expect(urlencodedMock).toHaveBeenCalledTimes(1);
       expect(urlencodedMock).toHaveBeenCalledWith({ extended: false });
       expect(jsonMock).toHaveBeenCalledTimes(1);
-
     });
   });
 
@@ -98,15 +109,24 @@ describe("defaultMiddleware", () => {
       config = { entry: "path/index.js" };
       compiler = { compiler: true };
       webpack = jest.fn((config: object) => compiler);
-      webpackHotMiddleware = jest.fn((compiler) => "webpack-hot-middleware middleware");
-      webpackDevMiddleware = jest.fn((compiler, options) => "webpack-dev-middleware middleware");
-      req = jest.fn<NodeRequire>()
-        .mockImplementationOnce((pkg: string) => (env: string) => `${pkg}-${env} middleware`)
+      webpackHotMiddleware = jest.fn(
+        compiler => "webpack-hot-middleware middleware",
+      );
+      webpackDevMiddleware = jest.fn(
+        (compiler, options) => "webpack-dev-middleware middleware",
+      );
+      req = jest
+        .fn<NodeRequire>()
+        .mockImplementationOnce((pkg: string) => (env: string) =>
+          `${pkg}-${env} middleware`,
+        )
         .mockImplementationOnce((pkg: string) => webpack)
         .mockImplementationOnce((path: string) => ({ default: config }))
         .mockImplementationOnce((pkg: string) => webpackHotMiddleware)
         .mockImplementationOnce((pkg: string) => webpackDevMiddleware);
-      staticMock.mockImplementation((pkg: string) => "express static middleware");
+      staticMock.mockImplementation(
+        (pkg: string) => "express static middleware",
+      );
     });
 
     afterEach(() => {
@@ -126,10 +146,11 @@ describe("defaultMiddleware", () => {
     });
 
     it("should not return morgan if logging is explicitly disabled", () => {
-      const middleware = defaultDevMiddleware({ disableDefaultLoggingMiddleware: true }, req);
-      expect(middleware).not.toContain([
-        "morgan-dev middleware",
-      ]);
+      const middleware = defaultDevMiddleware(
+        { disableDefaultLoggingMiddleware: true },
+        req,
+      );
+      expect(middleware).not.toContain(["morgan-dev middleware"]);
     });
 
     it("should return the dev middleware (with webpack)", () => {
@@ -156,11 +177,15 @@ describe("defaultMiddleware", () => {
     let req;
 
     beforeEach(() => {
-      expressBunyanLoggerMock = jest.fn(() => "express-bunyan-logger middleware")
-      req = jest.fn<NodeRequire>()
-        .mockImplementationOnce((pkg: string) => () => "compression middleware")
+      expressBunyanLoggerMock = jest.fn(
+        () => "express-bunyan-logger middleware",
+      );
+      req = jest
+        .fn<NodeRequire>()
         .mockImplementationOnce((pkg: string) => expressBunyanLoggerMock);
-      staticMock.mockImplementation((path: string) => "express static middleware");
+      staticMock.mockImplementation(
+        (path: string) => "express static middleware",
+      );
     });
 
     afterEach(() => {
@@ -173,28 +198,32 @@ describe("defaultMiddleware", () => {
       const middleware = defaultProductionMiddleware({}, null, req);
 
       expect(expressBunyanLoggerMock.mock.calls[0]).toMatchSnapshot();
-      expect(middleware.length).toBe(2);
-      expect(middleware).toEqual([
-        "compression middleware",
-        "express-bunyan-logger middleware",
-      ]);
+      expect(middleware.length).toBe(1);
+      expect(middleware).toEqual(["express-bunyan-logger middleware"]);
     });
 
     it("should not return bunyan in production middleware if logging is disabled", () => {
-      const middleware = defaultProductionMiddleware({ disableDefaultLoggingMiddleware: true }, null, req);
+      const middleware = defaultProductionMiddleware(
+        { disableDefaultLoggingMiddleware: true },
+        null,
+        req,
+      );
 
-      expect(middleware).not.toContain([
-        "express-bunyan-logger middleware",
-      ]);
+      expect(middleware).not.toContain(["express-bunyan-logger middleware"]);
     });
 
     it("should return the production middleware (with options and name)", () => {
-      const middleware = defaultProductionMiddleware({ serveAssets: true }, "lp-service-id", req);
+      const middleware = defaultProductionMiddleware(
+        { serveAssets: true },
+        "lp-service-id",
+        req,
+      );
 
-      expect(expressBunyanLoggerMock.mock.calls[0][0].name).toBe("lp-service-id");
-      expect(middleware.length).toBe(3);
+      expect(expressBunyanLoggerMock.mock.calls[0][0].name).toBe(
+        "lp-service-id",
+      );
+      expect(middleware.length).toBe(2);
       expect(middleware).toEqual([
-        "compression middleware",
         "express-bunyan-logger middleware",
         "express static middleware",
       ]);
@@ -203,9 +232,14 @@ describe("defaultMiddleware", () => {
 
   describe("defaultPostMiddleware", () => {
     beforeEach(() => {
-      AirbrakeCredsMock.mockImplementation((airbrakeId, airbrakeKey) => ({ airbrakeId, airbrakeKey }));
+      AirbrakeCredsMock.mockImplementation((airbrakeId, airbrakeKey) => ({
+        airbrakeId,
+        airbrakeKey,
+      }));
       errorHandlerMock.mockImplementation(() => "errorHandler middleware");
-      makeErrorHandlerMock.mockImplementation(() => "makeErrorHandler middleware");
+      makeErrorHandlerMock.mockImplementation(
+        () => "makeErrorHandler middleware",
+      );
     });
 
     afterEach(() => {
@@ -221,10 +255,7 @@ describe("defaultMiddleware", () => {
       const middleware = defaultPostMiddleware(false, options);
 
       expect(errorHandlerMock).toHaveBeenCalledWith(false, options);
-      expect(middleware).toEqual([
-        catchAllMock,
-        "errorHandler middleware"
-      ]);
+      expect(middleware).toEqual([catchAllMock, "errorHandler middleware"]);
     });
 
     it("should return the middleware for the prod environment", () => {
@@ -237,13 +268,18 @@ describe("defaultMiddleware", () => {
       const middleware = defaultPostMiddleware(true, options);
 
       expect(AirbrakeCredsMock).toHaveBeenCalledWith("abc", "xyz");
-      expect(AirbrakeClientMock).toHaveBeenCalledWith({ projectId: "abc", projectKey: "xyz" });
+      expect(AirbrakeClientMock).toHaveBeenCalledWith({
+        projectId: "abc",
+        projectKey: "xyz",
+      });
       expect(makeErrorHandlerMock).toHaveBeenCalledTimes(1);
-      expect(errorHandlerMock).toHaveBeenCalledWith(true, { sendProductionErrors: false });
+      expect(errorHandlerMock).toHaveBeenCalledWith(true, {
+        sendProductionErrors: false,
+      });
       expect(middleware).toEqual([
         "makeErrorHandler middleware",
         catchAllMock,
-        "errorHandler middleware"
+        "errorHandler middleware",
       ]);
     });
 
@@ -259,13 +295,18 @@ describe("defaultMiddleware", () => {
       const middleware = defaultPostMiddleware(true, options);
 
       expect(AirbrakeCredsMock).toHaveBeenCalledWith("abc", "xyz");
-      expect(AirbrakeClientMock).toHaveBeenCalledWith({ projectId: "abc", projectKey: "xyz" });
+      expect(AirbrakeClientMock).toHaveBeenCalledWith({
+        projectId: "abc",
+        projectKey: "xyz",
+      });
       expect(makeErrorHandlerMock).toHaveBeenCalledTimes(1);
-      expect(errorHandlerMock).toHaveBeenCalledWith(true, { sendProductionErrors: false });
+      expect(errorHandlerMock).toHaveBeenCalledWith(true, {
+        sendProductionErrors: false,
+      });
       expect(middleware).toEqual([
         "makeErrorHandler middleware",
         catchAllMock,
-        "errorHandler middleware"
+        "errorHandler middleware",
       ]);
     });
 
@@ -282,11 +323,10 @@ describe("defaultMiddleware", () => {
       expect(AirbrakeCredsMock).toHaveBeenCalledWith("abc", undefined);
       expect(AirbrakeClientMock).toHaveBeenCalledTimes(0);
       expect(makeErrorHandlerMock).toHaveBeenCalledTimes(0);
-      expect(errorHandlerMock).toHaveBeenCalledWith(true, { sendProductionErrors: false });
-      expect(middleware).toEqual([
-        catchAllMock,
-        "errorHandler middleware"
-      ]);
+      expect(errorHandlerMock).toHaveBeenCalledWith(true, {
+        sendProductionErrors: false,
+      });
+      expect(middleware).toEqual([catchAllMock, "errorHandler middleware"]);
     });
 
     it("should return the middleware for the prod environment (without airbrake data)", () => {
@@ -299,11 +339,10 @@ describe("defaultMiddleware", () => {
       expect(AirbrakeCredsMock).toHaveBeenCalledTimes(1);
       expect(AirbrakeClientMock).toHaveBeenCalledTimes(0);
       expect(makeErrorHandlerMock).toHaveBeenCalledTimes(0);
-      expect(errorHandlerMock).toHaveBeenCalledWith(true, { sendProductionErrors: false });
-      expect(middleware).toEqual([
-        catchAllMock,
-        "errorHandler middleware"
-      ]);
+      expect(errorHandlerMock).toHaveBeenCalledWith(true, {
+        sendProductionErrors: false,
+      });
+      expect(middleware).toEqual([catchAllMock, "errorHandler middleware"]);
     });
   });
 });

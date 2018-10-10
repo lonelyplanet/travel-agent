@@ -57,7 +57,6 @@
     "chokidar": "^2.0.2",
     "chunk-manifest-webpack-plugin": "^1.1.2",
     "commander": "^2.11.0",
-    "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
     "copyfiles": "^1.2.0",
     "cors": "^2.8.4",

@@ -41,9 +41,7 @@ export const defaultDevMiddleware = (
   options?: IUserConfig,
   req: NodeRequire = require,
 ) => {
-  const middleware = [
-    express.static(path.join(process.cwd(), "public")),
-  ];
+  const middleware = [express.static(path.join(process.cwd(), "public"))];
 
   if (shouldEnableDefaultLoggers(options)) {
     middleware.push(req("morgan")("dev"));
@@ -80,9 +78,7 @@ export const defaultProductionMiddleware = (
   name: string = process.env.LP_SERVICE_ID,
   req: NodeRequire = require,
 ) => {
-  const middleware = [
-    req("compression")(),
-  ];
+  const middleware = [];
 
   if (shouldEnableDefaultLoggers(options)) {
     const excludes = [
@@ -96,11 +92,13 @@ export const defaultProductionMiddleware = (
       "response-hrtime",
     ];
 
-    middleware.push(req("express-bunyan-logger")({
-      name: name || "travel-agent-server",
-      parseUA: false, // Leave user-agent as raw string
-      excludes,
-    }));
+    middleware.push(
+      req("express-bunyan-logger")({
+        name: name || "travel-agent-server",
+        parseUA: false, // Leave user-agent as raw string
+        excludes,
+      }),
+    );
   }
 
   if (options.serveAssets) {
