@@ -96,6 +96,7 @@ export const defaultProductionMiddleware = (
       req("express-bunyan-logger")({
         name: name || "travel-agent-server",
         parseUA: false, // Leave user-agent as raw string
+        includesFn: (req, res) => ({ 'x-trace-token': req.header('x-trace-token') }), // log x-trace-token set on Fastly
         excludes,
       }),
     );

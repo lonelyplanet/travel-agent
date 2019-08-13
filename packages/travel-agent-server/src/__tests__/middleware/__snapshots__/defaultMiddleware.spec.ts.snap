@@ -13,6 +13,7 @@ Array [
       "incoming",
       "response-hrtime",
     ],
+    "includesFn": [Function],
     "name": "travel-agent-server",
     "parseUA": false,
   },
